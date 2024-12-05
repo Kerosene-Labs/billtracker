@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 .pnpm-store/
 src/main/frontend/node_modules
-
+src/main/resources/static/main.css
 ### STS ###
 .apt_generated
 .classpath

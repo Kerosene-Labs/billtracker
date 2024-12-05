@@ -1,0 +1,4 @@
+<div th:fragment="simpleCard(title, content)" class="card">
+    <h1 th:text="${title}"></h1>
+    <div th:replace="${content}"></div>
+</div>

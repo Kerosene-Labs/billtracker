@@ -58,6 +58,7 @@
                         "systemId": "http://www.thymeleaf.org"
                     }
                 ],
+                "remote.autoForwardPorts": false,
                 "java.import.maven.enabled": true,
                 "java.import.gradle.enabled": false,
                 "files.autoSave": "afterDelay",
@@ -84,6 +85,7 @@
         }
     },
     "forwardPorts": [
-        8080
+        8080,
+        35729
     ]
 }
