@@ -6,7 +6,12 @@
             "version": "none",
             "installMaven": "true",
             "installGradle": "false"
-        }
+        },
+        "ghcr.io/devcontainers/features/node": {
+            "pnpmVersion": "latest",
+            "version": "lts"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker": {} // for some reason we get ENOENT on podman without having this?
     },
     "remoteUser": "vscode",
     "mounts": [
@@ -29,6 +34,7 @@
     "containerEnv": {
         "HOME": "/home/vscode"
     },
+    // "postCreateCommand": "sudo mkdir /etc/kindling && sudo ln -s /workspaces/kindling/configuration.json /etc/atc/configuration.json",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -39,9 +45,19 @@
                 "github.vscode-github-actions",
                 "GitHub.vscode-pull-request-github",
                 "redhat.vscode-yaml",
-                "redhat.vscode-xml"
+                "redhat.vscode-xml",
+                "vmware.vscode-boot-dev-pack",
+                "csstools.postcss",
+                "bradlc.vscode-tailwindcss",
+                "juhahinkula.thymeleaf"
             ],
             "settings": {
+                "xml.fileAssociations": [
+                    {
+                        "pattern": "*.html",
+                        "systemId": "http://www.thymeleaf.org"
+                    }
+                ],
                 "java.import.maven.enabled": true,
                 "java.import.gradle.enabled": false,
                 "files.autoSave": "afterDelay",

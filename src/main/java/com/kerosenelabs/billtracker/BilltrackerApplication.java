@@ -1,4 +1,4 @@
-package com.kerosenelabs.billtracker.billtracker;
+package com.kerosenelabs.billtracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
