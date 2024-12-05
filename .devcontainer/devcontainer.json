@@ -1,0 +1,73 @@
+{
+    "name": "BillTracker",
+    "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "none",
+            "installMaven": "true",
+            "installGradle": "false"
+        }
+    },
+    "remoteUser": "vscode",
+    "mounts": [
+        {
+            "source": "${localEnv:HOME}/.gitconfig",
+            "target": "/home/vscode/.gitconfig",
+            "type": "bind"
+        },
+        {
+            "source": "${localEnv:HOME}/.ssh",
+            "target": "/home/vscode/.ssh",
+            "type": "bind"
+        }
+    ],
+    "runArgs": [
+        "--userns=keep-id:uid=1000,gid=1000"
+    ],
+    "containerUser": "vscode",
+    "updateRemoteUserUID": true,
+    "containerEnv": {
+        "HOME": "/home/vscode"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-gradle",
+                "DavidAnson.vscode-markdownlint",
+                "ms-azuretools.vscode-docker",
+                "github.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "redhat.vscode-yaml",
+                "redhat.vscode-xml"
+            ],
+            "settings": {
+                "java.import.maven.enabled": true,
+                "java.import.gradle.enabled": false,
+                "files.autoSave": "afterDelay",
+                "files.autoSaveDelay": 250,
+                "editor.formatOnSave": true,
+                "files.exclude": {
+                    "**/.git": true,
+                    "**/.svn": true,
+                    "**/.hg": true,
+                    "**/CVS": true,
+                    "**/.DS_Store": true,
+                    "**/Thumbs.db": true,
+                    ".github": false,
+                    ".gradle": true,
+                    ".devcontainer": true,
+                    ".vscode": true,
+                    "bin": true,
+                    "build": true,
+                    "gradle": true,
+                    "gradlew": true,
+                    "gradlew.bat": true
+                }
+            }
+        }
+    },
+    "forwardPorts": [
+        8080
+    ]
+}
