@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-    @apply dark:bg-neutral-900;
+    @apply dark:bg-neutral-800;
     min-height: 100vh;
 }
 
@@ -46,4 +46,12 @@ p {
     @apply border rounded-md;
     @apply p-4;
     @apply border-neutral-200 dark:border-neutral-700;
+}
+
+.button {
+    @apply p-2 rounded-md;
+    @apply bg-neutral-300 dark:bg-neutral-700;
+    @apply text-neutral-900 dark:text-neutral-300;
+    @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;
+    @apply text-center;
 }
