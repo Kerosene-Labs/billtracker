@@ -55,3 +55,12 @@ p {
     @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;
     @apply text-center;
 }
+
+input[type="text"] {
+    @apply p-2 rounded-md;
+    @apply bg-neutral-300 dark:bg-neutral-900;
+    @apply text-neutral-900 dark:text-neutral-300;
+    @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;
+    @apply focus:bg-neutral-200 focus:dark:bg-neutral-600;
+
+}
