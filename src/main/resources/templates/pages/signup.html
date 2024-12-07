@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/common :: head('Sign Up')}"></head>
+
+<body class="flex items-center justify-center">
+    <div
+        th:replace="~{tk/cards :: simpleCard('Welcome', 'Thanks for joining. We\'re excited to have you.', ~{fragments/auth :: signUpForm})}">
+    </div>
+</body>
+
+</html>

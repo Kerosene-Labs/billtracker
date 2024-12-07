@@ -3,9 +3,9 @@
 
 <head th:replace="~{fragments/common :: head('Error')}"></head>
 
-<body class="flex items-center justify-center">
+<body class="flex items-center justify-center flex-col gap-2">
     <p>An internal error occurred.</p>
-    <a th:replace="tk/buttons :: link('Go Home', '/')"></a>
+    <a th:replace="~{tk/buttons :: link('Go Home', '/')}"></a>
 </body>
 
 </html>

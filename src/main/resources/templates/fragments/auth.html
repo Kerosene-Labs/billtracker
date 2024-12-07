@@ -1,5 +1,15 @@
 <form th:fragment="authForm" class="flex flex-col gap-2" method="POST">
-    <input th:replace="tk/inputs :: text">
-    <input th:replace="tk/inputs :: text">
-    <button th:replace="tk/buttons :: submit('Log In')"></button>
+    <input th:replace="~{tk/inputs :: text('userName', 'Username')}">
+    <input th:replace="~{tk/inputs :: text('password', 'Password')}">
+    <button th:replace="~{tk/buttons :: submit('Log In')}"></button>
+</form>
+
+<form th:fragment="signUpForm" class="flex flex-col gap-2" method="POST">
+    <div class="flex flex-row gap-2">
+        <input th:replace="~{tk/inputs :: text('firstName', 'First Name')}">
+        <input th:replace="~{tk/inputs :: text('lastName', 'Last Name')}">
+    </div>
+    <input th:replace="~{tk/inputs :: email('email', 'email')}">
+    <input th:replace="~{tk/inputs :: password('password', 'Password')}">
+    <button th:replace="~{tk/buttons :: submit('Sign Up')}"></button>
 </form>
