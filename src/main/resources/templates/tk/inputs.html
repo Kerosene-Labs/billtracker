@@ -1,14 +1,14 @@
 <div th:fragment="text(id, name)" class="flex flex-col">
     <label th:for="${id}" th:text="${name}"></label>
-    <input th:id="${id}" type="text" th:name="${name}">
+    <input th:id="${id}" type="text" th:name="${id}">
 </div>
 
 <div th:fragment="email(id, name)" class="flex flex-col">
     <label th:for="${id}" th:text="${name}"></label>
-    <input th:id="${id}" type="email" th:name="${name}">
+    <input th:id="${id}" type="email" th:name="${id}">
 </div>
 
 <div th:fragment="password(id, name)" class="flex flex-col">
     <label th:for="${id}" th:text="${name}"></label>
-    <input th:id="${id}" type="password" th:name="${name}">
+    <input th:id="${id}" type="password" th:name="${id}">
 </div>

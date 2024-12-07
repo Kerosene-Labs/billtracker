@@ -4,10 +4,9 @@
 <head th:replace="~{fragments/common :: head('Sign Up')}"></head>
 
 <body class="flex justify-center items-center">
-    <div th:replace="~{tk/cards :: simpleCard('Hi!', 'Lorem ipsum', ~{::buttons})}">
+    <div th:replace="~{tk/cards :: simpleCard('Welcome', 'Thanks for joining us', ~{::buttons})}">
         <div th:fragment="buttons" class="flex flex-row gap-2">
             <a th:replace="~{tk/buttons :: link('Login', '/login')}"></a>
-            <a th:replace="~{tk/buttons :: link('Sign Up', '/signup')}"></a>
         </div>
     </div>
 </body>

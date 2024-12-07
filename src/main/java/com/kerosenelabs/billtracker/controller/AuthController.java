@@ -29,7 +29,13 @@ public class AuthController {
     @PostMapping("/signup")
     public String handleSignUp(@RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
-        return "redirect:/welcome";
+        userService.createUser(firstName, lastName, email, password);
+        return "redirect:/welcome/nextSteps";
+    }
+
+    @GetMapping("/welcome/nextSteps")
+    public String getWelcomeNextSteps() {
+        return "pages/welcomeNextSteps";
     }
 
 }
