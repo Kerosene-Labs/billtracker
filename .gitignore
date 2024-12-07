@@ -6,6 +6,7 @@ target/
 .pnpm-store/
 src/main/frontend/node_modules
 src/main/resources/static/main.css
+application-*
 ### STS ###
 .apt_generated
 .classpath

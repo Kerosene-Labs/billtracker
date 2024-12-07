@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres
-    username: postgres.rxaokkvgpvkmoilqspwh
-    password: epx*8NvKCeKvuK9%1KqA
-    # driver-class-name: com.mysql.cj.jdbc.Driver
