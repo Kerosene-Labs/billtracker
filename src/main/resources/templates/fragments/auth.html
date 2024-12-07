@@ -1,5 +1,5 @@
-<form th:fragment="authForm" class="flex flex-col gap-2">
+<form th:fragment="authForm" class="flex flex-col gap-2" method="POST">
     <input th:replace="tk/inputs :: text">
     <input th:replace="tk/inputs :: text">
-    <a th:replace="tk/buttons :: link('Log In', '#')"></a>
+    <button th:replace="tk/buttons :: submit('Log In')"></button>
 </form>

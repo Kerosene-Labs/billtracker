@@ -1,6 +1,8 @@
 {
     "name": "BillTracker",
-    "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+    "dockerComposeFile": "compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/billtracker",
     "features": {
         "ghcr.io/devcontainers/features/java:1": {
             "version": "none",
@@ -11,30 +13,9 @@
             "pnpmVersion": "latest",
             "version": "lts"
         },
-        "ghcr.io/devcontainers/features/docker-in-docker": {} // for some reason we get ENOENT on podman without having this?
+        "ghcr.io/devcontainers/features/docker-in-docker": "latest"
     },
-    "remoteUser": "vscode",
-    "mounts": [
-        {
-            "source": "${localEnv:HOME}/.gitconfig",
-            "target": "/home/vscode/.gitconfig",
-            "type": "bind"
-        },
-        {
-            "source": "${localEnv:HOME}/.ssh",
-            "target": "/home/vscode/.ssh",
-            "type": "bind"
-        }
-    ],
-    "runArgs": [
-        "--userns=keep-id:uid=1000,gid=1000"
-    ],
-    "containerUser": "vscode",
     "updateRemoteUserUID": true,
-    "containerEnv": {
-        "HOME": "/home/vscode"
-    },
-    // "postCreateCommand": "sudo mkdir /etc/kindling && sudo ln -s /workspaces/kindling/configuration.json /etc/atc/configuration.json",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -64,6 +45,7 @@
                 "files.autoSave": "afterDelay",
                 "files.autoSaveDelay": 250,
                 "editor.formatOnSave": true,
+                "task.problemMatchers.neverPrompt": true,
                 "files.exclude": {
                     "**/.git": true,
                     "**/.svn": true,

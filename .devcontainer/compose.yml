@@ -1,0 +1,14 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    volumes:
+      - source: $HOME/.gitconfig
+        target: /home/vscode/.gitconfig
+        type: bind
+      - source: $HOME/.ssh
+        target: /home/vscode/.ssh
+        type: bind
+      - source: $PWD
+        target: /workspaces/billtracker
+        type: bind
+    command: sleep infinity &
