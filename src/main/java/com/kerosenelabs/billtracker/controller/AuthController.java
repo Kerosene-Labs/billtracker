@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kerosenelabs.billtracker.service.UserService;
+import com.kerosenelabs.billtracker.service.AuthService;
 
 @Controller
 public class AuthController {
-    private UserService userService;
+    private AuthService userService;
 
-    public AuthController(@Qualifier("supabaseUserService") UserService userService) {
+    public AuthController(@Qualifier("supabaseUserService") AuthService userService) {
         this.userService = userService;
     }
 
@@ -36,6 +36,12 @@ public class AuthController {
     @GetMapping("/welcome/nextSteps")
     public String getWelcomeNextSteps() {
         return "pages/welcomeNextSteps";
+    }
+
+    @GetMapping("/confirmToken")
+    public String handleConfirmToken(@RequestParam String tokenHash, @RequestParam String redirectTo) {
+        System.out.println(tokenHash);
+        return "pages/login";
     }
 
 }

@@ -4,8 +4,9 @@
 <head th:replace="~{fragments/common :: head('Sign Up')}"></head>
 
 <body class="flex justify-center items-center">
-    <div th:replace="~{tk/cards :: simpleCard('Welcome', 'Thanks for joining us', ~{::buttons})}">
-        <div th:fragment="buttons" class="flex flex-row gap-2">
+    <div th:replace="~{tk/cards :: simpleCard('Welcome', 'Thanks for joining us', ~{::content})}">
+        <div th:fragment="content" class="flex flex-col gap-2">
+            <p>There should be an e-mail in your inbox to confirm your user.</p>
             <a th:replace="~{tk/buttons :: link('Login', '/login')}"></a>
         </div>
     </div>
