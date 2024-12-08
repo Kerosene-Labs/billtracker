@@ -5,10 +5,6 @@
 </form>
 
 <form th:fragment="signUpForm" class="flex flex-col gap-2" method="POST">
-    <div class="flex flex-row gap-2">
-        <input th:replace="~{tk/inputs :: text('firstName', 'First Name')}">
-        <input th:replace="~{tk/inputs :: text('lastName', 'Last Name')}">
-    </div>
     <input th:replace="~{tk/inputs :: email('email', 'email')}">
     <input th:replace="~{tk/inputs :: password('password', 'Password')}">
     <button th:replace="~{tk/buttons :: submit('Sign Up')}"></button>

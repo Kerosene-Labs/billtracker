@@ -1,11 +1,15 @@
 package com.kerosenelabs.billtracker.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.service.AuthService;
 
 @Controller
@@ -27,9 +31,14 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public String handleSignUp(@RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password) {
-        userService.createUser(firstName, lastName, email, password);
+    public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
+            throws IOException, AuthException {
+        try {
+            userService.createUser(email, password);
+        } catch (AuthException e) {
+            model.addAttribute("error", e.getMessage());
+            return "pages/signup";
+        }
         return "redirect:/welcome/nextSteps";
     }
 
@@ -40,7 +49,7 @@ public class AuthController {
 
     @GetMapping("/confirmToken")
     public String handleConfirmToken(@RequestParam String tokenHash, @RequestParam String redirectTo) {
-        System.out.println(tokenHash);
+        System.out.println("tokenHash: " + tokenHash);
         return "pages/login";
     }
 
