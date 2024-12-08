@@ -12,23 +12,23 @@ body {
 }
 
 h1 {
-    @apply text-4xl font-black;
-    @apply text-neutral-900 dark:text-neutral-300;
-}
-
-h2 {
     @apply text-3xl font-black;
     @apply text-neutral-900 dark:text-neutral-300;
 }
 
-h3 {
+h2 {
     @apply text-2xl font-black;
+    @apply text-neutral-900 dark:text-neutral-300;
+}
+
+h3 {
+    @apply text-xl font-black;
     @apply text-neutral-900 dark:text-neutral-300;
 
 }
 
 h4 {
-    @apply text-xl font-bold;
+    @apply text-lg font-bold;
     @apply text-neutral-900 dark:text-neutral-300;
 
 }
@@ -42,9 +42,12 @@ p {
     @apply text-neutral-700 dark:text-neutral-200;
 }
 
+p.subtitle {
+    @apply text-neutral-600 dark:text-neutral-400;
+}
 .card {
-    @apply border rounded-md;
-    @apply p-4;
+    @apply border rounded-lg;
+    @apply p-6;
     @apply border-neutral-200 dark:border-neutral-700;
 }
 

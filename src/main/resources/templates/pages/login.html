@@ -4,7 +4,8 @@
 <head th:replace="~{fragments/common :: head('Login')}"></head>
 
 <body class="flex items-center justify-center">
-    <div th:replace="~{tk/cards :: simpleCard('Welcome', ~{fragments/auth :: authForm})}"></div>
+    <div th:replace="~{tk/cards :: simpleCard('Welcome Back', 'We\'ve missed you.', ~{fragments/auth :: authForm})}">
+    </div>
 </body>
 
 </html>

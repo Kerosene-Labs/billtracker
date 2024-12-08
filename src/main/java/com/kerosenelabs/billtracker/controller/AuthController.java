@@ -39,11 +39,6 @@ public class AuthController {
             model.addAttribute("error", e.getMessage());
             return "pages/signup";
         }
-        return "redirect:/welcome/nextSteps";
-    }
-
-    @GetMapping("/welcome/nextSteps")
-    public String getWelcomeNextSteps() {
         return "pages/welcomeNextSteps";
     }
 
