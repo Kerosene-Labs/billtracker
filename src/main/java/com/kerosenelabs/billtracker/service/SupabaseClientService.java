@@ -1,6 +1,7 @@
 package com.kerosenelabs.billtracker.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerosenelabs.billtracker.exception.AuthException;
 
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,29 +22,41 @@ import okhttp3.Response;
 @Service
 public class SupabaseClientService {
     private String serviceRoleKey;
-    private String instanceUrl;
+    private String instanceId;
 
     public SupabaseClientService(@Value("${supabase.serviceRole.key}") String serviceRoleKey,
-            @Value("${supabase.instanceUrl}") String instanceUrl) {
-        this.instanceUrl = instanceUrl;
+            @Value("${supabase.instanceId}") String instanceId) {
+        this.instanceId = instanceId;
         this.serviceRoleKey = serviceRoleKey;
+    }
+
+    private HttpUrl.Builder getHttpUrlBuilder(String endpoint, Optional<HashMap<String, String>> queryParameters) {
+        HttpUrl.Builder httpUrlBuilder = new HttpUrl.Builder()
+                .scheme("https")
+                .host(instanceId + ".supabase.co")
+                .addPathSegments(endpoint);
+        if (queryParameters.isPresent()) {
+            queryParameters.get().entrySet().stream()
+                    .forEach(value -> httpUrlBuilder.addQueryParameter(value.getKey(), value.getValue()));
+        }
+        return httpUrlBuilder;
     }
 
     /**
      * Configure an OkHttp {@link Request}.
      */
-    public Request.Builder getBuilder(String endpoint) {
+    private Request.Builder getRequestBuilder(HttpUrl httpUrl) {
         return new Request.Builder()
-                .url(instanceUrl + endpoint)
+                .url(httpUrl)
                 .header("apikey", serviceRoleKey);
     }
 
     /**
      * Configure an OkHttp {@link Request}.
      */
-    public Request.Builder getBuilder(String endpoint, String bearerToken) {
+    public Request.Builder getRequestBuilder(HttpUrl httpUrl, String bearerToken) {
         return new Request.Builder()
-                .url(instanceUrl + endpoint)
+                .url(httpUrl)
                 .header("apikey", serviceRoleKey)
                 .header("Authorization", "Bearer " + serviceRoleKey);
     }
@@ -53,8 +67,9 @@ public class SupabaseClientService {
      * @throws IOException
      * @throws AuthException
      */
-    public <RequestType, ResponseType> ResponseType post(String endpoint, RequestType request,
-            Class<ResponseType> responseTypeClass)
+    public <RequestType, ResponseType> ResponseType post(String endpoint,
+            Optional<HashMap<String, String>> queryParameters,
+            RequestType request, Class<ResponseType> responseTypeClass)
             throws IOException, AuthException {
         // prerequisites
         ObjectMapper objectMapper = new ObjectMapper();
@@ -62,7 +77,7 @@ public class SupabaseClientService {
         OkHttpClient httpClient = new OkHttpClient();
 
         // build our request
-        Request networkRequest = getBuilder(endpoint)
+        Request networkRequest = getRequestBuilder(getHttpUrlBuilder(endpoint, Optional.empty()).build())
                 .post(RequestBody.create(objectMapper.writeValueAsBytes(request)))
                 .build();
         Response response = httpClient.newCall(networkRequest).execute();
@@ -80,11 +95,12 @@ public class SupabaseClientService {
      * @throws JsonProcessingException
      * @throws JsonMappingException
      */
-    public <RequestType, ResponseType> ResponseType post(String endpoint, Optional<String> bearerToken,
+    public <RequestType, ResponseType> ResponseType post(String endpoint,
+            Optional<HashMap<String, String>> queryParameters, Optional<String> bearerToken,
             RequestType request, Class<ResponseType> responseTypeClass)
             throws JsonMappingException, JsonProcessingException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue("{}", responseTypeClass);
+        throw new RuntimeException("Not implemented.");
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // return objectMapper.readValue("{}", responseTypeClass);
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.service.AuthService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 public class AuthController {
     private AuthService userService;
@@ -25,6 +28,18 @@ public class AuthController {
         return "pages/login";
     }
 
+    @PostMapping("/login")
+    public String handleLogin(@RequestParam String email, @RequestParam String password, Model model)
+            throws IOException {
+        try {
+            userService.getToken(email, password);
+        } catch (AuthException e) {
+            model.addAttribute("error", e.getMessage());
+            return "pages/login";
+        }
+        return "pages/index";
+    }
+
     @GetMapping("/signup")
     public String getSignUp() {
         return "pages/signup";
@@ -32,7 +47,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
-            throws IOException, AuthException {
+            throws IOException {
         try {
             userService.createUser(email, password);
         } catch (AuthException e) {
@@ -42,10 +57,22 @@ public class AuthController {
         return "pages/welcomeNextSteps";
     }
 
-    @GetMapping("/confirmToken")
-    public String handleConfirmToken(@RequestParam String tokenHash, @RequestParam String redirectTo) {
-        System.out.println("tokenHash: " + tokenHash);
-        return "pages/login";
+    @GetMapping("/confirm")
+    public String handleConfirmToken(@RequestParam(name = "access_token") String accessToken,
+            @RequestParam("refresh_token") String refreshToken, HttpServletResponse response) {
+        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setSecure(true);
+        accessTokenCookie.setPath("/");
+        response.addCookie(accessTokenCookie);
+        // TODO add expiration for cookies
+
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setPath("/");
+        response.addCookie(refreshTokenCookie);
+        return "redirect:/home";
     }
 
 }

@@ -10,6 +10,6 @@ import com.kerosenelabs.billtracker.exception.AuthException;
 public interface AuthService {
     public void createUser(String email, String password) throws IOException, AuthException;
 
-    public String getGrant(String email, String password) throws IOException, AuthException;
+    public String getToken(String email, String password) throws IOException, AuthException;
 
 }
