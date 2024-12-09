@@ -15,6 +15,11 @@ public class SupabaseCookieService {
      * @throws AuthException
      */
     public Cookie getCookie(HttpServletRequest httpServletRequest, String name) throws AuthException {
+        Cookie[] cookies = httpServletRequest.getCookies();
+        if (cookies == null) {
+            throw new AuthException("No cookies present");
+        }
+
         for (Cookie cookie : httpServletRequest.getCookies()) {
             if (cookie.getName().equals(name)) {
                 return cookie;
