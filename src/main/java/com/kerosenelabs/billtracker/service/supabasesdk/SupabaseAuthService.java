@@ -1,4 +1,4 @@
-package com.kerosenelabs.billtracker.service;
+package com.kerosenelabs.billtracker.service.supabasesdk;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import com.kerosenelabs.billtracker.model.supabase.auth.request.CreateSignUpRequ
 import com.kerosenelabs.billtracker.model.supabase.auth.request.CreateTokenRequest;
 import com.kerosenelabs.billtracker.model.supabase.auth.response.CreateSignUpResponse;
 import com.kerosenelabs.billtracker.model.supabase.auth.response.CreateTokenResponse;
+import com.kerosenelabs.billtracker.service.AuthService;
 
 @Service("supabaseUserService")
 public class SupabaseAuthService implements AuthService {

@@ -13,7 +13,7 @@ public class HomeController {
         for (Cookie cookie : request.getCookies()) {
 
         }
-        return "redirect:/";
+        return "pages/home";
     }
 
 }

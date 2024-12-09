@@ -1,4 +1,4 @@
-package com.kerosenelabs.billtracker.service;
+package com.kerosenelabs.billtracker.service.supabasesdk;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -77,7 +77,7 @@ public class SupabaseClientService {
         OkHttpClient httpClient = new OkHttpClient();
 
         // build our request
-        Request networkRequest = getRequestBuilder(getHttpUrlBuilder(endpoint, Optional.empty()).build())
+        Request networkRequest = getRequestBuilder(getHttpUrlBuilder(endpoint, queryParameters).build())
                 .post(RequestBody.create(objectMapper.writeValueAsBytes(request)))
                 .build();
         Response response = httpClient.newCall(networkRequest).execute();
