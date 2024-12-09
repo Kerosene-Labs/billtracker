@@ -11,6 +11,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kerosenelabs.billtracker.exception.AuthException;
 
 import okhttp3.HttpUrl;
@@ -72,19 +74,23 @@ public class SupabaseClientService {
             RequestType request, Class<ResponseType> responseTypeClass)
             throws IOException, AuthException {
         // prerequisites
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonMapper mapper = JsonMapper.builder()
+                .findAndAddModules()
+                .build();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OkHttpClient httpClient = new OkHttpClient();
 
         // build our request
         Request networkRequest = getRequestBuilder(getHttpUrlBuilder(endpoint, queryParameters).build())
-                .post(RequestBody.create(objectMapper.writeValueAsBytes(request)))
+                .post(RequestBody.create(mapper.writeValueAsBytes(request)))
                 .build();
         Response response = httpClient.newCall(networkRequest).execute();
 
         // map our response
         if (response.isSuccessful()) {
-            return objectMapper.readValue(response.body().bytes(), responseTypeClass);
+            String resp = response.body().string();
+            System.out.println(resp);
+            return mapper.readValue(resp, responseTypeClass);
         }
         throw new AuthException(String.format("Got %s\n---\n%s", response.code(), response.body().string()));
     }

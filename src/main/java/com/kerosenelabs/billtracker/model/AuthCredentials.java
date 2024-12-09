@@ -1,5 +1,6 @@
 package com.kerosenelabs.billtracker.model;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +18,7 @@ public class AuthCredentials {
     private String accessToken;
     private String refreshToken;
     private UUID userId;
+    private Instant expiresAt;
 
     public String toJson() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);

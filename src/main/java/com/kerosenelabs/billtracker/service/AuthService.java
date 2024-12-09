@@ -24,12 +24,9 @@ public interface AuthService {
     public void createUser(String email, String password) throws IOException, AuthException;
 
     /**
-     * Check if this session is resumable. A resumable session means the user
-     * navigated to a page
-     * like {@code /login} and we need to check if they can be redirected to
-     * {@code /home}.
+     * Check if this sessions credentials are expired.
      */
-    public boolean isSessionResumable(HttpSession httpSession) throws IOException, AuthException;
+    public boolean isCredentialsExpired(AuthCredentials authCredentials);
 
     /**
      * Get credentials from the provider.
@@ -54,6 +51,7 @@ public interface AuthService {
         try {
             httpSession.setAttribute("authCredentials", authCredentials.toJson());
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new AuthException("An error occurred while writing JSON of AuthCredentials to session");
         }
     }

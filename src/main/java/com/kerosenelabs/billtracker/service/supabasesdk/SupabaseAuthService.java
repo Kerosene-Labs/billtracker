@@ -1,6 +1,7 @@
 package com.kerosenelabs.billtracker.service.supabasesdk;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -46,7 +47,8 @@ public class SupabaseAuthService implements AuthService {
                 }),
                 new CreateTokenRequest(email, password),
                 CreateTokenResponse.class);
-        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken(), response.getUser().getId());
+        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken(), response.getUser().getId(),
+                Instant.ofEpochSecond(response.getExpiresAt()));
     }
 
     @Override
@@ -67,7 +69,7 @@ public class SupabaseAuthService implements AuthService {
     }
 
     @Override
-    public boolean isSessionResumable(HttpSession httpSession) throws IOException, AuthException {
-        return false;
+    public boolean isCredentialsExpired(AuthCredentials authCredentials) {
+        return Instant.now().isBefore(authCredentials.getExpiresAt());
     }
 }

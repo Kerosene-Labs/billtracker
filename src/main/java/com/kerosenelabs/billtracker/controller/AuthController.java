@@ -25,7 +25,16 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(HttpSession httpSession) throws IOException {
+        // get our session, ignore any invalid session errors (as this is the login
+        // page, there shouldn't be a session in a normal flow)
+        try {
+            AuthCredentials credentials = authService.getCredentialsFromSession(httpSession);
+            if (!authService.isCredentialsExpired(credentials)) {
+                return "redirect:/home";
+            }
+        } catch (AuthException e) {
+        }
         return "pages/login";
     }
 
