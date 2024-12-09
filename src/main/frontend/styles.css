@@ -45,10 +45,21 @@ p {
 p.subtitle {
     @apply text-neutral-600 dark:text-neutral-400;
 }
+
+p.error {
+    @apply text-red-900 dark:text-red-400;
+}
+
 .card {
     @apply border rounded-lg;
     @apply p-6;
     @apply border-neutral-200 dark:border-neutral-700;
+}
+
+.error-card {
+    @apply border rounded-lg;
+    @apply p-2;
+    @apply border-red-400 dark:border-red-900;
 }
 
 .button {

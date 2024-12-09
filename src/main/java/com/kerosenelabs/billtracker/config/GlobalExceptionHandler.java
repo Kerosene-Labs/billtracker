@@ -10,7 +10,7 @@ import com.kerosenelabs.billtracker.exception.AuthException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(AuthException.class)
     public String handleAuthException(AuthException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addAttribute("error", e.getMessage());
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
         return "redirect:/login";
     }
 }

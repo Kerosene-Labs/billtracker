@@ -14,6 +14,9 @@ import com.kerosenelabs.billtracker.model.supabase.auth.response.CreateSignUpRes
 import com.kerosenelabs.billtracker.model.supabase.auth.response.CreateTokenResponse;
 import com.kerosenelabs.billtracker.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Service("supabaseUserService")
 public class SupabaseAuthService implements AuthService {
     private SupabaseClientService supabaseClientService;
@@ -31,7 +34,8 @@ public class SupabaseAuthService implements AuthService {
     }
 
     @Override
-    public AuthCredentials getCredentials(String email, String password) throws IOException, AuthException {
+    public AuthCredentials getCredentials(String email, String password)
+            throws IOException, AuthException {
         CreateTokenResponse response = supabaseClientService.post("/auth/v1/token",
                 Optional.of(new HashMap<>() {
                     {
@@ -40,9 +44,12 @@ public class SupabaseAuthService implements AuthService {
                 }),
                 new CreateTokenRequest(email, password),
                 CreateTokenResponse.class);
-        return new AuthCredentials.Builder()
-                .accessToken(response.getAccessToken())
-                .refreshToken(response.getRefreshToken())
-                .build();
+        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken());
+    }
+
+    @Override
+    public void refreshCredentials(AuthCredentials authCredentials) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'refreshCredentials'");
     }
 }

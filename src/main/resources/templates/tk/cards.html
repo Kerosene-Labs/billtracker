@@ -5,3 +5,7 @@
         <p>Card Content</p>
     </div>
 </div>
+
+<div th:fragment="errorCard(msg)" class="error-card w-full">
+    <p th:text="${msg}" class="error">Undefined error message</p>
+</div>

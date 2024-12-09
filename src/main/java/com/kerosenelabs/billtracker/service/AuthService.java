@@ -8,13 +8,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.model.AuthCredentials;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Service
 public interface AuthService {
     public void createUser(String email, String password) throws IOException, AuthException;
 
-    public AuthCredentials getCredentials(String email, String password) throws IOException, AuthException;
+    public AuthCredentials getCredentials(String email, String password)
+            throws IOException, AuthException;
 
     /**
      * Persist auth credentials to the session.
