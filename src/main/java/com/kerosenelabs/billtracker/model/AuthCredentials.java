@@ -1,10 +1,11 @@
 package com.kerosenelabs.billtracker.model;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class AuthCredentials {
     private String accessToken;
     private String refreshToken;
+    private UUID userId;
 
     public String toJson() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);
@@ -22,9 +24,5 @@ public class AuthCredentials {
 
     public static AuthCredentials fromJson(String json) throws JsonMappingException, JsonProcessingException {
         return new ObjectMapper().readValue(json, AuthCredentials.class);
-    }
-
-    public void persistToSession(HttpSession httpSession) {
-        
     }
 }

@@ -5,18 +5,42 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.model.AuthCredentials;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Service
 public interface AuthService {
+    /**
+     * Create a new user
+     * 
+     * @param email
+     * @param password
+     * @throws IOException
+     * @throws AuthException
+     */
     public void createUser(String email, String password) throws IOException, AuthException;
 
-    public AuthCredentials getCredentials(String email, String password)
-            throws IOException, AuthException;
+    /**
+     * Check if this session is resumable. A resumable session means the user
+     * navigated to a page
+     * like {@code /login} and we need to check if they can be redirected to
+     * {@code /home}.
+     */
+    public boolean isSessionResumable(HttpSession httpSession) throws IOException, AuthException;
+
+    /**
+     * Get credentials from the provider.
+     * 
+     * @param email
+     * @param password
+     * @return
+     * @throws IOException
+     * @throws AuthException
+     */
+    public AuthCredentials generateCredentials(String email, String password) throws IOException, AuthException;
 
     /**
      * Persist auth credentials to the session.
@@ -43,4 +67,16 @@ public interface AuthService {
      * @param authCredentials
      */
     public void refreshCredentials(AuthCredentials authCredentials);
+
+    /**
+     * Helper to read the session and extract the {@code authCredentials} attribute.
+     * 
+     * @param httpSession
+     * @return
+     * @throws AuthException
+     * @throws JsonMappingException
+     * @throws JsonProcessingException
+     */
+    public AuthCredentials getCredentialsFromSession(HttpSession httpSession)
+            throws AuthException, JsonMappingException, JsonProcessingException;
 }

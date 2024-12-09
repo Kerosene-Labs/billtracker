@@ -34,7 +34,7 @@ public class AuthController {
             HttpSession httpSession)
             throws IOException {
         try {
-            AuthCredentials credentials = authService.getCredentials(email, password);
+            AuthCredentials credentials = authService.generateCredentials(email, password);
             authService.persistCredentialsToSession(httpSession, credentials);
         } catch (AuthException e) {
             model.addAttribute("error", e.getMessage());

@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.model.AuthCredentials;
 import com.kerosenelabs.billtracker.model.supabase.auth.request.CreateSignUpRequest;
@@ -34,7 +36,7 @@ public class SupabaseAuthService implements AuthService {
     }
 
     @Override
-    public AuthCredentials getCredentials(String email, String password)
+    public AuthCredentials generateCredentials(String email, String password)
             throws IOException, AuthException {
         CreateTokenResponse response = supabaseClientService.post("/auth/v1/token",
                 Optional.of(new HashMap<>() {
@@ -44,12 +46,28 @@ public class SupabaseAuthService implements AuthService {
                 }),
                 new CreateTokenRequest(email, password),
                 CreateTokenResponse.class);
-        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken());
+        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken(), response.getUser().getId());
     }
 
     @Override
     public void refreshCredentials(AuthCredentials authCredentials) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'refreshCredentials'");
+    }
+
+    @Override
+    public AuthCredentials getCredentialsFromSession(HttpSession httpSession)
+            throws AuthException, JsonMappingException, JsonProcessingException {
+        // Retrieve and return the session attribute
+        Object attribute = httpSession.getAttribute("authCredentials");
+        if (attribute == null) {
+            throw new AuthException("Session cookie not set");
+        }
+        return AuthCredentials.fromJson((String) attribute);
+    }
+
+    @Override
+    public boolean isSessionResumable(HttpSession httpSession) throws IOException, AuthException {
+        return false;
     }
 }
