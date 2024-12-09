@@ -40,6 +40,9 @@ public class SupabaseAuthService implements AuthService {
                 }),
                 new CreateTokenRequest(email, password),
                 CreateTokenResponse.class);
-        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken());
+        return new AuthCredentials.Builder()
+                .accessToken(response.getAccessToken())
+                .refreshToken(response.getRefreshToken())
+                .build();
     }
 }

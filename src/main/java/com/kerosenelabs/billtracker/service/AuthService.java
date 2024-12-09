@@ -9,8 +9,6 @@ import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.model.AuthCredentials;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public interface AuthService {
@@ -19,19 +17,28 @@ public interface AuthService {
     public AuthCredentials getCredentials(String email, String password) throws IOException, AuthException;
 
     /**
-     * Establish a new session with the given credentials. These credentials will be
-     * persisted, and the browser will be given a new session.
+     * Persist auth credentials to the session.
      * 
      * @param httpSession     The session from the controller
-     * @param authCredentials The credentials to base this session on
+     * @param authCredentials The credentials to persist
      * @throws AuthException
      */
-    default public void establishSession(HttpSession httpSession, AuthCredentials authCredentials)
+    default public void persistCredentialsToSession(HttpSession httpSession, AuthCredentials authCredentials)
             throws AuthException {
         try {
             httpSession.setAttribute("authCredentials", authCredentials.toJson());
         } catch (JsonProcessingException e) {
-            throw new AuthException("An error occurred while writing JSON");
+            throw new AuthException("An error occurred while writing JSON of AuthCredentials to session");
         }
     }
+
+    /**
+     * Refresh the given credentials. This modifies the passed in instance. Please
+     * note that your implementation should probably call
+     * {@link this#persistCredentialsToSession(HttpSession, AuthCredentials)}
+     * to persist your credential changes.
+     * 
+     * @param authCredentials
+     */
+    public void refreshCredentials(AuthCredentials authCredentials);
 }
