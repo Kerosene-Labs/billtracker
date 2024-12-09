@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.model.AuthCredentials;
 
@@ -23,8 +24,14 @@ public interface AuthService {
      * 
      * @param httpSession     The session from the controller
      * @param authCredentials The credentials to base this session on
+     * @throws AuthException
      */
-    default public void establishSession(HttpSession httpSession, AuthCredentials authCredentials) {
-        httpSession.setAttribute("authCredentials", authCredentials.toString());
+    default public void establishSession(HttpSession httpSession, AuthCredentials authCredentials)
+            throws AuthException {
+        try {
+            httpSession.setAttribute("authCredentials", authCredentials.toJson());
+        } catch (JsonProcessingException e) {
+            throw new AuthException("An error occurred while writing JSON");
+        }
     }
 }
