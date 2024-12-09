@@ -3,13 +3,13 @@ package com.kerosenelabs.billtracker.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kerosenelabs.billtracker.model.supabase.SupabaseCookies;
+import com.kerosenelabs.billtracker.model.AuthCredentials;
 
 
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String getMethodName(SupabaseCookies supabaseCookies) {
+    public String getMethodName(AuthCredentials supabaseCookies) {
         return "pages/home";
     }
 

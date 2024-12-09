@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.AuthCredentials;
 import com.kerosenelabs.billtracker.model.supabase.auth.request.CreateSignUpRequest;
 import com.kerosenelabs.billtracker.model.supabase.auth.request.CreateTokenRequest;
 import com.kerosenelabs.billtracker.model.supabase.auth.response.CreateSignUpResponse;
@@ -30,7 +31,7 @@ public class SupabaseAuthService implements AuthService {
     }
 
     @Override
-    public String getToken(String email, String password) throws IOException, AuthException {
+    public AuthCredentials getCredentials(String email, String password) throws IOException, AuthException {
         CreateTokenResponse response = supabaseClientService.post("/auth/v1/token",
                 Optional.of(new HashMap<>() {
                     {
@@ -39,6 +40,6 @@ public class SupabaseAuthService implements AuthService {
                 }),
                 new CreateTokenRequest(email, password),
                 CreateTokenResponse.class);
-        return response.getAccessToken();
+        return new AuthCredentials(response.getAccessToken(), response.getRefreshToken());
     }
 }

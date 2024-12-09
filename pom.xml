@@ -33,7 +33,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-core</artifactId>
+			<artifactId>spring-session-jdbc</artifactId>
 			<version>3.4.0</version>
 		</dependency>
 		<dependency>

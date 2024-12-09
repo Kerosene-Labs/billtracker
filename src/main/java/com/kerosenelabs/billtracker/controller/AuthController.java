@@ -10,19 +10,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.AuthCredentials;
 import com.kerosenelabs.billtracker.service.AuthService;
-import com.kerosenelabs.billtracker.service.supabasesdk.SupabaseCookieService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
-    private AuthService userService;
-    private SupabaseCookieService supabaseCookieService;
+    private AuthService authService;
 
-    public AuthController(@Qualifier("supabaseUserService") AuthService userService) {
-        this.userService = userService;
+    public AuthController(@Qualifier("supabaseUserService") AuthService authService) {
+        this.authService = authService;
     }
 
     @GetMapping("/login")
@@ -31,10 +30,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String email, @RequestParam String password, Model model)
+    public String handleLogin(@RequestParam String email, @RequestParam String password, Model model,
+            HttpSession httpSession)
             throws IOException {
         try {
-            userService.getToken(email, password);
+            AuthCredentials credentials = authService.getCredentials(email, password);
+            authService.establishSession(httpSession, credentials);
         } catch (AuthException e) {
             model.addAttribute("error", e.getMessage());
             return "pages/login";
@@ -51,7 +52,7 @@ public class AuthController {
     public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
             throws IOException {
         try {
-            userService.createUser(email, password);
+            authService.createUser(email, password);
         } catch (AuthException e) {
             model.addAttribute("error", e.getMessage());
             return "pages/signup";
@@ -62,9 +63,7 @@ public class AuthController {
     @GetMapping("/confirm")
     public String handleConfirmToken(@RequestParam(name = "access_token") String accessToken,
             @RequestParam("refresh_token") String refreshToken, HttpServletResponse response) {
-        supabaseCookieService.setCookie(response, "accessToken", accessToken, 3600);
-        supabaseCookieService.setCookie(response, "refreshToken", refreshToken, 3600);
-        return "redirect:/home";
+        return "redirect:/login";
     }
 
 }

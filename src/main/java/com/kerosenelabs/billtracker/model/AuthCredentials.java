@@ -1,4 +1,4 @@
-package com.kerosenelabs.billtracker.model.supabase;
+package com.kerosenelabs.billtracker.model;
 
 import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupabaseCookies {
-    private Cookie accessToken;
-    private Cookie refreshToken;
+public class AuthCredentials {
+    private String accessToken;
+    private String refreshToken;
 }
