@@ -25,7 +25,6 @@ public interface AuthService {
      * @param authCredentials The credentials to base this session on
      */
     default public void establishSession(HttpSession httpSession, AuthCredentials authCredentials) {
-        httpSession.setAttribute("authCredentials", authCredentials);
-        System.out.println("Persisted authCredentials");
+        httpSession.setAttribute("authCredentials", authCredentials.toString());
     }
 }
