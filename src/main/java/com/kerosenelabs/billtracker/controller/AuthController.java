@@ -2,6 +2,7 @@ package com.kerosenelabs.billtracker.controller;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -28,18 +29,19 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLogin(HttpSession httpSession) throws IOException {
-        // TODO: get our session, ignore any invalid session errors (as this is the
-        // login
-        // page, there shouldn't be a session in a normal flow)
+        UUID userId = (UUID) httpSession.getAttribute("userId");
+        if (userId != null) {
+            return "redirect:/home";
+        }
         return "pages/login";
     }
 
     @PostMapping("/login")
     public String handleLogin(@RequestParam String email, @RequestParam String password, Model model,
             HttpSession httpSession)
-            throws IOException {
+            throws AuthException {
         try {
-            UserEntity user = userService.getUserByEmailAndPassword(email, password).get();
+            UserEntity user = userService.getUserByEmailAndPassword(email, password);
             userService.establishSession(httpSession, user);
         } catch (NoSuchElementException e) {
             model.addAttribute("error", "A user with those credentials could not be found.");
@@ -54,10 +56,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public String handleSignUp(@RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password, Model model)
+    public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
             throws IOException {
-        userService.createUser(firstName, lastName, email, password);
+        userService.createUser(email, password);
         return "pages/welcomeNextSteps";
 
     }
