@@ -1,6 +1,8 @@
 services:
   devcontainer:
     image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    ports:
+      - 8443:8443
     volumes:
       - source: $HOME/.gitconfig
         target: /home/vscode/.gitconfig
@@ -12,3 +14,15 @@ services:
         target: /workspaces/billtracker
         type: bind
     command: sleep infinity &
+    networks:
+      devcontainer:
+  db:
+    image: postgres:17
+    networks:
+      devcontainer:
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - 5432:5432
+networks:
+  devcontainer:

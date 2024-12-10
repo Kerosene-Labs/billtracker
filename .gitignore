@@ -7,6 +7,7 @@ target/
 src/main/frontend/node_modules
 src/main/resources/static/main.css
 application-*
+*.p12
 ### STS ###
 .apt_generated
 .classpath

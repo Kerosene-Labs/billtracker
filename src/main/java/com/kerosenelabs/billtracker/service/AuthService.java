@@ -12,7 +12,7 @@ import com.kerosenelabs.billtracker.model.AuthCredentials;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public interface AuthService {
+public class AuthService {
     /**
      * Create a new user
      * 
@@ -21,7 +21,9 @@ public interface AuthService {
      * @throws IOException
      * @throws AuthException
      */
-    public void createUser(String email, String password) throws IOException, AuthException;
+    public void createUser(String email, String password) throws IOException, AuthException {
+        
+    }
 
     /**
      * Check if this sessions credentials are expired.
