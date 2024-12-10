@@ -53,7 +53,7 @@ public class UserService {
      * @return Optionally, the user if they were found.
      */
     public Optional<UserEntity> getUserByEmailAndPassword(String emailAddress, String password) {
-        return userRepository.findUserByEmailAndPassword(emailAddress, getKeyFromPassword(password));
+        return userRepository.findUserByEmailAddressAndPassword(emailAddress, getKeyFromPassword(password));
     }
 
     /**
