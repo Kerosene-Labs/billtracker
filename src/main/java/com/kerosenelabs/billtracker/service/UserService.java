@@ -14,9 +14,11 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     /**
@@ -37,7 +39,8 @@ public class UserService {
     }
 
     /**
-     * Create a new user.
+     * Create a new user. Also creates a confirmation token and sends an email out
+     * for confirmation.
      * 
      * @param emailAddress
      * @param password
@@ -45,7 +48,9 @@ public class UserService {
      */
     public UserEntity createUser(String emailAddress, String password) {
         UserEntity userEntity = new UserEntity(emailAddress, getKeyFromPassword(password));
-        return userRepository.save(userEntity);
+        userRepository.save(userEntity);
+        confirmationTokenService.createConfirmationToken(userEntity);
+        return userEntity;
     }
 
     /**

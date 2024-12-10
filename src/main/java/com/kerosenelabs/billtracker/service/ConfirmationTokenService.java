@@ -25,22 +25,41 @@ public class ConfirmationTokenService {
      * @param userEntity The entity to create the confirmation token for
      * @return
      */
-    public ConfirmationTokenEntity createConfirmationToken(UserEntity userEntity) {
+    public ConfirmationTokenEntity createConfirmationToken(UserEntity user) {
         return confirmationTokenRepository
-                .save(new ConfirmationTokenEntity(userEntity, Instant.now().plusSeconds(900)));
+                .save(new ConfirmationTokenEntity(user, Instant.now().plusSeconds(900)));
     }
 
     /**
-     * Check if a user has confirmed their account or not.
+     * Get a confirmation token by their user.
      * 
-     * @param userEntity
+     * @param user
      * @return
      * @throws AuthException
      */
-    public boolean isUserConfirmed(UserEntity userEntity) throws AuthException {
-        ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenRepository.findByUser(userEntity)
-                .orElseThrow(() -> new AuthException("Unverified account, please check your e-mail"));
-        return confirmationTokenEntity.isConfirmed();
+    public ConfirmationTokenEntity getConfirmationTokenByUser(UserEntity user) throws AuthException {
+        return confirmationTokenRepository.findByUser(user)
+                .orElseThrow(() -> new AuthException("Confirmation token not on record for this user; perhapse one was never created?"));
     }
 
+    /**
+     * Confirm the user by ensuring the confirmation token given is the one
+     * associated with them.
+     * 
+     * @param userEntity
+     * @param potentialTokenId
+     * @throws AuthException
+     */
+    public void confirmUser(UserEntity userEntity, String confirmationTokenCandidate) throws AuthException {
+        // get our confirmation token, check if this user's already confirmed
+        ConfirmationTokenEntity confirmationToken = getConfirmationTokenByUser(userEntity);
+        if (getConfirmationTokenByUser(userEntity).isConfirmed()) {
+            throw new AuthException("User already confirmed");
+        }
+
+        // ensure that our candidate token matches ours
+        if (!confirmationToken.getId().toString().equals(confirmationTokenCandidate)) {
+            throw new AuthException("Confirmation token candidate does not equal the users confirmation token");
+        }
+    }
 }

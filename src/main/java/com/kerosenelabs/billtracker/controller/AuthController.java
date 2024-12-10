@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
@@ -26,10 +27,6 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLogin(HttpSession httpSession) throws IOException {
-        UUID userId = (UUID) httpSession.getAttribute("userId");
-        if (userId != null) {
-            return "redirect:/home";
-        }
         return "pages/login";
     }
 
@@ -56,7 +53,7 @@ public class AuthController {
     public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
             throws IOException {
         userService.createUser(email, password);
-        return "pages/welcomeNextSteps";
+        return "redirect:/confirmAccount";
 
     }
 

@@ -12,4 +12,9 @@ public class HomeController {
         return "pages/home";
     }
 
+    @GetMapping("/confirmAccount")
+    public String getConfirmAccount() {
+        return "pages/welcomeNextSteps";
+    }
+
 }
