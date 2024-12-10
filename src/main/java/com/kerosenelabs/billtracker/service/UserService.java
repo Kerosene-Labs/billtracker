@@ -1,5 +1,7 @@
 package com.kerosenelabs.billtracker.service;
 
+import java.util.UUID;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,9 +57,20 @@ public class UserService {
      * @throws AuthException
      */
     public UserEntity getUserByEmailAndPassword(String emailAddress, String password) throws AuthException {
-        UserEntity user = userRepository.findUserByEmailAddress(emailAddress).orElseThrow(
+        return userRepository.findUserByEmailAddress(emailAddress).orElseThrow(
                 () -> new AuthException("A user with the given credentials could not be found."));
-        return user;
+    }
+
+    /**
+     * Get a user by their ID
+     * 
+     * @param id
+     * @return
+     * @throws AuthException
+     */
+    public UserEntity getUserById(UUID id) throws AuthException {
+        return userRepository.findById(id).orElseThrow(
+                () -> new AuthException("A user with that ID could not be found."));
     }
 
     /**

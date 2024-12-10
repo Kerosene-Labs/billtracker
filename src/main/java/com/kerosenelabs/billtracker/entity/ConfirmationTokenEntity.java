@@ -1,5 +1,6 @@
 package com.kerosenelabs.billtracker.entity;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -7,30 +8,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(name = "user", schema = "public")
+@Table(name = "confirmation_token", schema = "public")
 @Entity
-public class UserEntity {
+public class ConfirmationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String firstName = null;
-    private String lastName = null;
+    @OneToOne(optional = false)
+    @JoinColumn(unique = true)
+    private UserEntity user;
 
     @Column(nullable = false)
-    private String emailAddress;
+    private Instant expires;
 
     @Column(nullable = false)
-    private String password;
+    private boolean confirmed = false;
 
-    public UserEntity(String emailAddress, String password) {
-        this.emailAddress = emailAddress;
-        this.password = password;
+    public ConfirmationTokenEntity(UserEntity user, Instant expires) {
+        this.user = user;
+        this.expires = expires;
     }
 }

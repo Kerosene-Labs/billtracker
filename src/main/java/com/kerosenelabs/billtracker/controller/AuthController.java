@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
-import com.kerosenelabs.billtracker.model.AuthCredentials;
 import com.kerosenelabs.billtracker.service.UserService;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -63,10 +60,10 @@ public class AuthController {
 
     }
 
-    @GetMapping("/confirm")
-    public String handleConfirmToken(@RequestParam(name = "access_token") String accessToken,
-            @RequestParam("refresh_token") String refreshToken, HttpServletResponse response) {
-        return "redirect:/login";
+    @GetMapping("/logout")
+    public String getLogOut(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/";
     }
 
 }
