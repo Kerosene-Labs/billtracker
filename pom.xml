@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.kerosenelabs.billtracker</groupId>
 	<artifactId>billtracker</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>billtracker</name>
 	<description>A bill tracking web application.</description>
 	<url />
