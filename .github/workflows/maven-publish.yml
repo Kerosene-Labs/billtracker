@@ -23,10 +23,8 @@ jobs:
         distribution: 'corretto'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-    - name: Set up Node, PNPM
-      uses: pnpm/action-setup@v4
-      with:
-        version: 9
+    - name: Install dependencies
+      run: cd src/main/frontend && npm i
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
