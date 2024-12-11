@@ -7,9 +7,11 @@
     <div th:fragment="content" class="flex w-full justify-center">
         <div class="flex flex-col gap-6 w-full lg:w-1/2">
             <div
-                th:replace="~{tk/cards :: simpleCard('Welcome to BillTracker', 'This thing\'s still in the oven, apologies for the bugs.', ~{::reportBugsContent})}">
-                <div th:fragment="reportBugsContent" class="flex max-w-fit">
+                th:replace="~{tk/cards :: simpleCard('Welcome to BillTracker', 'This thing\'s still in the oven, apologies for the bugs and lack of polish.', ~{::reportBugsContent})}">
+                <div th:fragment="reportBugsContent" class="flex flex-col gap-4 lg:flex-row lg:items-end w-full">
                     <a th:replace="~{tk/buttons :: link('Report Bug', '/bugReport')}"></a>
+                    <a th:replace="~{tk/buttons :: link('Settings', '/settings')}"></a>
+                    <a th:replace="~{tk/buttons :: link('Logout', '/logout')}"></a>
                 </div>
             </div>
             <div
