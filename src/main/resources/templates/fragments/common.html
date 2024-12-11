@@ -17,3 +17,7 @@
         }
     </script>
 </head>
+
+<body th:fragment="body(content)" class="flex w-full p-4 lg:pt-6">
+    <div th:replace="${content}"></div>
+</body>

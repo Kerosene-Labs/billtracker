@@ -55,6 +55,7 @@ p.error {
     @apply p-8;
     @apply bg-neutral-100 dark:bg-neutral-900/50;
     @apply drop-shadow-md;
+    @apply h-min;
 }
 
 .error-card {
@@ -64,7 +65,7 @@ p.error {
 }
 
 .button {
-    @apply p-2 rounded-md;
+    @apply p-2 rounded-lg;
     @apply bg-neutral-300 dark:bg-neutral-700;
     @apply text-neutral-900 dark:text-neutral-300;
     @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;

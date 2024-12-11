@@ -1,8 +1,10 @@
 <div th:fragment="simpleCard(title, subtitle, content)" class="card">
     <h1 th:text="${title}" class="drop-shadow-sm">Card Title</h1>
     <p th:text="${subtitle}" class="subtitle pb-4">Card Subtitle</p>
-    <div th:replace="${content}">
-        <p>Card Content</p>
+    <div th:if="${content}">
+        <div th:replace="${content}">
+            <p>Card Content</p>
+        </div>
     </div>
 </div>
 

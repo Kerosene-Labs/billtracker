@@ -3,8 +3,16 @@
 
 <head th:replace="~{fragments/common :: head('Home')}"></head>
 
-<body class="flex justify-center items-center">
-    <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+<body th:replace="~{fragments/common :: body(~{::content})}">
+    <div th:fragment="content" class="flex w-full justify-center">
+        <div class="flex flex-col gap-6 w-full lg:w-1/2">
+            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            </div>
+            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            </div>
+            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            </div>
+        </div>
     </div>
 </body>
 
