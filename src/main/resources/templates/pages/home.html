@@ -6,14 +6,39 @@
 <body th:replace="~{fragments/common :: body(~{::content})}">
     <div th:fragment="content" class="flex w-full justify-center">
         <div class="flex flex-col gap-6 w-full lg:w-1/2">
-            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            <div
+                th:replace="~{tk/cards :: simpleCard('Welcome to BillTracker', 'This thing\'s still in the oven, apologies for the bugs.', ~{::reportBugsContent})}">
+                <div th:fragment="reportBugsContent" class="flex max-w-fit">
+                    <a th:replace="~{tk/buttons :: link('Report Bug', '/bugReport')}"></a>
+                </div>
             </div>
-            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            <div
+                th:replace="~{tk/cards :: simpleCard('Introductions', 'Tell us a bit more about yourself.', ~{::introductionsContent})}">
+                <div th:fragment="introductionsContent" class="flex flex-col gap-4 lg:flex-row lg:items-end w-full">
+                    <input th:replace="~{tk/inputs :: text('firstName', 'First Name')}">
+                    <input th:replace="~{tk/inputs :: text('firstName', 'Last Name')}">
+                    <input th:replace="~{tk/inputs :: date('birthday', 'Birthday')}">
+                    <div class="max-w-full">
+                        <button th:replace="~{tk/buttons :: button('Save')}"></button>
+                    </div>
+                </div>
             </div>
-            <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
+            <div
+                th:replace="~{tk/cards :: simpleCard('Expenses', 'Where\'s that cheddar going?', ~{::expensesContent})}">
+                <div th:fragment="expensesContent">
+                    <div class="w-full flex">
+                        <a th:replace="~{tk/buttons :: link('Open Expenses', '/expenses')}"></a>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="~{tk/cards :: simpleCard('Income', 'Aww yeah baby, it\'s pay day!', ~{::incomeContent})}">
+                <div th:fragment="incomeContent">
+                    <div class="w-full flex">
+                        <a th:replace="~{tk/buttons :: link('Open Income', '/income')}"></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

@@ -12,3 +12,8 @@
     <label th:for="${id}" th:text="${name}"></label>
     <input th:id="${id}" type="password" th:name="${id}">
 </div>
+
+<div th:fragment="date(id, name)" class="flex flex-col">
+    <label th:for="${id}" th:text="${name}"></label>
+    <input th:id="${id}" type="date" th:name="${id}">
+</div>
