@@ -8,6 +8,7 @@ src/main/frontend/node_modules
 src/main/resources/static/main.css
 application-*
 *.p12
+*.pem
 ### STS ###
 .apt_generated
 .classpath
