@@ -14,6 +14,13 @@
 	<version>0.0.1</version>
 	<name>billtracker</name>
 	<description>A bill tracking web application.</description>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/Kerosene-Labs/billtracker</url>
+		</repository>
+	</distributionManagement>
 	<url />
 	<licenses>
 		<license />
