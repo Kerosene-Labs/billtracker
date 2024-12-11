@@ -8,9 +8,22 @@
         <div th:if="${error}">
             <div th:replace="~{tk/cards :: errorCard(${error})}"></div>
         </div>
-        <div
-            th:replace="~{tk/cards :: simpleCard('Welcome Back', 'We\'ve missed you.', ~{fragments/auth :: authForm})}">
+        <div th:replace="~{tk/cards :: simpleCard(null, null, ~{::loginContent})}">
+            <div th:fragment="loginContent" class="flex flex-col lg:flex-row gap-8">
+                <div class="flex flex-col gap-2">
+                    <h2>Log in</h2>
+                    <div th:replace="~{fragments/auth :: authForm}"></div>
+                </div>
+                <div class="border-b lg:border-l border border-neutral-200 dark:border-neutral-900 rounded-3xl">
+                </div>
+                <div class="flex flex-col gap-2 justify-center">
+                    <h2>No Account?</h2>
+                    <p>Join and start saving money.</p>
+                    <a th:replace="~{tk/buttons :: link('Sign Up', '/signup')}">
+                </div>
+            </div>
         </div>
+    </div>
     </div>
 </body>
 
