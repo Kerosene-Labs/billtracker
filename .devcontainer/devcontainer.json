@@ -15,13 +15,11 @@
         },
         "ghcr.io/devcontainers/features/docker-in-docker": "latest"
     },
-    "onCreateCommand": "keytool -genkeypair -alias mysslkey -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650 || true",
     "updateRemoteUserUID": true,
     "customizations": {
         "vscode": {
             "extensions": [
                 "vscjava.vscode-java-pack",
-                "vscjava.vscode-gradle",
                 "DavidAnson.vscode-markdownlint",
                 "ms-azuretools.vscode-docker",
                 "github.vscode-github-actions",

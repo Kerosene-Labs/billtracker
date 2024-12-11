@@ -1,21 +1,24 @@
 package com.kerosenelabs.billtracker.service;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.kerosenelabs.billtracker.entity.ConfirmationTokenEntity;
 import com.kerosenelabs.billtracker.entity.UserEntity;
+import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.repository.ConfirmationTokenRepository;
-
-import jakarta.security.auth.message.AuthException;
 
 @Service
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final NoReplyMailService noReplyMailService;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository) {
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository,
+            NoReplyMailService noReplyMailService) {
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.noReplyMailService = noReplyMailService;
     }
 
     /**
@@ -26,8 +29,19 @@ public class ConfirmationTokenService {
      * @return
      */
     public ConfirmationTokenEntity createConfirmationToken(UserEntity user) {
-        return confirmationTokenRepository
+        // create our confirmation token
+        ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenRepository
                 .save(new ConfirmationTokenEntity(user, Instant.now().plusSeconds(900)));
+
+        // build our message
+        StringBuilder message = new StringBuilder("Welcome!\n");
+        message.append("Click the link below to confirm your account. This is only valid for 15 mintues.\n");
+        message.append(String.format("https://localhost:8443/confirm?t=%s", confirmationTokenEntity.getId()));
+
+        // send the mail
+        noReplyMailService.sendTestEmail(user.getEmailAddress(), "Confirm your BillTracker account",
+                message.toString());
+        return confirmationTokenEntity;
     }
 
     /**
@@ -39,7 +53,8 @@ public class ConfirmationTokenService {
      */
     public ConfirmationTokenEntity getConfirmationTokenByUser(UserEntity user) throws AuthException {
         return confirmationTokenRepository.findByUser(user)
-                .orElseThrow(() -> new AuthException("Confirmation token not on record for this user; perhapse one was never created?"));
+                .orElseThrow(() -> new AuthException(
+                        "Confirmation token not on record for this user; perhapse one was never created?"));
     }
 
     /**
@@ -50,16 +65,19 @@ public class ConfirmationTokenService {
      * @param potentialTokenId
      * @throws AuthException
      */
-    public void confirmUser(UserEntity userEntity, String confirmationTokenCandidate) throws AuthException {
+    public void confirmUser(String confirmationTokenCandidate) throws AuthException {
         // get our confirmation token, check if this user's already confirmed
-        ConfirmationTokenEntity confirmationToken = getConfirmationTokenByUser(userEntity);
-        if (getConfirmationTokenByUser(userEntity).isConfirmed()) {
-            throw new AuthException("User already confirmed");
-        }
+        ConfirmationTokenEntity confirmationToken = confirmationTokenRepository
+                .findById(UUID.fromString(confirmationTokenCandidate))
+                .orElseThrow(() -> new AuthException("Invalid confirmation token"));
 
         // ensure that our candidate token matches ours
         if (!confirmationToken.getId().toString().equals(confirmationTokenCandidate)) {
             throw new AuthException("Confirmation token candidate does not equal the users confirmation token");
         }
+
+        // update our confirmation token
+        confirmationToken.setConfirmed(true);
+        confirmationTokenRepository.save(confirmationToken);
     }
 }

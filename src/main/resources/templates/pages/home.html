@@ -4,9 +4,7 @@
 <head th:replace="~{fragments/common :: head('Home')}"></head>
 
 <body class="flex justify-center items-center">
-    <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', ~{::buttons})}">
-        <div th:fragment="buttons" class="flex flex-row gap-2">
-        </div>
+    <div th:replace="~{tk/cards :: simpleCard('Home', 'Welcome to your home! Take a look around.', null)}">
     </div>
 </body>
 

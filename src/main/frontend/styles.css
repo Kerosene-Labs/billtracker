@@ -13,37 +13,37 @@ body {
 
 h1 {
     @apply text-3xl font-black;
-    @apply text-neutral-900 dark:text-neutral-300;
+    @apply text-neutral-900 dark:text-neutral-100;
 }
 
 h2 {
     @apply text-2xl font-black;
-    @apply text-neutral-900 dark:text-neutral-300;
+    @apply text-neutral-900 dark:text-neutral-100;
 }
 
 h3 {
     @apply text-xl font-black;
-    @apply text-neutral-900 dark:text-neutral-300;
+    @apply text-neutral-900 dark:text-neutral-100;
 
 }
 
 h4 {
     @apply text-lg font-bold;
-    @apply text-neutral-900 dark:text-neutral-300;
+    @apply text-neutral-900 dark:text-neutral-100;
 
 }
 
 h5 {
     @apply text-lg font-bold;
-    @apply text-neutral-900 dark:text-neutral-300;
+    @apply text-neutral-900 dark:text-neutral-100;
 }
 
 p {
-    @apply text-neutral-700 dark:text-neutral-200;
+    @apply text-neutral-700 dark:text-neutral-100;
 }
 
 p.subtitle {
-    @apply text-neutral-600 dark:text-neutral-400;
+    @apply text-neutral-600 dark:text-neutral-200;
 }
 
 p.error {
@@ -51,9 +51,10 @@ p.error {
 }
 
 .card {
-    @apply border rounded-lg;
-    @apply p-6;
-    @apply border-neutral-200 dark:border-neutral-700;
+    @apply rounded-2xl;
+    @apply p-8;
+    @apply bg-neutral-100 dark:bg-neutral-900/50;
+    @apply drop-shadow-md;
 }
 
 .error-card {

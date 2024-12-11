@@ -9,20 +9,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.service.ConfirmationTokenService;
 import com.kerosenelabs.billtracker.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
-    private UserService userService;
+    private final UserService userService;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, ConfirmationTokenService confirmationTokenService) {
         this.userService = userService;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     @GetMapping("/login")
@@ -61,6 +63,12 @@ public class AuthController {
     public String getLogOut(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/confirm")
+    public String getConfirm(@RequestParam String t) throws AuthException {
+        confirmationTokenService.confirmUser(t);
+        return "pages/confirm";
     }
 
 }

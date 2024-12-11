@@ -19,7 +19,7 @@ public class AuthCredentials {
     private String refreshToken;
     private UUID userId;
     private Instant expiresAt;
-
+    
     public String toJson() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);
     }
