@@ -1,28 +1,8 @@
-# Personal Use and Self-Hosting License (PUSH License)
 
-Version 1.0
+Copyright 2024 Kerosene Labs LLC
 
-1. **Grant of License**
-   - The software is licensed, not sold, under the terms of this agreement.
-   - You may use, modify, and self-host the software for personal, non-commercial purposes.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-2. **Restrictions**
-   - You may not use this software in any capacity that generates monetary profit, whether directly or indirectly.
-   - Commercial hosting services or businesses are strictly prohibited from using or deploying this software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-3. **Definition of Terms**
-   - **Personal Use**: Use by an individual for their own benefit, not tied to business or organizational activities.
-   - **Non-Commercial**: Activities that do not involve the exchange of money or goods/services for profit.
-   - **Self-Hosting**: Hosting the software on infrastructure owned and managed directly by the user.
-
-4. **Modifications**
-   - Modifications to the software are allowed for personal use but may not be redistributed in any form without explicit written permission from the licensor.
-
-5. **No Warranty**
-   - The software is provided "as-is," without any express or implied warranties.
-
-6. **Termination**
-   - This license is terminated immediately upon violation of any of its terms.
-
-7. **Contact**
-   - For clarifications, permissions, or other inquiries, contact <hlafaille@kerosenelabs.com>.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
