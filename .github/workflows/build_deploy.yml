@@ -24,14 +24,16 @@ jobs:
         settings-path: ${{ github.workspace }}
     - name: Install dependencies
       run: cd src/main/frontend && npm i
+    - name: Set Version
+      run: echo "PROJECT_VERSION=${GITHUB_REF_NAME:1}" >> $GITHUB_ENV
     - name: Build with Maven
-      run: mvn -B package --file pom.xml -Dproject.version=${GITHUB_REF_NAME:1}
+      run: mvn -B package --file pom.xml -Dproject.version=${PROJECT_VERSION}
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app
         path: |
-          target/billtracker-${GITHUB_REF_NAME:1}.jar
+          target/billtracker-${PROJECT_VERSION}.jar
   publish_maven:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
