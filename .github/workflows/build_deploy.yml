@@ -2,10 +2,10 @@ name: Build and Deploy
 on:
   release:
     types:
-      - created
+      - published
   push: 
-    # branches: 
-    #   - main
+    branches: 
+      - main
 
 jobs:
   build:
@@ -56,18 +56,23 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'corretto'
+      
       - name: Install dependencies
         run: cd src/main/frontend && npm i
+      
       - uses: actions/download-artifact@v4
         with:
           name: app
+      
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }}
+  
   publish_container:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -75,20 +80,26 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
+      
       - name: Install dependencies
         run: cd src/main/frontend && npm i
+      
       - uses: actions/download-artifact@v4
         with:
           name: app
+      
       - name: Build Container Image
         run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
+      
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.ACCESS_TOKEN }}
+      
       - name: Push Container Image
         run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
