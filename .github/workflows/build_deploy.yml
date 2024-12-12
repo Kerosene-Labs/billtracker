@@ -66,4 +66,12 @@ jobs:
         with:
           name: app
       - name: Build Container Image
-        run: docker buil . -t ghcr.io/Kerosene-Labs/billtracker:${{ github.ref }}
+        run: docker build . -t ghcr.io/Kerosene-Labs/billtracker:${{ github.ref }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.ACCESS_TOKEN }}
+      - name: Push Container Image
+        run: docker push ghcr.io/Kerosene-Labs/billtracker:${{ github.ref }}
