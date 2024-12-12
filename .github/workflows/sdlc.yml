@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: SDLC
 on:
   release:
     types:
@@ -8,11 +8,27 @@ on:
       - main
 
 jobs:
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: 'java,css,html,js'  # Specify your project's languages
+          # database: './codeql-db'  # Optional: Customize the database location
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: '/language-security-and-quality'  # Customize category if needed
+
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+    needs: 
+      - codeql
     steps:
     - uses: actions/checkout@v4
 
