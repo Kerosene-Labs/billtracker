@@ -52,7 +52,7 @@ jobs:
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }}
   publish_container:
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs:
       - build
