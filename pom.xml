@@ -9,7 +9,7 @@
 		<version>3.4.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kerosenelabs.billtracker</groupId>
+	<groupId>com.kerosenelabs</groupId>
 	<artifactId>billtracker</artifactId>
 	<version>0.0.1</version>
 	<name>billtracker</name>
