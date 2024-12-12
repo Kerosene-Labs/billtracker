@@ -45,6 +45,8 @@ jobs:
           distribution: 'corretto'
           server-id: github
           settings-path: ${{ github.workspace }}
+      - name: Install dependencies
+        run: cd src/main/frontend && npm i
       - uses: actions/download-artifact@v4
         with:
           name: app
@@ -61,3 +63,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Install dependencies
+        run: cd src/main/frontend && npm i
