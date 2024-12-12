@@ -33,7 +33,7 @@ jobs:
       with:
         name: app
         path: |
-          target/billtracker-${PROJECT_VERSION}.jar
+          target/billtracker-${{ env.PROJECT_VERSION }}.jar
   publish_maven:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
