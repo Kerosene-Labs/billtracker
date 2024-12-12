@@ -1,0 +1,9 @@
+<settings>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>hlafaille</username>
+            <password>${github.token}</password>
+        </server>
+    </servers>
+</settings>
