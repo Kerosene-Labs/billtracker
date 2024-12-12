@@ -14,7 +14,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: 'java,css,html,js'  # Specify your project's languages
+          languages: 'java,javascript'  # Specify your project's languages
           # database: './codeql-db'  # Optional: Customize the database location
 
       - name: Perform CodeQL Analysis
