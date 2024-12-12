@@ -74,4 +74,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.ACCESS_TOKEN }}
       - name: Push Container Image
-        run: docker push ghcr.io/Kerosene-Labs/billtracker:${{ github.ref }}
+        run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref }}
