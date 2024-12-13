@@ -84,9 +84,18 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: app
-      
+
+      - name: Determine PROJECT_VERSION
+        id: set-project-version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "PROJECT_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
+          fi
+
       - name: Publish to GitHub Packages Apache Maven
-        run: mvn deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }}
+        run: mvn deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }} -Dproject.version=${PROJECT_VERSION}
   
   publish_container:
     if: github.event_name == 'release'
@@ -105,9 +114,18 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: app
+
+      - name: Determine PROJECT_VERSION
+        id: set-project-version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "PROJECT_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
+          fi
       
       - name: Build Container Image
-        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
+        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }} --build-arg PROJECT_VERSION=${PROJECT_VERSION}
       
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
