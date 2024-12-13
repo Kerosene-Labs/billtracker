@@ -7,17 +7,7 @@ on:
     branches: 
       - main
 
-jobs:
-  codeql:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      actions: read
-      security-events: write
-    steps:
-      - uses: actions/checkout@v4
-      
+jobs: 
   build:
     runs-on: ubuntu-latest
     permissions:
