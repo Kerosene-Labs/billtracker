@@ -8,6 +8,29 @@ on:
       - main
 
 jobs:
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: 'java,javascript'  # Specify your project's languages
+
+      - name: CodeQL Autobuild
+        uses: github/codeql-action/autobuild@v3
+      
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language-security-and-quality'  # Customize category if needed
+
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -44,19 +67,6 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml -Dproject.version=${PROJECT_VERSION}
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: 'java,javascript'  # Specify your project's languages
-
-    - name: CodeQL Autobuild
-      uses: github/codeql-action/autobuild@v2
-    
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: '/language-security-and-quality'  # Customize category if needed
-      
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
