@@ -136,3 +136,21 @@ jobs:
       
       - name: Push Container Image
         run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
+  
+  deploy:
+    # if: github.event_name == 'release'
+    needs: 
+      - publish_container
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event_name == 'release' && 'production' || 'development' }}
+    steps:
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{secrets.DEPLOY_PRIVATE_KEY}}
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+      - name: Transfer artifact to target
+        run: ssh ${{ secrets.DEPLOY_PRIVATE_KEY }} "cd ${{ secrets.TOFU_PATH }} && tofu apply -auto-approve"
