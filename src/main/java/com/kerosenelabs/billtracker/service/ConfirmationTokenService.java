@@ -3,6 +3,7 @@ package com.kerosenelabs.billtracker.service;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.kerosenelabs.billtracker.entity.ConfirmationTokenEntity;
@@ -14,9 +15,12 @@ import com.kerosenelabs.billtracker.repository.ConfirmationTokenRepository;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final NoReplyMailService noReplyMailService;
+    private final String billTrackerDomain;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository,
+    public ConfirmationTokenService(@Value("billtracker.domain") String billTrackerDomain,
+            ConfirmationTokenRepository confirmationTokenRepository,
             NoReplyMailService noReplyMailService) {
+        this.billTrackerDomain = billTrackerDomain;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.noReplyMailService = noReplyMailService;
     }
@@ -36,7 +40,7 @@ public class ConfirmationTokenService {
         // build our message
         StringBuilder message = new StringBuilder("Welcome!\n");
         message.append("Click the link below to confirm your account. This is only valid for 15 mintues.\n");
-        message.append(String.format("https://localhost:8443/confirm?t=%s", confirmationTokenEntity.getId()));
+        message.append(String.format("https://%s/confirm?t=%s", billTrackerDomain, confirmationTokenEntity.getId()));
 
         // send the mail
         noReplyMailService.sendTestEmail(user.getEmailAddress(), "Confirm your BillTracker account",
