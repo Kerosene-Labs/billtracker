@@ -157,7 +157,7 @@ jobs:
           fi
       
       - name: Write Keys
-        run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}"" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}"" >> ~/.ssh/deployment
+        run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
       
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
