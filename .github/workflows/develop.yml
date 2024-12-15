@@ -1,4 +1,4 @@
-name: Production
+name: Develop
 on:
   push:
     branches:
