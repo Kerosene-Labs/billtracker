@@ -164,4 +164,4 @@ jobs:
             ${{ secrets.BASTION_PRIVATE_KEY }}
       
       - name: Update Infrastructure
-        run: ssh -J bastion@bastion.kerosenelabs.com -vvv infra@kerosenelabs.com "BILLTRACKER_VERSION=${PROJECT_VERSION} docker compose pull && docker compose up -d"
+        run: ssh -A -J bastion@bastion.kerosenelabs.com -vvv infra@kerosenelabs.com "BILLTRACKER_VERSION=${PROJECT_VERSION} docker compose pull && docker compose up -d"
