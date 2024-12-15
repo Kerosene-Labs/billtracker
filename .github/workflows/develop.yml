@@ -85,7 +85,7 @@ jobs:
       - publish_container
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: develop
     steps:
       - name: Write Keys
         run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
