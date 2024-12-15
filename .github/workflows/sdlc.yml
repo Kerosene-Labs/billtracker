@@ -4,8 +4,8 @@ on:
     types:
       - published
   push: 
-    # branches: 
-      # - main
+    branches: 
+      - main
 
 jobs: 
   build:
@@ -52,18 +52,18 @@ jobs:
         path: |
           target/billtracker-${{ env.PROJECT_VERSION }}.jar
 
-    # - name: Initialize CodeQL
-    #   uses: github/codeql-action/init@v3
-    #   with:
-    #     languages: 'java,javascript'  # Specify your project's languages
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: 'java,javascript'  # Specify your project's languages
 
-    # - name: CodeQL Autobuild
-    #   uses: github/codeql-action/autobuild@v3
+    - name: CodeQL Autobuild
+      uses: github/codeql-action/autobuild@v3
     
-    # - name: Perform CodeQL Analysis
-    #   uses: github/codeql-action/analyze@v3
-    #   with:
-    #     category: '/language-security-and-quality'  # Customize category if needed
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: '/language-security-and-quality'  # Customize category if needed
 
   publish_maven:
     if: github.event_name == 'release'
@@ -100,7 +100,7 @@ jobs:
         run: ./mvnw deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }} -Dproject.version=${PROJECT_VERSION}
   
   publish_container:
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs:
       - build
@@ -140,7 +140,7 @@ jobs:
         run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
   
   deploy:
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     needs: 
       - publish_container
     runs-on: ubuntu-latest
