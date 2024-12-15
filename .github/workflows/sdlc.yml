@@ -9,7 +9,7 @@ on:
 
 jobs: 
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -66,7 +66,7 @@ jobs:
 
   publish_maven:
     if: github.event_name == 'release'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - build
     steps:
@@ -99,7 +99,7 @@ jobs:
   
   publish_container:
     # if: github.event_name == 'release'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - build
     steps:
@@ -141,7 +141,7 @@ jobs:
     # if: github.event_name == 'release'
     needs: 
       - publish_container
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment:
       name: ${{ github.event_name == 'release' && 'production' || 'development' }}
     steps:
