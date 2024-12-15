@@ -35,7 +35,7 @@ jobs:
       with:
         name: app
         path: |
-          target/billtracker-${{ github.ref_name }}.jar
+          target/billtracker-${{ github.sha }}.jar
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -68,7 +68,7 @@ jobs:
           name: app
       
       - name: Build Container Image
-        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }} --build-arg PROJECT_VERSION=${{ github.sha }}
+        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.sha }} --build-arg PROJECT_VERSION=${{ github.sha }}
       
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -78,7 +78,7 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
       
       - name: Push Container Image
-        run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
+        run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.sha }}
   
   deploy:
     needs: 
