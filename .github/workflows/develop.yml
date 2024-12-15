@@ -78,7 +78,7 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
       
       - name: Push Container Image
-        run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.sha }}
+        run: docker push ghcr.io/kerosene-labs/billtracker:main
   
   deploy:
     needs: 
@@ -104,4 +104,4 @@ jobs:
           echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
       
       - name: Update Infrastructure
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"cd production && export BILLTRACKER_VERSION=${{ github.sha }}} && docker compose pull app && docker compose up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"cd develop && export BILLTRACKER_VERSION=main && docker compose pull app && docker compose up -d app\""
