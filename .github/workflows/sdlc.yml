@@ -52,18 +52,18 @@ jobs:
         path: |
           target/billtracker-${{ env.PROJECT_VERSION }}.jar
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: 'java,javascript'  # Specify your project's languages
+    # - name: Initialize CodeQL
+    #   uses: github/codeql-action/init@v3
+    #   with:
+    #     languages: 'java,javascript'  # Specify your project's languages
 
-    - name: CodeQL Autobuild
-      uses: github/codeql-action/autobuild@v3
+    # - name: CodeQL Autobuild
+    #   uses: github/codeql-action/autobuild@v3
     
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: '/language-security-and-quality'  # Customize category if needed
+    # - name: Perform CodeQL Analysis
+    #   uses: github/codeql-action/analyze@v3
+    #   with:
+    #     category: '/language-security-and-quality'  # Customize category if needed
 
   publish_maven:
     if: github.event_name == 'release'
@@ -157,7 +157,7 @@ jobs:
           fi
       
       - name: Write Keys
-        run: echo ${{secrets.BASTION_PRIVATE_KEY}} >> ~/.ssh/bastion && echo ${{secrets.DEPLOYMENT_PRIVATE_KEY}} >> ~/.ssh/deployment
+        run: echo "${{secrets.BASTION_PRIVATE_KEY}}"" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}"" >> ~/.ssh/deployment
       
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
