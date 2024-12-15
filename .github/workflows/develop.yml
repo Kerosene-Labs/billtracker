@@ -1,8 +1,8 @@
 name: Production
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - main
 
 jobs: 
   build:
