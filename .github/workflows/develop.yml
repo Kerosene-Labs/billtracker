@@ -1,8 +1,8 @@
-name: Develop
+name: Production
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - published
 
 jobs: 
   build:
@@ -27,19 +27,15 @@ jobs:
     - name: Install Node Dependencies
       run: cd src/main/frontend && npm i
     
-    - name: Determine PROJECT_VERSION
-      id: set-project-version
-      run: echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
-      
     - name: Build with Maven
-      run: ./mvnw -B package --file pom.xml -Dproject.version=${PROJECT_VERSION}
+      run: ./mvnw -B package --file pom.xml -Dproject.version=${{ github.ref_name }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app
         path: |
-          target/billtracker-${{ env.PROJECT_VERSION }}.jar
+          target/billtracker-${{ github.ref_name }}.jar
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -70,18 +66,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: app
-
-      - name: Determine PROJECT_VERSION
-        id: set-project-version
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            echo "PROJECT_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
-          else
-            echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
-          fi
       
       - name: Build Container Image
-        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }} --build-arg PROJECT_VERSION=${PROJECT_VERSION}
+        run: docker build . -t ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }} --build-arg PROJECT_VERSION=${{ github.sha }}
       
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -98,17 +85,8 @@ jobs:
       - publish_container
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event_name == 'release' && 'production' || 'development' }}
+      name: production
     steps:
-      - name: Determine PROJECT_VERSION
-        id: set-project-version
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            echo "PROJECT_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
-          else
-            echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
-          fi
-      
       - name: Write Keys
         run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
 
@@ -126,4 +104,4 @@ jobs:
           echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
       
       - name: Update Infrastructure
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"cd production && export BILLTRACKER_VERSION=${PROJECT_VERSION} && docker compose pull app && docker compose up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"cd production && export BILLTRACKER_VERSION=${{ github.sha }}} && docker compose pull app && docker compose up -d app\""
