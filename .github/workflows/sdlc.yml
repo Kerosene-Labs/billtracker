@@ -28,6 +28,7 @@ jobs:
         distribution: 'corretto'
         server-id: github
         settings-path: ${{ github.workspace }}
+        cache: 'maven'
     
     - name: Install Node Dependencies
       run: cd src/main/frontend && npm i
@@ -83,6 +84,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'corretto'
+          cache: 'maven'
       
       - name: Install dependencies
         run: cd src/main/frontend && npm i
