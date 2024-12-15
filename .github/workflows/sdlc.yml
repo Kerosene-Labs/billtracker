@@ -98,7 +98,7 @@ jobs:
         run: mvn deploy -s ./settings.xml -Dgithub.token=${{ secrets.ACCESS_TOKEN }} -Dproject.version=${PROJECT_VERSION}
   
   publish_container:
-    if: github.event_name == 'release'
+    # if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs:
       - build
@@ -138,19 +138,28 @@ jobs:
         run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.ref_name }}
   
   deploy:
-    if: github.event_name == 'release'
+    # if: github.event_name == 'release'
     needs: 
       - publish_container
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event_name == 'release' && 'production' || 'development' }}
     steps:
+      - name: Determine PROJECT_VERSION
+        id: set-project-version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "PROJECT_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
+          fi
+      
       - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{secrets.DEPLOY_PRIVATE_KEY}}
-      - uses: actions/download-artifact@v4
-        with:
-          name: build
-      - name: Transfer artifact to target
-        run: ssh ${{ secrets.DEPLOY_PRIVATE_KEY }} "cd ${{ secrets.TOFU_PATH }} && tofu apply -auto-approve"
+          ssh-private-key: |
+            ${{ secrets.DEPLOYMENT_PRIVATE_KEY }}
+            ${{ secrets.BASTION_PRIVATE_KEY }}
+      
+      - name: Update Infrastructure
+        run: ssh -J bastion@bastion.kerosenelabs.com infra@kerosenelabs.com "BILLTRACKER_VERSION=${PROJECT_VERSION} docker compose pull && docker compose up -d"
