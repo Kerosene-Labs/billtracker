@@ -162,7 +162,7 @@ jobs:
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
 
-      - run: ssh -Tv -i ~/.ssh/bastion -o "StrictHostKeyChecking no" infra@bastion.kerosenelabs.com
+      # - run: ssh -Tv -i ~/.ssh/bastion -o "StrictHostKeyChecking no" infra@bastion.kerosenelabs.com
 
       - name: Start ssh-agent and add keys
         run: |
