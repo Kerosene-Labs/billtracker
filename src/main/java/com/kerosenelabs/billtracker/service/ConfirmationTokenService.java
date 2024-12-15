@@ -17,7 +17,7 @@ public class ConfirmationTokenService {
     private final NoReplyMailService noReplyMailService;
     private final String billTrackerDomain;
 
-    public ConfirmationTokenService(@Value("billtracker.domain") String billTrackerDomain,
+    public ConfirmationTokenService(@Value("${billtracker.domain}") String billTrackerDomain,
             ConfirmationTokenRepository confirmationTokenRepository,
             NoReplyMailService noReplyMailService) {
         this.billTrackerDomain = billTrackerDomain;
