@@ -173,4 +173,4 @@ jobs:
           echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
       
       - name: Update Infrastructure
-        run: ssh -vvv -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"export BILLTRACKER_VERSION=v0.1.4 && docker compose pull app && docker compuse up -d app\""
+        run: ssh -vvv -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"export BILLTRACKER_VERSION=v0.1.4 && docker compose pull app && docker compose up -d app\""
