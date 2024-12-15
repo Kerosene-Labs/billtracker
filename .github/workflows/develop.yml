@@ -78,7 +78,7 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
       
       - name: Push Container Image
-        run: docker push ghcr.io/kerosene-labs/billtracker:main
+        run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.sha }}
   
   deploy:
     needs: 
