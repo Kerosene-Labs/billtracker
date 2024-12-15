@@ -9,7 +9,10 @@ on:
 
 jobs: 
   build:
-    runs-on: self-hosted
+    runs-on: 
+      - self-hosted
+      - linux
+      - X64
     permissions:
       contents: read
       packages: write
@@ -66,7 +69,10 @@ jobs:
 
   publish_maven:
     if: github.event_name == 'release'
-    runs-on: self-hosted
+    runs-on: 
+      - self-hosted
+      - linux
+      - X64
     needs:
       - build
     steps:
@@ -99,7 +105,10 @@ jobs:
   
   publish_container:
     # if: github.event_name == 'release'
-    runs-on: self-hosted
+    runs-on: 
+      - self-hosted
+      - linux
+      - X64
     needs:
       - build
     steps:
@@ -141,7 +150,10 @@ jobs:
     # if: github.event_name == 'release'
     needs: 
       - publish_container
-    runs-on: self-hosted
+    runs-on: 
+      - self-hosted
+      - linux
+      - X64
     environment:
       name: ${{ github.event_name == 'release' && 'production' || 'development' }}
     steps:
