@@ -85,7 +85,7 @@ jobs:
       - publish_container
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: develop
     steps:
       - name: Write Keys
         run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
@@ -104,4 +104,4 @@ jobs:
           echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
       
       - name: Update Infrastructure
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@mars1d.kerosenelabs.com "bash -c \"cd develop && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@mars1d.kerosenelabs.com "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
