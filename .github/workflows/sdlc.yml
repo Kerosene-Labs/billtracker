@@ -164,4 +164,7 @@ jobs:
             ${{ secrets.BASTION_PRIVATE_KEY }}
       
       - name: Update Infrastructure
-        run: ssh -o StrictHostKeyChecking=no -A -J infra@bastion.kerosenelabs.com -v infra@billtracker.lan "BILLTRACKER_VERSION=${PROJECT_VERSION} docker compose pull && docker compose up -d"
+        run: |
+          ssh -o StrictHostKeyChecking=no 
+          -A -J infra@bastion.kerosenelabs.com 
+          infra@billtracker.lan "bash -c \"export BILLTRACKER_VERSION=v0.1.4 && docker compose pull app && docker compuse up -d app\""
