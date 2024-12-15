@@ -156,12 +156,14 @@ jobs:
             echo "PROJECT_VERSION=${{ github.sha }}" >> $GITHUB_ENV
           fi
       
-      - name: Setup SSH Agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: |
-            ${{ secrets.DEPLOYMENT_PRIVATE_KEY }}
-            ${{ secrets.BASTION_PRIVATE_KEY }}
+      - name: Write Keys
+        run: echo ${{secrets.BASTION_PRIVATE_KEY}} >> ~/.ssh/bastion && echo ${{secrets.DEPLOYMENT_PRIVATE_KEY}} >> ~/.ssh/deployment
+      
+      - name: Set Key Permissions
+        run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
+
+      - name: Add Keys to Agent
+        run: ssh-add -i ~/.ssh/bastion && ssh-add -i ~/.ssh/deployment
       
       - name: Update Infrastructure
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"export BILLTRACKER_VERSION=v0.1.4 && docker compose pull app && docker compuse up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -i ~/.ssh/bastion -i ~/.ssh/deployment -J infra@bastion.kerosenelabs.com infra@billtracker.lan "bash -c \"export BILLTRACKER_VERSION=v0.1.4 && docker compose pull app && docker compuse up -d app\""
