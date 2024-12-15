@@ -162,7 +162,7 @@ jobs:
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
 
-      - run: ssh -Tv git@github.com
+      - run: ssh -Tv infra@basstion.kerosenelabs.com
 
       - name: Start ssh-agent and add keys
         run: |
