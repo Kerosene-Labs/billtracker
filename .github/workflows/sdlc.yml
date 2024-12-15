@@ -4,8 +4,8 @@ on:
     types:
       - published
   push: 
-    branches: 
-      - main
+    # branches: 
+      # - main
 
 jobs: 
   build:
@@ -164,7 +164,10 @@ jobs:
 
       - name: Start Agent
         run: eval "$(ssh-agent -s)"
-        
+      
+      - name: SSH Socket is
+        run: echo $SSH_AUTH_SOCK
+
       - name: Add Keys to Agent
         run: ssh-add -i ~/.ssh/bastion && ssh-add -i ~/.ssh/deployment
       
