@@ -162,6 +162,9 @@ jobs:
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
 
+      - name: Start Agent
+        run: eval "$(ssh-agent -s)"
+        
       - name: Add Keys to Agent
         run: ssh-add -i ~/.ssh/bastion && ssh-add -i ~/.ssh/deployment
       
