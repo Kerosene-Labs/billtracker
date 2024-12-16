@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/common :: head('Home')}"></head>
+
+<body th:replace="~{fragments/common :: body(~{::content})}">
+    <div th:fragment="content" class="flex w-full justify-center">
+        <div th:replace="~{tk/cards :: simpleCard('Settings', '', null)}"></div>
+    </div>
+</body>
+
+</html>
