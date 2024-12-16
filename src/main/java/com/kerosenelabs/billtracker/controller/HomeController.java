@@ -27,6 +27,8 @@ public class HomeController {
         // home screen
         if (user.getFirstName() != null) {
             model.addAttribute("showIntroduction", false);
+        } else {
+            model.addAttribute("showIntroduction", true);
         }
         return "pages/home";
     }
@@ -40,7 +42,7 @@ public class HomeController {
     public String handleEditIntroductions(UserEntity user, @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam LocalDate birthday) {
-                
+
         userService.setIntroductorySettings(user, firstName, lastName, birthday);
         return "redirect:/home";
     }
