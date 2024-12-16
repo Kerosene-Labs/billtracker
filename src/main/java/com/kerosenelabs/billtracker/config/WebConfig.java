@@ -29,6 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(confirmedUserInterceptor)
                 .addPathPatterns("/home/**")
-                .addPathPatterns("/settings/**");
+                .addPathPatterns("/settings/**")
+                .addPathPatterns("/expenses/**");
     }
 }
