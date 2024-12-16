@@ -1,5 +1,7 @@
 package com.kerosenelabs.billtracker.entity;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -22,6 +24,7 @@ public class UserEntity {
 
     private String firstName = null;
     private String lastName = null;
+    private LocalDate birthday = null;
 
     @Column(nullable = false, unique = true)
     private String emailAddress;

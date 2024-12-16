@@ -1,5 +1,7 @@
 package com.kerosenelabs.billtracker.service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -85,5 +87,15 @@ public class UserService {
      */
     public void establishSession(HttpSession httpSession, UserEntity userEntity) {
         httpSession.setAttribute("userId", userEntity.getId());
+    }
+
+    /**
+     * Sets introductory settings such as the users first and last name
+     */
+    public void setIntroductorySettings(UserEntity userEntity, String firstName, String lastName, LocalDate birthday) {
+        userEntity.setFirstName(firstName);
+        userEntity.setLastName(lastName);
+        userEntity.setBirthday(birthday);
+        userRepository.save(userEntity);
     }
 }
