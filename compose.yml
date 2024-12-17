@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: "mysecretpassword"
+    network_mode: host
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
