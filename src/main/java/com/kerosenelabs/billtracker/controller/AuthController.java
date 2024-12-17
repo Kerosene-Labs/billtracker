@@ -38,8 +38,11 @@ public class AuthController {
             throws AuthException {
         try {
             UserEntity user = userService.getUserByEmailAndPassword(email, password);
+            if (!userService.doesPasswordMatch(password, user.getPassword())) {
+                throw new AuthException("Invalid password");
+            }
             userService.establishSession(httpSession, user);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | AuthException e) {
             model.addAttribute("error", "A user with those credentials could not be found.");
             return "pages/login";
         }
