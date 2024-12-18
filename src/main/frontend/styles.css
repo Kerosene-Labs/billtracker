@@ -71,12 +71,12 @@ p.error {
     @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;
     @apply focus:bg-neutral-200 focus:dark:bg-neutral-600;
     @apply active:bg-neutral-300 active:dark:bg-neutral-700;
-    @apply text-center;
+    @apply text-center text-nowrap;
     @apply transition-colors;
     @apply focus:outline-none focus:ring-offset-1 focus:ring-1 focus:ring-neutral-400;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"] {
     @apply p-2 rounded-md;
     @apply bg-neutral-300 dark:bg-neutral-900;
     @apply text-neutral-900 dark:text-neutral-300;
@@ -87,6 +87,16 @@ input[type="text"], input[type="email"], input[type="password"], input[type="dat
     @apply focus:outline-none ring-0 focus:ring-2 focus:ring-neutral-400;
 }
 
+option {
+    @apply p-2 rounded-md;
+    @apply bg-neutral-300 dark:bg-neutral-900;
+    @apply text-neutral-900 dark:text-neutral-300;
+    @apply hover:bg-neutral-200 hover:dark:bg-neutral-600;
+    @apply focus:bg-neutral-200 focus:dark:bg-neutral-600;
+    @apply transition-all;
+    @apply w-full;
+    @apply focus:outline-none ring-0 focus:ring-2 focus:ring-neutral-400;
+}
 label {
     @apply uppercase text-sm font-semibold;
     @apply text-neutral-400 dark:text-neutral-600;

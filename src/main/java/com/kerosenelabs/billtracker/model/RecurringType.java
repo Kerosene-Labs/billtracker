@@ -6,6 +6,6 @@ package com.kerosenelabs.billtracker.model;
  * might get paid every two weeks.
  */
 public enum RecurringType {
-    FIXED_DATE,
-    FIXED_INTERVAL
+    DATE,
+    INTERVAL
 }
