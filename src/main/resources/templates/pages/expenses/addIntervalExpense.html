@@ -12,7 +12,7 @@
                 <div th:replace="~{tk/inputs :: text('name', 'name')}"></div>
                 <div class="flex flex-row gap-4">
                     <div th:replace="~{tk/inputs :: number('recurrence', 'recurrence')}"></div>
-                    <div th:replace="~{tk/inputs :: select('unit', 'unit', ${#arrays.toArray('Item1')})}"></div>
+                    <div th:replace="~{tk/inputs :: select('unit', 'unit', ${#strings.arraySplit('apple,banana,orange', ',')})}"></div>
                 </div>
             </form>
         </div>
