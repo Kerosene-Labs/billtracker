@@ -10,7 +10,7 @@
                 th:replace="~{tk/cards :: simpleCard('Oops', 'An error occurred while processing your request.', ~{::errorContent})}">
                 <div th:fragment="errorContent" class="flex flex-col gap-4">
                     <div class="p-4 bg-neutral-400 dark:bg-neutral-900 drop-shadow-md rounded-lg">
-                        <p class="font-mono text-neutral-500 dark:text-neutral-600" th:text="${message}"></p>
+                        <p class="font-mono text-neutral-500 dark:text-neutral-600" th:text="${message}">(No error message specified)</p>
                     </div>
                     <a th:replace="~{tk/buttons :: link('Go Home', '/home')}"></a>
                 </div>
