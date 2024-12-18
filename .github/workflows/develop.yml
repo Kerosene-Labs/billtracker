@@ -37,18 +37,18 @@ jobs:
         path: |
           target/billtracker-${{ github.sha }}.jar
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: 'java,javascript'  # Specify your project's languages
-
-    - name: CodeQL Autobuild
-      uses: github/codeql-action/autobuild@v3
-    
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: '/language-security-and-quality'  # Customize category if needed
+#    - name: Initialize CodeQL
+#      uses: github/codeql-action/init@v3
+#      with:
+#        languages: 'java,javascript'  # Specify your project's languages
+#
+#    - name: CodeQL Autobuild
+#      uses: github/codeql-action/autobuild@v3
+#
+#    - name: Perform CodeQL Analysis
+#      uses: github/codeql-action/analyze@v3
+#      with:
+#        category: '/language-security-and-quality'  # Customize category if needed
 
   publish_container:
     runs-on: ubuntu-latest
