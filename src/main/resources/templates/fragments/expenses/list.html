@@ -1,8 +1,0 @@
-<html xmlns:th="http://www.thymeleaf.org">
-
-<!--List / table for viewing and selecting expenses-->
-<div th:fragment="list">
-    <div th:each="expense : ${expenses}" class="flex flex-col">
-        <div th:insert="~{fragments/expenses/listEntry :: listEntry(${expense})}"></div>
-    </div>
-</div>
