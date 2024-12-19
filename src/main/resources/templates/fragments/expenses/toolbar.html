@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <!--Toolbar for editing-->
-<div th:fragment="toolbar" class="flex flex-col gap-2 ml-auto w-fit">
-    <button th:replace="~{tk/buttons :: submit('Add Expense')}"></button>
+<div th:fragment="toolbar" class="flex flex-row gap-2 ml-auto w-min">
+    <button th:replace="~{tk/buttons :: link('Add Date Expense', '/expenses/addDateExpense')}"></button>
+    <button th:replace="~{tk/buttons :: link('Add Interval Expense', '/expenses/addIntervalExpense')}"></button>
 </div>

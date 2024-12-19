@@ -11,8 +11,13 @@ import java.util.ArrayList;
 @Controller
 public class ExpensesController {
     @GetMapping("/expenses")
-    public String getExpenses(UserEntity user, Model model) {
+    public String getExpensesManager(UserEntity user, Model model) {
         model.addAttribute("expenses", new ArrayList<>() {{add("test");}});
         return "pages/expenses/manager";
+    }
+
+    @GetMapping("/expenses/addIntervalExpense")
+    public String getAddIntervalExpense(UserEntity user, Model model) {
+        return "pages/expenses/addIntervalExpense";
     }
 }
