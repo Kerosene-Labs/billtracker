@@ -121,7 +121,7 @@ jobs:
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
 
-      - run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" infra@bastion.kerosenelabs.com
+      - run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" ${{secrets.BASTION_SSH_URI}}
 
       - name: Start ssh-agent and add keys
         run: |
@@ -137,7 +137,7 @@ jobs:
           name: frontend
 
       - name: Update Frontend
-        run: scp -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com src/main/svelte/build/* infra@mars1d.kerosenelabs.com:/home/infra/frontend_content
+        run: scp -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_URI}} src/main/svelte/build/* ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
 
       - name: Update Backend
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@mars1d.kerosenelabs.com "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_URI}} ${{secrets.DEPLOYMENT_TARGET}} "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
