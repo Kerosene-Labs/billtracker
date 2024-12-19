@@ -4,7 +4,7 @@
     import {AuthControllerApi} from "$lib/sdk";
     import Button from "$lib/tk/Button.svelte";
     import {goto} from "$app/navigation";
-    import ErrorCard from "$lib/tk/ErrorCard.svelte";
+    import ErrorCard from "$lib/tk/ErrorQueue.svelte";
 
     let confirmed: boolean = false;
     let error: string | undefined = undefined;

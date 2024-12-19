@@ -4,35 +4,37 @@
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {goto} from "$app/navigation";
     import {AuthControllerApi, ResponseError} from "$lib/sdk";
-    import ErrorCard from "$lib/tk/ErrorCard.svelte";
+    import {errorQueue} from "$lib";
 
     // binds
     let email: string;
     let password: string;
 
-    // request state
-    let errorMessage: string | undefined = undefined;
-
+    $: console.log($errorQueue);
     async function doLogin() {
         await new AuthControllerApi().createSession({
             createSessionRequest: {
                 email: email,
                 password: password
             }
-        }).catch((error: ResponseError) => {
-            errorMessage = error as unknown as string;
-        }).finally(() => {
-            if (errorMessage == undefined) {
-                goto("/home");
+        }).catch(async (error: ResponseError) => {
+            if (error.response) {
+                // Extract and process the response body
+                const errorBody = await error.response.json().catch(() => null); // Handle non-JSON responses
+                const errorMessage = errorBody?.message || "An unexpected error occurred";
+
+                // Add the error message to the error queue
+                errorQueue.update(errors => [...errors, errorMessage]);
+            } else {
+                // Handle network or other errors
+                const fallbackMessage = error.message || "A network error occurred";
+                errorQueue.update(errors => [...errors, fallbackMessage]);
             }
         })
     }
 </script>
 
 <div class="flex flex-col items-center justify-center min-h-full gap-2">
-    {#if errorMessage}
-        <ErrorCard bind:outerErrorText={errorMessage}>{errorMessage}</ErrorCard>
-    {/if}
     <Card>
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
             <div class="flex flex-col gap-2">

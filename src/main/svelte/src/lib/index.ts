@@ -1,2 +1,3 @@
-// place files you want to import through the `$lib` alias in this folder.
-export const prerender = true;
+import {writable} from "svelte/store";
+
+export const errorQueue = writable<string[]>([]);
