@@ -75,7 +75,7 @@ jobs:
         with:
           name: frontend
           path: |
-            build
+            src/main/svelte/build
 
   ###
   ### PUBLISH PACKAGES
