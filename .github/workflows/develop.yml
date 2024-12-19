@@ -1,11 +1,14 @@
 name: Develop
 on:
   push:
-    branches:
-      - main
+#    branches:
+#      - main
 
-jobs: 
-  build:
+jobs:
+  ###
+  ### BUILD DISTRIBUTABLES
+  ###
+  build_backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,9 +26,7 @@ jobs:
         server-id: github
         settings-path: ${{ github.workspace }}
         cache: 'maven'
-    
-    - name: Install Node Dependencies
-      run: cd src/main/frontend && npm i
+
     
     - name: Build with Maven
       run: ./mvnw -B package --file pom.xml -Dproject.version=${{ github.sha }}
@@ -33,27 +34,37 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app
+        name: backend
         path: |
           target/billtracker-${{ github.sha }}.jar
 
-#    - name: Initialize CodeQL
-#      uses: github/codeql-action/init@v3
-#      with:
-#        languages: 'java,javascript'  # Specify your project's languages
-#
-#    - name: CodeQL Autobuild
-#      uses: github/codeql-action/autobuild@v3
-#
-#    - name: Perform CodeQL Analysis
-#      uses: github/codeql-action/analyze@v3
-#      with:
-#        category: '/language-security-and-quality'  # Customize category if needed
+  build_frontend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Build Distributable
+        run: npm i && npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: |
+            build
+
+  ###
+  ### PUBLISH PACKAGES
+  ###
   publish_container:
     runs-on: ubuntu-latest
     needs:
-      - build
+      - build_backend
     steps:
       - uses: actions/checkout@v4
 
@@ -79,29 +90,32 @@ jobs:
       
       - name: Push Container Image
         run: docker push ghcr.io/kerosene-labs/billtracker:${{ github.sha }}
-  
-  deploy:
-    needs: 
-      - publish_container
-    runs-on: ubuntu-latest
-    environment:
-      name: develop
-    steps:
-      - name: Write Keys
-        run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
 
-      - name: Set Key Permissions
-        run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
-
-      - run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" infra@bastion.kerosenelabs.com
-
-      - name: Start ssh-agent and add keys
-        run: |
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/bastion
-          ssh-add ~/.ssh/deployment
-          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
-          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
-      
-      - name: Update Infrastructure
-        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@mars1d.kerosenelabs.com "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
+  ###
+  ### DEPLOYMENT
+  ###
+#  deploy:
+#    needs:
+#      - publish_container
+#    runs-on: ubuntu-latest
+#    environment:
+#      name: develop
+#    steps:
+#      - name: Write Keys
+#        run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
+#
+#      - name: Set Key Permissions
+#        run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
+#
+#      - run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" infra@bastion.kerosenelabs.com
+#
+#      - name: Start ssh-agent and add keys
+#        run: |
+#          eval "$(ssh-agent -s)"
+#          ssh-add ~/.ssh/bastion
+#          ssh-add ~/.ssh/deployment
+#          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+#          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
+#
+#      - name: Update Infrastructure
+#        run: ssh -o "StrictHostKeyChecking no" -A -J infra@bastion.kerosenelabs.com infra@mars1d.kerosenelabs.com "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
