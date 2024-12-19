@@ -4,14 +4,21 @@
     import {AuthControllerApi} from "$lib/sdk";
     import Button from "$lib/tk/Button.svelte";
     import {goto} from "$app/navigation";
+    import ErrorCard from "$lib/tk/ErrorCard.svelte";
 
     let confirmed: boolean = false;
+    let error: string | undefined = undefined;
 
     onMount(() => {
         new AuthControllerApi().confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
-            .then((result) => {confirmed = true})
-            .catch((err) => {console.error(err)})
-            .finally(() => {});
+            .then((result) => {
+                confirmed = true
+            })
+            .catch((err) => {
+                error = err
+            })
+            .finally(() => {
+            });
     })
 
 </script>
@@ -21,8 +28,11 @@
         <Card title="Confirmed" subtitle="You're all confirmed!">
             <Button on:click={() => {goto('/')}}>Log In</Button>
         </Card>
-    {:else}
-        <Card title="Confirming" subtitle="Talking to the mothership">
-        </Card>
+    {:else if !confirmed && !error}
+            <Card title="Confirming" subtitle="Communicating with the mother-ship...">
+            </Card>
+    {/if}
+    {#if error}
+        <ErrorCard>{error}</ErrorCard>
     {/if}
 </div>
