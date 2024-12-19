@@ -10,9 +10,9 @@
                 th:replace="~{tk/cards :: simpleCard('Add Interval Expense', 'An interval expense is an expense that occurrs every certain amount of time. For example, you might be billed monthly for your electric bill.', ~{::addIntervalExpenseContent})}">
             <form th:fragment="addIntervalExpenseContent" class="flex flex-col gap-4" method="post">
                 <div th:replace="~{tk/inputs :: text('name', 'name')}"></div>
-                <div class="flex flex-row gap-4">
+                <div class="flex flex-col lg:flex-row gap-4 w-full">
                     <div th:replace="~{tk/inputs :: number('recurrence', 'recurrence')}"></div>
-                    <div th:replace="~{tk/inputs :: select('unit', 'unit', ${#strings.arraySplit('apple,banana,orange', ',')})}"></div>
+                    <div th:replace="~{tk/inputs :: select('unit', 'unit', ${#strings.arraySplit('day(s),week(s),month(s)', ',')})}"></div>
                 </div>
             </form>
         </div>
