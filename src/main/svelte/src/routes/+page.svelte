@@ -17,6 +17,11 @@
                 email: email,
                 password: password
             }
+        }).then(() => {
+            addToToastQueue({message: "Success. Navigating you now.", type: ToastType.SUCCESS})
+            setTimeout(() => {
+                goto("/home")
+            }, 3000)
         }).catch(async (error: ResponseError) => {
             await getErrorMessageFromSdk(error)
                 .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))
