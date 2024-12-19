@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-    import ErrorCard from "$lib/tk/ErrorQueue.svelte";
+    import ErrorCard from "$lib/tk/ToastQueue.svelte";
 
 	let { children } = $props();
 </script>

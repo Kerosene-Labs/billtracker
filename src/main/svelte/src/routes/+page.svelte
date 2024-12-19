@@ -4,7 +4,8 @@
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {goto} from "$app/navigation";
     import {AuthControllerApi, ResponseError} from "$lib/sdk";
-    import {errorQueue} from "$lib";
+    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {addToToastQueue, ToastType} from "$lib/toast";
 
     // binds
     let email: string;
@@ -17,18 +18,8 @@
                 password: password
             }
         }).catch(async (error: ResponseError) => {
-            if (error.response) {
-                // Extract and process the response body
-                const errorBody = await error.response.json().catch(() => null); // Handle non-JSON responses
-                const errorMessage = errorBody?.message || "An unexpected error occurred";
-
-                // Add the error message to the error queue
-                errorQueue.update(errors => [...errors, errorMessage]);
-            } else {
-                // Handle network or other errors
-                const fallbackMessage = error.message || "A network error occurred";
-                errorQueue.update(errors => [...errors, fallbackMessage]);
-            }
+            await getErrorMessageFromSdk(error)
+                .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))
         })
     }
 </script>
