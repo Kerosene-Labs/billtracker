@@ -6,7 +6,9 @@
     export let id: number;
 
     onMount(() => {
-
+        setTimeout(() => {
+            destroy()
+        }, 5000)
     })
 
     export function destroy() {

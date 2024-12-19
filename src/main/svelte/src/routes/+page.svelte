@@ -10,7 +10,6 @@
     let email: string;
     let password: string;
 
-    $: console.log($errorQueue);
     async function doLogin() {
         await new AuthControllerApi().createSession({
             createSessionRequest: {
