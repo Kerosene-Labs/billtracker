@@ -9,15 +9,13 @@ import com.kerosenelabs.billtracker.exception.UnconfirmedUserException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(AuthException.class)
-    public String handleAuthException(AuthException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:/login";
-    }
+//    @ExceptionHandler(AuthException.class)
+//    public String handleAuthException(AuthException e, RedirectAttributes redirectAttributes) {
+//        redirectAttributes.addFlashAttribute("error", e.getMessage());
+//        return "redirect:/login";
+//    }
 
-    @ExceptionHandler(UnconfirmedUserException.class)
-    public String handleUnconfirmedUserException(UnconfirmedUserException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", "Looks like your account isn't confirmed yet");
-        return "redirect:/confirmAccount";
-    }
+//    @ExceptionHandler(UnconfirmedUserException.class)
+//    public String handleUnconfirmedUserException(UnconfirmedUserException e, RedirectAttributes redirectAttributes) {
+//    }
 }

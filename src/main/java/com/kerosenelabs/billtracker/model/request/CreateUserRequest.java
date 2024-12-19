@@ -9,8 +9,10 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateSessionRequest {
+public class CreateUserRequest {
     @Email
     private String email;
+
+    @Length(min = 8, max = 64)
     private String password;
 }

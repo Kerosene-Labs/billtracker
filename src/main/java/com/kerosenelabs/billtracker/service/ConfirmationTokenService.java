@@ -29,10 +29,10 @@ public class ConfirmationTokenService {
      * Create a Confirmation Token for a user. This user will not be allowed to
      * access the system until they've been verified.
      * 
-     * @param userEntity The entity to create the confirmation token for
+     * @param user The entity to create the confirmation token for
      * @return
      */
-    public ConfirmationTokenEntity createConfirmationToken(UserEntity user) {
+    public ConfirmationTokenEntity createAndSendConfirmationToken(UserEntity user) {
         // create our confirmation token
         ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenRepository
                 .save(new ConfirmationTokenEntity(user, Instant.now().plusSeconds(900)));

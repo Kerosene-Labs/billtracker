@@ -51,7 +51,7 @@ public class UserService {
     public UserEntity createUser(String emailAddress, String password) {
         UserEntity userEntity = new UserEntity(emailAddress, getKeyFromPassword(password));
         userRepository.save(userEntity);
-        confirmationTokenService.createConfirmationToken(userEntity);
+        confirmationTokenService.createAndSendConfirmationToken(userEntity);
         return userEntity;
     }
 
