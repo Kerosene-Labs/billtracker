@@ -3,7 +3,7 @@
     import Card from "$lib/tk/Card.svelte";
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {goto} from "$app/navigation";
-    import {AuthControllerApi} from "$lib/sdk";
+    import {AuthControllerApi, ResponseError} from "$lib/sdk";
     import ErrorCard from "$lib/tk/ErrorCard.svelte";
 
     // binds
@@ -11,18 +11,18 @@
     let password: string;
 
     // request state
-    let error: string | undefined = undefined;
+    let errorMessage: string | undefined = undefined;
 
-    function doLogin() {
-        new AuthControllerApi().createSession({
+    async function doLogin() {
+        await new AuthControllerApi().createSession({
             createSessionRequest: {
                 email: email,
                 password: password
             }
-        }).catch((err) => {
-            error = err
+        }).catch((error: ResponseError) => {
+            errorMessage = error as unknown as string;
         }).finally(() => {
-            if (error == undefined) {
+            if (errorMessage == undefined) {
                 goto("/home");
             }
         })
@@ -30,8 +30,8 @@
 </script>
 
 <div class="flex flex-col items-center justify-center min-h-full gap-2">
-    {#if error}
-        <ErrorCard bind:outerErrorText={error}>{error}</ErrorCard>
+    {#if errorMessage}
+        <ErrorCard bind:outerErrorText={errorMessage}>{errorMessage}</ErrorCard>
     {/if}
     <Card>
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
