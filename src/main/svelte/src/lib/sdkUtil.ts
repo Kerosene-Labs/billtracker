@@ -1,4 +1,8 @@
-import {ResponseError} from "$lib/sdk";
+import {Configuration, ResponseError} from "$lib/sdk";
+
+export let apiConfig = new Configuration({
+    basePath: "http://localhost:8080",
+})
 
 export async function getErrorMessageFromSdk(error: ResponseError): Promise<string> {
     if (error.response) {

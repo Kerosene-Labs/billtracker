@@ -4,13 +4,13 @@
     import {AuthControllerApi} from "$lib/sdk";
     import Button from "$lib/tk/Button.svelte";
     import {goto} from "$app/navigation";
-    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
 
     let confirmed: boolean = false;
 
     onMount(() => {
-        new AuthControllerApi().confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
+        new AuthControllerApi(apiConfig).confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
             .then((result) => {
                 confirmed = true
                 addToToastQueue({message: "You're confirmed!", type: ToastType.SUCCESS})

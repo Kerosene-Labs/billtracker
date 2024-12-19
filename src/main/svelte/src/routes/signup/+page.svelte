@@ -3,14 +3,14 @@
     import Card from "$lib/tk/Card.svelte";
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {AuthControllerApi} from "$lib/sdk";
-    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
 
     let email: string;
     let password: string;
 
     async function doSignUp() {
-        await new AuthControllerApi().createUser({createUserRequest: {email: email, password: password}})
+        await new AuthControllerApi(apiConfig).createUser({createUserRequest: {email: email, password: password}})
             .then((response) => {
                 addToToastQueue({message: "Success! Please check your email.", type: ToastType.SUCCESS})
             })

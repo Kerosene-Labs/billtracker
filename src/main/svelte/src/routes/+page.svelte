@@ -4,7 +4,7 @@
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {goto} from "$app/navigation";
     import {AuthControllerApi, ResponseError} from "$lib/sdk";
-    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
 
     // binds
@@ -12,7 +12,7 @@
     let password: string;
 
     async function doLogin() {
-        await new AuthControllerApi().createSession({
+        await new AuthControllerApi(apiConfig).createSession({
             createSessionRequest: {
                 email: email,
                 password: password
