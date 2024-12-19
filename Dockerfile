@@ -7,7 +7,7 @@ RUN apt-get install openjdk-21-jre-headless -y
 
 # copy the app
 RUN mkdir /app
-COPY billtracker-${PROJECT_VERSION}.jar /app/app.jar
+COPY billtracker-backend-${PROJECT_VERSION}.jar /app/app.jar
 
 # run the app
 WORKDIR /app

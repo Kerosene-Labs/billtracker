@@ -44,7 +44,7 @@ jobs:
         with:
           name: backend
           path: |
-            target/billtracker-${{ github.sha }}.jar
+            target/billtracker-backend-${{ github.sha }}.jar
 
   build_frontend:
     runs-on: ubuntu-latest
@@ -90,12 +90,9 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Install dependencies
-        run: cd src/main/frontend && npm i
-
       - uses: actions/download-artifact@v4
         with:
-          name: app
+          name: backend
 
       - name: Build Container Image
         run: docker build . -t ghcr.io/kerosene-labs/billtracker-backend:${{ github.sha }} --build-arg PROJECT_VERSION=${{ github.sha }}

@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kerosenelabs</groupId>
-	<artifactId>billtracker</artifactId>
+	<artifactId>billtracker-backend</artifactId>
 	<version>${project.version}</version>
 	<properties>
 		<project.version>0.0.0</project.version>
