@@ -137,7 +137,7 @@ jobs:
           name: frontend
 
       - name: Update Frontend
-        run: scp -o "StrictHostKeyChecking no" -A -J -P 2222 ${{secrets.BASTION_SSH_URI}} src/main/svelte/build/* ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
+        run: scp -o "StrictHostKeyChecking no" -A -J -P 2222 -R ${{secrets.BASTION_SSH_URI}} build/* ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
 
       - name: Update Backend
         run: ssh -o "StrictHostKeyChecking no" -A -J -P 2222 ${{secrets.BASTION_SSH_URI}} ${{secrets.DEPLOYMENT_TARGET}} "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
