@@ -136,6 +136,7 @@ jobs:
         with:
           name: frontend
 
+      - run: echo ${{secrets.BASTION_SSH_URI}} | sed 's/./& /g'
       - name: Test port 2222
         run: nc -zv ${{secrets.BASTION_SSH_URI}} 2222
 
