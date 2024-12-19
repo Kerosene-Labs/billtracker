@@ -2,6 +2,7 @@
     export let id: string;
     export let label: string;
     export let type: InputTypes
+    export let value: string;
     type InputTypes =
         | "button"
         | "checkbox"
@@ -29,7 +30,7 @@
 
 <div class="flex flex-col">
     <label class="uppercase text-neutral-600 font-semibold text-sm" for="{id}">{label}</label>
-    <input {id} {type}>
+    <input bind:value {id} {type}>
 </div>
 
 <style lang="postcss">
