@@ -65,7 +65,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Navigate and Install Dependencies
-        run: cd src/main/frontend && npm i
+        run: cd src/main/svelte && npm i
 
       - name: Build Distributable
         run: npm run build
