@@ -33,10 +33,10 @@
     }
 
     .success {
-        @apply bg-green-900 text-green-300 hover:bg-green-800 hover:text-red-200;
+        @apply bg-green-900 text-green-300 hover:bg-green-800 hover:text-green-200;
     }
 
     .info {
-        @apply bg-neutral-900 text-neutral-300 hover:bg-neutral-800 hover:text-red-200;
+        @apply bg-neutral-900 text-neutral-300 hover:bg-neutral-800 hover:text-neutral-200;
     }
 </style>

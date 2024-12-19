@@ -28,7 +28,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createSession(HttpSession httpSession, @RequestBody CreateSessionRequest createSessionRequest) throws AuthException {
         UserEntity user = userService.getUserByEmail(createSessionRequest.getEmail());
-        if (userService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
+        if (!userService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
             throw new AuthException("A user with those credentials could not be found");
         }
         userService.establishSession(httpSession, user);

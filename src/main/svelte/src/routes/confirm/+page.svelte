@@ -4,21 +4,21 @@
     import {AuthControllerApi} from "$lib/sdk";
     import Button from "$lib/tk/Button.svelte";
     import {goto} from "$app/navigation";
-    import ErrorCard from "$lib/tk/ToastQueue.svelte";
+    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {addToToastQueue, ToastType} from "$lib/toast";
 
     let confirmed: boolean = false;
-    let error: string | undefined = undefined;
 
     onMount(() => {
         new AuthControllerApi().confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
             .then((result) => {
                 confirmed = true
+                addToToastQueue({message: "You're confirmed!", type: ToastType.SUCCESS})
             })
-            .catch((err) => {
-                error = err
+            .catch(async (error) => {
+                await getErrorMessageFromSdk(error)
+                    .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))
             })
-            .finally(() => {
-            });
     })
 
 </script>
@@ -28,11 +28,8 @@
         <Card title="Confirmed" subtitle="You're all confirmed!">
             <Button on:click={() => {goto('/')}}>Log In</Button>
         </Card>
-    {:else if !confirmed && !error}
+    {:else if !confirmed}
             <Card title="Confirming" subtitle="Communicating with the mother-ship...">
             </Card>
-    {/if}
-    {#if error}
-        <ErrorCard>{error}</ErrorCard>
     {/if}
 </div>
