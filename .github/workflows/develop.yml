@@ -137,7 +137,7 @@ jobs:
           name: frontend
 
       - name: Acknowledge Host Key on Bastion
-        run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}} -P 2222
+        run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}
 
       - name: Update Frontend
         run: scp -o "StrictHostKeyChecking no" -A -R -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 . ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
