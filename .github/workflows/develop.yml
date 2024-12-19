@@ -136,8 +136,11 @@ jobs:
         with:
           name: frontend
 
+      - name: Test port 2222
+        run: nc -zv ${{secrets.BASTION_SSSH_URI}} 2222
+
       - name: Update Frontend
-        run: scp -o "StrictHostKeyChecking no" -A -R -J ${{secrets.BASTION_SSH_URI}} . ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
+        run: scp -o "StrictHostKeyChecking no" -A -R -J ${{secrets.BASTION_SSH_URI}}:2222 . ${{secrets.DEPLOYMENT_TARGET}}:/home/infra/frontend_content
 
       - name: Update Backend
-        run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_URI}} ${{secrets.DEPLOYMENT_TARGET}} "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
+        run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_URI}}:2222 ${{secrets.DEPLOYMENT_TARGET}} "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
