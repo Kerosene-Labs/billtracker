@@ -6,7 +6,7 @@ on:
 
 jobs:
   ###
-  ### BUILD DISTRIBUTABLES
+  ### BUILD DISTRIBUTABLE(S)
   ###
   build_backend:
     runs-on: ubuntu-latest
@@ -136,15 +136,13 @@ jobs:
       - name: Set Key Permissions
         run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
 
-      #      - run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" ${{secrets.BASTION_SSH_URI}}
-
       - name: Start ssh-agent and add keys
         run: |
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/bastion
           ssh-add ~/.ssh/deployment
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
-          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
+          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV`
 
       - uses: actions/download-artifact@v4
         name: Download Frontend Artifact
@@ -155,7 +153,7 @@ jobs:
         run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}
 
       - name: Update Frontend
-        run: scp -o "StrictHostKeyChecking no" -A -r -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 $PWD/* ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}}:/home/infra/frontend_content
+        run: scp -o "StrictHostKeyChecking no" -A -r -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 $PWD/* ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}}:/home/infra/billtracker/frontend_content
 
       - name: Update Backend
         run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}} "bash -c \"cd billtracker && echo "export BILLTRACKER_VERSION=${{ github.sha }}" >> version.env && source version.env && docker compose pull backend && docker compose up -d backend\""
