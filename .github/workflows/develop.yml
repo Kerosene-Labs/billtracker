@@ -91,6 +91,14 @@ jobs:
         with:
           name: backend
 
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
       - name: Build Container Image
         run: docker build . -t ghcr.io/kerosene-labs/billtracker-backend:${{ github.sha }} --build-arg PROJECT_VERSION=${{ github.sha }}
 
