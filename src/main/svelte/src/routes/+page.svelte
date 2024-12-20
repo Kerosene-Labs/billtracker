@@ -3,7 +3,7 @@
     import Card from "$lib/tk/Card.svelte";
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import {goto} from "$app/navigation";
-    import {AuthControllerApi, ResponseError} from "$lib/sdk";
+    import {AuthApi, ResponseError} from "$lib/sdk";
     import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
 
@@ -12,7 +12,7 @@
     let password: string;
 
     async function doLogin() {
-        await new AuthControllerApi(apiConfig).createSession({
+        await new AuthApi(apiConfig).createSession({
             createSessionRequest: {
                 email: email,
                 password: password

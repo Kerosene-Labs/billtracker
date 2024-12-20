@@ -7,7 +7,9 @@ import com.kerosenelabs.billtracker.model.request.CreateUserRequest;
 import com.kerosenelabs.billtracker.model.response.ConfirmUserResponse;
 import com.kerosenelabs.billtracker.model.response.CreateUserResponse;
 import com.kerosenelabs.billtracker.service.ConfirmationTokenService;
-import com.kerosenelabs.billtracker.service.UserService;
+import com.kerosenelabs.billtracker.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +17,31 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@Tag(name = "Auth", description = "User and auth")
 public class AuthController {
-    private final UserService userService;
+    private final AuthService authService;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public AuthController(UserService userService, ConfirmationTokenService confirmationTokenService) {
-        this.userService = userService;
+    public AuthController(AuthService authService, ConfirmationTokenService confirmationTokenService) {
+        this.authService = authService;
         this.confirmationTokenService = confirmationTokenService;
     }
 
     @PostMapping("/auth/session")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Establish a new session for a given user")
     public void createSession(HttpSession httpSession, @RequestBody CreateSessionRequest createSessionRequest) throws AuthException {
-        UserEntity user = userService.getUserByEmail(createSessionRequest.getEmail());
-        if (!userService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
+        UserEntity user = authService.getUserByEmail(createSessionRequest.getEmail());
+        if (!authService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
             throw new AuthException("A user with those credentials could not be found");
         }
-        userService.establishSession(httpSession, user);
+        authService.establishSession(httpSession, user);
     }
 
     @PostMapping("/auth/user")
+    @Operation(summary = "Create a new user")
     public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        UserEntity user = userService.createUser(createUserRequest.getEmail(), createUserRequest.getPassword());
+        UserEntity user = authService.createUser(createUserRequest.getEmail(), createUserRequest.getPassword());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new CreateUserResponse(
@@ -46,8 +51,16 @@ public class AuthController {
     }
 
     @PutMapping("/auth/confirm")
+    @Operation(summary = "Confirm a new user")
     public ResponseEntity<ConfirmUserResponse> confirmuser(@RequestParam String token) throws AuthException {
         confirmationTokenService.confirmUser(token);
         return ResponseEntity.ok(new ConfirmUserResponse("Confirmed"));
+    }
+
+    @PostMapping("/auth/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Log out")
+    public void logout(HttpSession httpSession) {
+        authService.endSession(httpSession);
     }
 }

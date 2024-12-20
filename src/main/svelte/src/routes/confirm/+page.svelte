@@ -1,7 +1,7 @@
 <script lang="ts">
     import Card from "$lib/tk/Card.svelte";
     import {onMount} from "svelte";
-    import {AuthControllerApi} from "$lib/sdk";
+    import {AuthApi} from "$lib/sdk";
     import Button from "$lib/tk/Button.svelte";
     import {goto} from "$app/navigation";
     import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
@@ -10,7 +10,7 @@
     let confirmed: boolean = false;
 
     onMount(() => {
-        new AuthControllerApi(apiConfig).confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
+        new AuthApi(apiConfig).confirmuser({token: new URL(window.location.href).searchParams.get("token") as string})
             .then((result) => {
                 confirmed = true
                 addToToastQueue({message: "You're confirmed!", type: ToastType.SUCCESS})

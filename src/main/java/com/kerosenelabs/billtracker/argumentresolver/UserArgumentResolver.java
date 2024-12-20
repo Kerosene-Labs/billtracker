@@ -11,17 +11,17 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
-import com.kerosenelabs.billtracker.service.UserService;
+import com.kerosenelabs.billtracker.service.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
-    private UserService userService;
+    private AuthService authService;
 
-    public UserArgumentResolver(UserService userService) {
-        this.userService = userService;
+    public UserArgumentResolver(AuthService authService) {
+        this.authService = authService;
     }
 
     @Override
@@ -39,6 +39,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         if (userId == null) {
             throw new AuthException("Please log in.");
         }
-        return userService.getUserById(userId);
+        return authService.getUserById(userId);
     }
 }
