@@ -91,10 +91,10 @@ jobs:
         with:
           name: backend
 
-      - name: Cache npm dependencies
+      - name: Cache Container layers
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: /var/docker/overlay2
           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-docker-
@@ -148,7 +148,7 @@ jobs:
         run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}
 
       - name: Update Frontend
-        run: scp -o "StrictHostKeyChecking no" -A -R -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 $PWD/* ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}}:/home/infra/frontend_content
+        run: scp -o "StrictHostKeyChecking no" -A -r -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 $PWD/* ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}}:/home/infra/frontend_content
 
       - name: Update Backend
         run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 ${{secrets.DEPLOYMENT_SSH_USER}}@${{secrets.DEPLOYMENT_HOST}} "bash -c \"cd billtracker && export BILLTRACKER_VERSION=${{ github.sha }} && docker compose pull app && docker compose up -d app\""
