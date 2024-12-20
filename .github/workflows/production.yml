@@ -1,6 +1,5 @@
 name: Production
 on:
-  push:
   release:
     types:
       - created
