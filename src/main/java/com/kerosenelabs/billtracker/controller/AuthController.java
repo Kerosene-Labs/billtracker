@@ -6,11 +6,13 @@ import com.kerosenelabs.billtracker.model.request.CreateSessionRequest;
 import com.kerosenelabs.billtracker.model.request.CreateUserRequest;
 import com.kerosenelabs.billtracker.model.response.ConfirmUserResponse;
 import com.kerosenelabs.billtracker.model.response.CreateUserResponse;
+import com.kerosenelabs.billtracker.model.response.ValidateSessionResponse;
 import com.kerosenelabs.billtracker.service.ConfirmationTokenService;
 import com.kerosenelabs.billtracker.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.Validate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,12 @@ public class AuthController {
             throw new AuthException("A user with those credentials could not be found");
         }
         authService.establishSession(httpSession, user);
+    }
+
+    @GetMapping("/auth/session/validate")
+    @Operation(summary = "Validate a session, ensuring it is still valid")
+    public ResponseEntity<ValidateSessionResponse> validateSession(HttpSession httpSession) {
+        return ResponseEntity.ok(new ValidateSessionResponse(httpSession == null || httpSession.isNew()));
     }
 
     @PostMapping("/auth/user")

@@ -18,10 +18,8 @@
                 password: password
             }
         }).then(() => {
-            addToToastQueue({message: "Success. Navigating you now.", type: ToastType.SUCCESS})
-            setTimeout(() => {
-                goto("/home")
-            }, 3000)
+            addToToastQueue({message: "Successfully logged in.", type: ToastType.SUCCESS})
+            goto("/home")
         }).catch(async (error: ResponseError) => {
             await getErrorMessageFromSdk(error)
                 .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))
@@ -29,25 +27,27 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center min-h-full gap-2">
-    <Card>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
-            <div class="flex flex-col gap-2">
-                <div class="flex flex-col">
-                    <h2>Log In</h2>
-                    <p class="subtitle">We're happy you're back.</p>
+<div class="flex flex-col justify-center items-center min-h-full">
+    <div class="flex flex-col max-w-screen-xl">
+        <Card>
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
+                <div class="flex flex-col gap-2">
+                    <div class="flex flex-col">
+                        <h2>Log In</h2>
+                        <p class="subtitle">We're happy you're back.</p>
+                    </div>
+                    <LineEdit id="email" type="email" label="E-Mail" bind:value={email}></LineEdit>
+                    <LineEdit id="password" type="password" label="Password" bind:value={password}></LineEdit>
+                    <Button on:click={doLogin}>Log In</Button>
                 </div>
-                <LineEdit id="email" type="email" label="E-Mail" bind:value={email}></LineEdit>
-                <LineEdit id="password" type="password" label="Password" bind:value={password}></LineEdit>
-                <Button on:click={doLogin}>Log In</Button>
-            </div>
-            <div class="flex flex-col gap-2 h-full justify-center">
-                <div class="flex flex-col">
-                    <h2>Or Join Us</h2>
-                    <p class="subtitle">Join and start tracking your money.</p>
+                <div class="flex flex-col gap-2 h-full justify-center">
+                    <div class="flex flex-col">
+                        <h2>Or Join Us</h2>
+                        <p class="subtitle">Join and start tracking your money.</p>
+                    </div>
+                    <Button on:click={() => {goto("/signup")}}>Sign Up</Button>
                 </div>
-                <Button on:click={() => {goto("/signup")}}>Sign Up</Button>
             </div>
-        </div>
-    </Card>
+        </Card>
+    </div>
 </div>

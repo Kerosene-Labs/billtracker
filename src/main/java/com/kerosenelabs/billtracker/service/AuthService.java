@@ -98,6 +98,6 @@ public class AuthService {
     }
 
     public void endSession(HttpSession httpSession) {
-        httpSession.removeAttribute("userId");
+        httpSession.invalidate();
     }
 }

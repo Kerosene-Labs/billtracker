@@ -18,7 +18,7 @@
 
 <button
         title="Dismiss"
-        class="p-4  transition-colors font-mono text-sm rounded-lg drop-shadow-2xl max-w-72 text-left"
+        class="p-6  transition-colors font-mono text-sm font-bold rounded-lg drop-shadow-2xl max-w-72 min-w-72 text-left"
         on:click={destroy}
         class:error={request.type === ToastType.ERROR}
         class:success={request.type === ToastType.SUCCESS}
@@ -37,6 +37,6 @@
     }
 
     .info {
-        @apply bg-neutral-900 text-neutral-300 hover:bg-neutral-800 hover:text-neutral-200;
+        @apply bg-neutral-950 text-neutral-300 hover:bg-neutral-900 hover:text-neutral-200;
     }
 </style>
