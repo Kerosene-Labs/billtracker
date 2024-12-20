@@ -1,9 +1,5 @@
-FROM ubuntu:24.04
+FROM ghcr.io/graalvm/jdk-community:21
 ARG PROJECT_VERSION=0.0.0
-
-# update, upgrade, install java
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install openjdk-21-jre-headless -y
 
 # copy the app
 RUN mkdir /app
