@@ -1,7 +1,8 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import {toastQueue, type ToastRequest, ToastType} from "$lib/toast";
-
+    import {cubicOut} from "svelte/easing";
+    import {fly} from "svelte/transition";
     export let request: ToastRequest;
     export let id: number;
 
@@ -17,6 +18,7 @@
 </script>
 
 <button
+        transition:fly="{{ x: -100, duration: 150, delay: 25, easing: cubicOut }}"
         title="Dismiss"
         class="p-6  transition-colors font-mono text-sm font-bold rounded-lg drop-shadow-2xl max-w-72 min-w-72 text-left"
         on:click={destroy}
