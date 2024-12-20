@@ -5,8 +5,6 @@
     import {AuthApi, ResponseError, SettingsApi} from "$lib/sdk";
     import {apiConfig, getErrorMessageFromSdk, validateAndEnforceSession} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
-    import {onMount} from "svelte";
-    import {goto} from "$app/navigation";
 
     let firstName: string;
     let lastName: string;
@@ -20,7 +18,7 @@
                 birthday: new Date(birthday),
             }
         }).then(() => {
-            addToToastQueue({message: "Saved.", type: ToastType.SUCCESS})
+            addToToastQueue({message: `Nice to meet you, ${firstName}. We've saved this to your account.`, type: ToastType.SUCCESS})
         }).catch(async (error: ResponseError) => {
             await getErrorMessageFromSdk(error)
                 .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))

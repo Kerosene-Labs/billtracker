@@ -23,13 +23,12 @@
 
 </script>
 
-<div class="flex flex-col items-center justify-center min-h-full">
-    {#if confirmed}
-        <Card title="Confirmed" subtitle="You're all confirmed!">
-            <Button on:click={() => {goto('/')}}>Log In</Button>
+{#if confirmed}
+    <Card title="Confirmed" subtitle="You're all confirmed!">
+        <Button on:click={() => {goto('/')}}>Log In</Button>
+    </Card>
+{:else if !confirmed}
+        <Card title="Confirming" subtitle="Communicating with the mother-ship...">
+            <Button spinning={true} on:click={() => {goto('/')}}>Waiting...</Button>
         </Card>
-    {:else if !confirmed}
-            <Card title="Confirming" subtitle="Communicating with the mother-ship...">
-            </Card>
-    {/if}
-</div>
+{/if}
