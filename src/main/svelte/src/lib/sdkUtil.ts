@@ -26,8 +26,6 @@ export async function validateAndEnforceSession() {
             if (!result.valid) {
                 addToToastQueue({message: "Your session was invalid, you've been signed out.", type: ToastType.ERROR});
                 goto("/");
-            } else {
-                console.log("session fine")
             }
         })
         .catch(async (error) => {
@@ -38,5 +36,4 @@ export async function validateAndEnforceSession() {
                     goto("/");
                 })
         })
-        .finally(() => {console.log("finished")})
 }
