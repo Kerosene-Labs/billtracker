@@ -116,8 +116,7 @@ jobs:
           push: true
           tags: ghcr.io/kerosene-labs/billtracker-backend:${{ github.sha }}
           cache-from: type=gha
-          build-args:
-            - BILLTRACKER_VERSION=${{ github.sha }}
+          build-args: BILLTRACKER_VERSION=${{ github.sha }}
           cache-to: type=gha,mode=max
 
   ###
