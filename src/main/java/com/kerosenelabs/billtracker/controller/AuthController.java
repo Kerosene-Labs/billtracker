@@ -37,6 +37,7 @@ public class AuthController {
         if (!authService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
             throw new AuthException("A user with those credentials could not be found");
         }
+        httpSession.setAttribute("fuck", "ass");
         authService.establishSession(httpSession, user);
     }
 

@@ -19,6 +19,7 @@ import type {
   CreateSessionRequest,
   CreateUserRequest,
   CreateUserResponse,
+  ValidateSessionResponse,
 } from '../models/index';
 import {
     ConfirmUserResponseFromJSON,
@@ -29,6 +30,8 @@ import {
     CreateUserRequestToJSON,
     CreateUserResponseFromJSON,
     CreateUserResponseToJSON,
+    ValidateSessionResponseFromJSON,
+    ValidateSessionResponseToJSON,
 } from '../models/index';
 
 export interface ConfirmuserRequest {
@@ -179,6 +182,32 @@ export class AuthApi extends runtime.BaseAPI {
      */
     async logout(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.logoutRaw(initOverrides);
+    }
+
+    /**
+     * Validate a session, ensuring it is still valid
+     */
+    async validateSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ValidateSessionResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/auth/session/validate`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ValidateSessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Validate a session, ensuring it is still valid
+     */
+    async validateSession(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ValidateSessionResponse> {
+        const response = await this.validateSessionRaw(initOverrides);
+        return await response.value();
     }
 
 }

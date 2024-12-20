@@ -34,6 +34,12 @@ public class AuthService {
         return passwordEncoder.encode(rawPassword);
     }
 
+    /**
+     * Checks if the given passwords match using the BCrypt algorithm
+     * @param first
+     * @param second
+     * @return True if matches, false if doesn't
+     */
     public boolean doesPasswordMatch(String first, String second) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(first, second);
@@ -87,17 +93,7 @@ public class AuthService {
         httpSession.setAttribute("userId", userEntity.getId());
     }
 
-    /**
-     * Sets introductory settings such as the users first and last name
-     */
-    public void setIntroductorySettings(UserEntity userEntity, String firstName, String lastName, LocalDate birthday) {
-        userEntity.setFirstName(firstName);
-        userEntity.setLastName(lastName);
-        userEntity.setBirthday(birthday);
-        userRepository.save(userEntity);
-    }
-
     public void endSession(HttpSession httpSession) {
-        httpSession.invalidate();
+//        httpSession.invalidate();
     }
 }
