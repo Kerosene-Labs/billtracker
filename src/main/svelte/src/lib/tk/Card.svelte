@@ -18,7 +18,7 @@
 <style lang="postcss">
     .card {
         @apply p-8 rounded-xl;
-        @apply drop-shadow-lg;
         @apply bg-neutral-900/35;
+        @apply w-full
     }
 </style>
