@@ -2,9 +2,10 @@
 
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import Button from "$lib/tk/Button.svelte";
-    import {ResponseError, SettingsApi} from "$lib/sdk";
-    import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {AuthApi, ResponseError, SettingsApi} from "$lib/sdk";
+    import {apiConfig, getErrorMessageFromSdk, validateAndEnforceSession} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
+    import {onMount} from "svelte";
     import {goto} from "$app/navigation";
 
     let firstName: string;
