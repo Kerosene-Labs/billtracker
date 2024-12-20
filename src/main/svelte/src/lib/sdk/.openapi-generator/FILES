@@ -6,6 +6,8 @@ models/ConfirmUserResponse.ts
 models/CreateSessionRequest.ts
 models/CreateUserRequest.ts
 models/CreateUserResponse.ts
+models/GetIntroductorySettingsResponse.ts
+models/IntroductorySettings.ts
 models/SetIntroductorySettingsRequest.ts
 models/ValidateSessionResponse.ts
 models/index.ts

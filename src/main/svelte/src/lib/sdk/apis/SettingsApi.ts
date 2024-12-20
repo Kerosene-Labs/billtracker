@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  GetIntroductorySettingsResponse,
   SetIntroductorySettingsRequest,
 } from '../models/index';
 import {
+    GetIntroductorySettingsResponseFromJSON,
+    GetIntroductorySettingsResponseToJSON,
     SetIntroductorySettingsRequestFromJSON,
     SetIntroductorySettingsRequestToJSON,
 } from '../models/index';
@@ -30,6 +33,30 @@ export interface SetIntroductionsRequest {
  * 
  */
 export class SettingsApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async getIntroductionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetIntroductorySettingsResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/settings/introductions`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetIntroductorySettingsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getIntroductions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetIntroductorySettingsResponse> {
+        const response = await this.getIntroductionsRaw(initOverrides);
+        return await response.value();
+    }
 
     /**
      */
