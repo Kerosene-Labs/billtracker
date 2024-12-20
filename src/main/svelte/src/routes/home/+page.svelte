@@ -5,8 +5,8 @@
     import {apiConfig, validateAndEnforceSession} from "$lib/sdkUtil";
     import {goto} from "$app/navigation";
     import {addToToastQueue, ToastType} from "$lib/toast";
-    import Introductions from "$lib/components/IntroductionsEditor.svelte";
     import {onMount} from "svelte";
+    import IntroductionsEditor from "$lib/components/IntroductionsCard.svelte";
 
     onMount(async () => {
         await validateAndEnforceSession();
@@ -29,8 +29,6 @@
         <Button on:click={doLogOut}>Log Out</Button>
     </div>
 </Card>
-<Card title="Introductions" subtitle="Tell us a bit about yourself.">
-    <Introductions></Introductions>
-</Card>
+<IntroductionsEditor hideIfPopulated={true}></IntroductionsEditor>
 <Card title="Expenses" subtitle="Where's your money going?"></Card>
 <Card title="Income" subtitle="How much is coming in?"></Card>

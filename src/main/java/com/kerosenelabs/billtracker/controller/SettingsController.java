@@ -7,10 +7,7 @@ import com.kerosenelabs.billtracker.service.SettingsService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "Settings", description = "User settings")
@@ -21,9 +18,9 @@ public class SettingsController {
         this.settingsService = settingsService;
     }
 
-    @PutMapping("/settings/introductions")
+    @PutMapping(value = "/settings/introductions", consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void setIntroductions(@Parameter(hidden = true) UserEntity user, SetIntroductorySettingsRequest request) {
+    public void setIntroductions(@Parameter(hidden = true) UserEntity user, @RequestBody SetIntroductorySettingsRequest request) {
         settingsService.setIntroductorySettings(user, request.getFirstName(), request.getLastName(), request.getBirthday());
     }
 

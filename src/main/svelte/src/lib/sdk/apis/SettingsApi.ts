@@ -26,7 +26,7 @@ import {
 } from '../models/index';
 
 export interface SetIntroductionsRequest {
-    request: SetIntroductorySettingsRequest;
+    setIntroductorySettingsRequest: SetIntroductorySettingsRequest;
 }
 
 /**
@@ -61,26 +61,25 @@ export class SettingsApi extends runtime.BaseAPI {
     /**
      */
     async setIntroductionsRaw(requestParameters: SetIntroductionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['request'] == null) {
+        if (requestParameters['setIntroductorySettingsRequest'] == null) {
             throw new runtime.RequiredError(
-                'request',
-                'Required parameter "request" was null or undefined when calling setIntroductions().'
+                'setIntroductorySettingsRequest',
+                'Required parameter "setIntroductorySettingsRequest" was null or undefined when calling setIntroductions().'
             );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['request'] != null) {
-            queryParameters['request'] = requestParameters['request'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
             path: `/settings/introductions`,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: SetIntroductorySettingsRequestToJSON(requestParameters['setIntroductorySettingsRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

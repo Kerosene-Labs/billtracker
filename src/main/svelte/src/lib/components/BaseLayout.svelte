@@ -3,7 +3,7 @@
 </script>
 
 <div class="flex flex-col items-center min-h-full" class:justify-center={justifyCenter}>
-    <div class="flex flex-col max-w-screen-xl p-8 min-h-full gap-6">
+    <div class="flex flex-col max-w-1/2 p-8 min-h-full gap-6">
         <slot></slot>
     </div>
 </div>
