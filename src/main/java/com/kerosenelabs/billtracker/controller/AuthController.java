@@ -1,23 +1,20 @@
 package com.kerosenelabs.billtracker.controller;
 
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.request.CreateSessionRequest;
+import com.kerosenelabs.billtracker.model.request.CreateUserRequest;
+import com.kerosenelabs.billtracker.model.response.ConfirmUserResponse;
+import com.kerosenelabs.billtracker.model.response.CreateUserResponse;
 import com.kerosenelabs.billtracker.service.ConfirmationTokenService;
 import com.kerosenelabs.billtracker.service.UserService;
-
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+
+@RestController
 public class AuthController {
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
@@ -27,51 +24,30 @@ public class AuthController {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-    @GetMapping("/login")
-    public String getLogin(HttpSession httpSession) throws IOException {
-        return "pages/login";
-    }
-
-    @PostMapping("/login")
-    public String handleLogin(@RequestParam String email, @RequestParam String password, Model model,
-            HttpSession httpSession)
-            throws AuthException {
-        try {
-            UserEntity user = userService.getUserByEmailAndPassword(email, password);
-            if (!userService.doesPasswordMatch(password, user.getPassword())) {
-                throw new AuthException("Invalid password");
-            }
-            userService.establishSession(httpSession, user);
-        } catch (NoSuchElementException | AuthException e) {
-            model.addAttribute("error", "A user with those credentials could not be found.");
-            return "pages/login";
+    @PostMapping("/auth/session")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createSession(HttpSession httpSession, @RequestBody CreateSessionRequest createSessionRequest) throws AuthException {
+        UserEntity user = userService.getUserByEmail(createSessionRequest.getEmail());
+        if (!userService.doesPasswordMatch(createSessionRequest.getPassword(), user.getPassword())) {
+            throw new AuthException("A user with those credentials could not be found");
         }
-        return "redirect:/home";
+        userService.establishSession(httpSession, user);
     }
 
-    @GetMapping("/signup")
-    public String getSignUp() {
-        return "pages/signup";
+    @PostMapping("/auth/user")
+    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        UserEntity user = userService.createUser(createUserRequest.getEmail(), createUserRequest.getPassword());
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new CreateUserResponse(
+                        "Created new user. Please check for confirmation email.",
+                        user.getId()
+                ));
     }
 
-    @PostMapping("/signup")
-    public String handleSignUp(@RequestParam String email, @RequestParam String password, Model model)
-            throws IOException {
-        userService.createUser(email, password);
-        return "redirect:/confirmAccount";
-
+    @PutMapping("/auth/confirm")
+    public ResponseEntity<ConfirmUserResponse> confirmuser(@RequestParam String token) throws AuthException {
+        confirmationTokenService.confirmUser(token);
+        return ResponseEntity.ok(new ConfirmUserResponse("Confirmed"));
     }
-
-    @GetMapping("/logout")
-    public String getLogOut(HttpSession httpSession) {
-        httpSession.invalidate();
-        return "redirect:/";
-    }
-
-    @GetMapping("/confirm")
-    public String getConfirm(@RequestParam String t) throws AuthException {
-        confirmationTokenService.confirmUser(t);
-        return "pages/confirm";
-    }
-
 }

@@ -51,19 +51,18 @@ public class UserService {
     public UserEntity createUser(String emailAddress, String password) {
         UserEntity userEntity = new UserEntity(emailAddress, getKeyFromPassword(password));
         userRepository.save(userEntity);
-        confirmationTokenService.createConfirmationToken(userEntity);
+        confirmationTokenService.createAndSendConfirmationToken(userEntity);
         return userEntity;
     }
 
     /**
-     * Get a user by their email and password.
+     * Get a user by their email.
      * 
      * @param emailAddress
-     * @param password     Plain text password
      * @return Optionally, the user if they were found.
      * @throws AuthException
      */
-    public UserEntity getUserByEmailAndPassword(String emailAddress, String password) throws AuthException {
+    public UserEntity getUserByEmail(String emailAddress) throws AuthException {
         return userRepository.findUserByEmailAddress(emailAddress).orElseThrow(
                 () -> new AuthException("A user with the given credentials could not be found."));
     }

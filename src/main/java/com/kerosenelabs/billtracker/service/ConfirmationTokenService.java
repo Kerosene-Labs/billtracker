@@ -15,12 +15,12 @@ import com.kerosenelabs.billtracker.repository.ConfirmationTokenRepository;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final NoReplyMailService noReplyMailService;
-    private final String billTrackerDomain;
+    private final String billTrackerBaseUrl;
 
-    public ConfirmationTokenService(@Value("${billtracker.domain}") String billTrackerDomain,
+    public ConfirmationTokenService(@Value("${billtracker.baseUrl}") String billTrackerBaseUrl,
             ConfirmationTokenRepository confirmationTokenRepository,
             NoReplyMailService noReplyMailService) {
-        this.billTrackerDomain = billTrackerDomain;
+        this.billTrackerBaseUrl = billTrackerBaseUrl;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.noReplyMailService = noReplyMailService;
     }
@@ -29,10 +29,10 @@ public class ConfirmationTokenService {
      * Create a Confirmation Token for a user. This user will not be allowed to
      * access the system until they've been verified.
      * 
-     * @param userEntity The entity to create the confirmation token for
+     * @param user The entity to create the confirmation token for
      * @return
      */
-    public ConfirmationTokenEntity createConfirmationToken(UserEntity user) {
+    public ConfirmationTokenEntity createAndSendConfirmationToken(UserEntity user) {
         // create our confirmation token
         ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenRepository
                 .save(new ConfirmationTokenEntity(user, Instant.now().plusSeconds(900)));
@@ -40,7 +40,7 @@ public class ConfirmationTokenService {
         // build our message
         StringBuilder message = new StringBuilder("Welcome!\n");
         message.append("Click the link below to confirm your account. This is only valid for 15 mintues.\n");
-        message.append(String.format("https://%s/confirm?t=%s", billTrackerDomain, confirmationTokenEntity.getId()));
+        message.append(String.format("%s/confirm?token=%s", billTrackerBaseUrl, confirmationTokenEntity.getId()));
 
         // send the mail
         noReplyMailService.sendTestEmail(user.getEmailAddress(), "Confirm your BillTracker account",
