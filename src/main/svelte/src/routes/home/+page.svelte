@@ -2,10 +2,15 @@
     import Card from "$lib/tk/Card.svelte";
     import Button from "$lib/tk/Button.svelte";
     import {AuthApi} from "$lib/sdk";
-    import {apiConfig} from "$lib/sdkUtil";
+    import {apiConfig, validateAndEnforceSession} from "$lib/sdkUtil";
     import {goto} from "$app/navigation";
     import {addToToastQueue, ToastType} from "$lib/toast";
     import Introductions from "$lib/components/Introductions.svelte";
+    import {onMount} from "svelte";
+
+    onMount(async () => {
+        await validateAndEnforceSession();
+    })
 
     async function doLogOut() {
         await new AuthApi(apiConfig).logout();

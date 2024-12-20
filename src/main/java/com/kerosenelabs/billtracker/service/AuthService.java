@@ -94,6 +94,6 @@ public class AuthService {
     }
 
     public void endSession(HttpSession httpSession) {
-//        httpSession.invalidate();
+        httpSession.invalidate();
     }
 }
