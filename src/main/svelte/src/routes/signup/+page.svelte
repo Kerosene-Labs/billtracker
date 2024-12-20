@@ -21,12 +21,10 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center min-h-full">
-    <Card title="Welcome" subtitle="Looking forward to work together.">
-        <div class="flex flex-col gap-2">
-            <LineEdit bind:value={email} id="email" type="email" label="E-Mail"></LineEdit>
-            <LineEdit bind:value={password} id="password" type="password" label="Password"></LineEdit>
-            <Button on:click={doSignUp}>Sign Up</Button>
-        </div>
-    </Card>
-</div>
+<Card title="Welcome" subtitle="We're excited to have you!">
+    <div class="flex flex-col gap-4">
+        <LineEdit bind:value={email} id="email" type="email" label="E-Mail"></LineEdit>
+        <LineEdit bind:value={password} id="password" type="password" label="Password"></LineEdit>
+        <Button on:click={doSignUp}>Sign Up</Button>
+    </div>
+</Card>

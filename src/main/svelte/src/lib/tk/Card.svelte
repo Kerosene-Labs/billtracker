@@ -3,15 +3,17 @@
     export let subtitle: string | undefined = undefined;
 </script>
 
-<div class="card">
-    <div class="pb-2">
-        {#if title}
-            <h1>{title}</h1>
-        {/if}
-        {#if subtitle}
-            <p class="subtitle">{subtitle}</p>
-        {/if}
-    </div>
+<div class="card drop-shadow-2xl">
+    {#if title || subtitle}
+        <div class="pb-4">
+            {#if title}
+                <h1>{title}</h1>
+            {/if}
+            {#if subtitle}
+                <p class="subtitle">{subtitle}</p>
+            {/if}
+        </div>
+    {/if}
     <slot></slot>
 </div>
 
@@ -19,6 +21,6 @@
     .card {
         @apply p-8 rounded-xl;
         @apply bg-neutral-900/35;
-        @apply w-full
+        @apply w-full;
     }
 </style>

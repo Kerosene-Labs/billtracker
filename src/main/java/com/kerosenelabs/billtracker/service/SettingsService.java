@@ -1,6 +1,7 @@
 package com.kerosenelabs.billtracker.service;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
+import com.kerosenelabs.billtracker.model.IntroductorySettings;
 import com.kerosenelabs.billtracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,14 @@ public class SettingsService {
         userEntity.setLastName(lastName);
         userEntity.setBirthday(birthday);
         userRepository.save(userEntity);
+    }
+
+    /**
+     * Helper to get the user's introductory settings.
+     * @param user
+     * @return
+     */
+    public IntroductorySettings getIntroductorySettings(UserEntity user) {
+        return new IntroductorySettings(user.getFirstName(), user.getLastName(), user.getBirthday());
     }
 }
