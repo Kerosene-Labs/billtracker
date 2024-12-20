@@ -1,7 +1,9 @@
 import {Configuration, ResponseError} from "$lib/sdk";
+// @ts-ignore
+import { PUBLIC_API_URL } from '$env/static/public';
 
 export let apiConfig = new Configuration({
-    basePath: "http://localhost:8080",
+    basePath: PUBLIC_API_URL,
 })
 
 export async function getErrorMessageFromSdk(error: ResponseError): Promise<string> {
