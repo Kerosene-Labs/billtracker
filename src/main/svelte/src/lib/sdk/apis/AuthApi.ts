@@ -46,9 +46,10 @@ export interface CreateUserOperationRequest {
 /**
  * 
  */
-export class AuthControllerApi extends runtime.BaseAPI {
+export class AuthApi extends runtime.BaseAPI {
 
     /**
+     * Confirm a new user
      */
     async confirmuserRaw(requestParameters: ConfirmuserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConfirmUserResponse>> {
         if (requestParameters['token'] == null) {
@@ -77,6 +78,7 @@ export class AuthControllerApi extends runtime.BaseAPI {
     }
 
     /**
+     * Confirm a new user
      */
     async confirmuser(requestParameters: ConfirmuserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ConfirmUserResponse> {
         const response = await this.confirmuserRaw(requestParameters, initOverrides);
@@ -84,6 +86,7 @@ export class AuthControllerApi extends runtime.BaseAPI {
     }
 
     /**
+     * Establish a new session for a given user
      */
     async createSessionRaw(requestParameters: CreateSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['createSessionRequest'] == null) {
@@ -111,12 +114,14 @@ export class AuthControllerApi extends runtime.BaseAPI {
     }
 
     /**
+     * Establish a new session for a given user
      */
     async createSession(requestParameters: CreateSessionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.createSessionRaw(requestParameters, initOverrides);
     }
 
     /**
+     * Create a new user
      */
     async createUserRaw(requestParameters: CreateUserOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateUserResponse>> {
         if (requestParameters['createUserRequest'] == null) {
@@ -144,10 +149,36 @@ export class AuthControllerApi extends runtime.BaseAPI {
     }
 
     /**
+     * Create a new user
      */
     async createUser(requestParameters: CreateUserOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateUserResponse> {
         const response = await this.createUserRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Log out
+     */
+    async logoutRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/auth/logout`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Log out
+     */
+    async logout(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.logoutRaw(initOverrides);
     }
 
 }

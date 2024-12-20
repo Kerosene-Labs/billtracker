@@ -1,5 +1,4 @@
-.openapi-generator-ignore
-apis/AuthControllerApi.ts
+apis/AuthApi.ts
 apis/index.ts
 index.ts
 models/ConfirmUserResponse.ts

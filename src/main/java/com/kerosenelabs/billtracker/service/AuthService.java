@@ -1,7 +1,6 @@
 package com.kerosenelabs.billtracker.service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +13,11 @@ import com.kerosenelabs.billtracker.exception.AuthException;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class UserService {
+public class AuthService {
     private final UserRepository userRepository;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService) {
+    public AuthService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
         this.confirmationTokenService = confirmationTokenService;
     }
@@ -96,5 +95,9 @@ public class UserService {
         userEntity.setLastName(lastName);
         userEntity.setBirthday(birthday);
         userRepository.save(userEntity);
+    }
+
+    public void endSession(HttpSession httpSession) {
+        httpSession.removeAttribute("userId");
     }
 }
