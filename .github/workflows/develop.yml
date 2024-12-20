@@ -27,7 +27,6 @@ jobs:
           settings-path: ${{ github.workspace }}
           cache: 'maven'
 
-      # Step 3: Cache Maven dependencies
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -142,7 +141,7 @@ jobs:
           ssh-add ~/.ssh/bastion
           ssh-add ~/.ssh/deployment
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
-          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV`
+          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v4
         name: Download Frontend Artifact
