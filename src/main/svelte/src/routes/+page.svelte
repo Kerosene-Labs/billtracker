@@ -12,12 +12,12 @@
 </script>
 
 <div class="flex flex-col justify-center items-center min-h-full">
-    <div class="flex flex-col max-w-screen-xl">
-        <Card title="Welcome" subtitle="We're so excited to have you.">
+    <div class="flex flex-col max-w-96">
+        <Card title="Welcome" subtitle="We're so excited to have you. Please log in with one of the following providers.">
             <div class="flex flex-col gap-2">
                 <Button on:click={doSignInWithGoogle}>Sign in with Google</Button>
-                <Button on:click={doSignInWithGoogle}>Sign in with Apple</Button>
-                <Button on:click={doSignInWithGoogle}>Sign in with Microsoft</Button>
+                <Button on:click={doSignInWithGoogle} disabled={true}>Sign in with Apple</Button>
+                <Button on:click={doSignInWithGoogle} disabled={true}>Sign in with Microsoft</Button>
             </div>
         </Card>
     </div>

@@ -7,6 +7,8 @@ billtracker:
     providers:
       google:
         tokenEndpoint: https://oauth2.googleapis.com/token
+        clientSecret:
+        clientId:
 
 springdoc:
   enable-spring-security: true

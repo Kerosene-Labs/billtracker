@@ -31,11 +31,9 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String emailAddress;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(nullable = false, unique = true)
+    private String idToken;
 
-    public UserEntity(String emailAddress, String password) {
-        this.emailAddress = emailAddress;
-        this.password = password;
-    }
+    @Column(nullable = false, unique = true)
+    private String accessToken;
 }

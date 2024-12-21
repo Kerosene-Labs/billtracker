@@ -1,8 +1,9 @@
 <script lang="ts">
     export let spinning: boolean = false;
+    export let disabled: boolean = false;
 </script>
 
-<button aria-label="Button" disabled={spinning} on:click>
+<button aria-label="Button" {disabled} on:click>
     <span class="flex flex-row gap-4 items-center justify-center">
         <slot></slot>
         {#if spinning}
