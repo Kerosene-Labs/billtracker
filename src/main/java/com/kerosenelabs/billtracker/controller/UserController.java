@@ -25,19 +25,6 @@ public class UserController {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-
-    @PostMapping("/user")
-    @Operation(summary = "Create a new user")
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        UserEntity user = authService.createUser(createUserRequest.getEmail(), createUserRequest.getPassword());
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new CreateUserResponse(
-                        "Created new user. Please check for confirmation email.",
-                        user.getId()
-                ));
-    }
-
     @PutMapping("/user/confirm")
     @Operation(summary = "Confirm a new user")
     public ResponseEntity<ConfirmUserResponse> confirmUser(@RequestParam String token) throws AuthException {

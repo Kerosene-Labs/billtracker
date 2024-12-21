@@ -9,7 +9,4 @@ billtracker:
         tokenEndpoint: https://oauth2.googleapis.com/token
         clientSecret:
         clientId:
-
-springdoc:
-  enable-spring-security: true
-  show-oauth2-endpoints: true
+        redirectUri:

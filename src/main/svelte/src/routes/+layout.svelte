@@ -1,10 +1,6 @@
 <script lang="ts">
 	import '../app.css';
     import ToastQueue from "$lib/tk/ToastQueue.svelte";
-    import {afterNavigate, beforeNavigate} from "$app/navigation";
-    import {validateAndEnforceSession} from "$lib/sdkUtil";
-    import BaseLayout from "$lib/components/BaseLayout.svelte";
-
 
     const unprotectedRoutes: string[] = ["/login", "/signup", "/"]
 
