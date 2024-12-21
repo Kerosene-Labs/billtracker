@@ -49,11 +49,11 @@ public class AuthService {
      * for confirmation.
      * 
      * @param emailAddress
-     * @param password
+     * @param idToken The OAuth/OpenID ID Token
      * @return The newly created entity
      */
-    public UserEntity createUser(String emailAddress, String password) {
-        UserEntity userEntity = new UserEntity(emailAddress, getKeyFromPassword(password));
+    public UserEntity createUser(String emailAddress, String idToken) {
+        UserEntity userEntity = new UserEntity(emailAddress, idToken);
         userRepository.save(userEntity);
         confirmationTokenService.createAndSendConfirmationToken(userEntity);
         return userEntity;

@@ -36,4 +36,9 @@ public class UserEntity {
 
     @Column(nullable = false, unique = true)
     private String accessToken;
+
+    public UserEntity(String emailAddress, String idToken) {
+        this.emailAddress = emailAddress;
+        this.idToken = idToken;
+    }
 }
