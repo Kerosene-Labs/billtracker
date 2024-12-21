@@ -7,12 +7,12 @@
 
     const unprotectedRoutes: string[] = ["/login", "/signup", "/"]
 
-    afterNavigate(async (navigation) => {
-        if (unprotectedRoutes.includes(window.location.href)) {
-            return;
-        }
-        await validateAndEnforceSession();
-    });
+    // afterNavigate(async (navigation) => {
+    //     if (unprotectedRoutes.includes(window.location.href)) {
+    //         return;
+    //     }
+    //     await validateAndEnforceSession();
+    // });
 
 	let { children } = $props();
 </script>
