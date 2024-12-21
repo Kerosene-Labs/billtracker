@@ -4,9 +4,11 @@ const config: CapacitorConfig = {
   appId: 'com.kerosenelabs.billtracker',
   appName: 'BillTracker',
   webDir: 'build',
+  bundledWebRuntime: false
   // server: {
-  //   url: 'http://10.0.2.2:5173',
-  //   cleartext: true
+  //   url: 'https://billtracker.kerosenelabs.com',
+  //   cleartext: true,
+  //   androidScheme: "https"
   // }
 };
 
