@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: billtracker
+
+billtracker:
+  oauth2:
+    providers:
+      google:
+        tokenEndpoint: https://oauth2.googleapis.com/token
+
+springdoc:
+  enable-spring-security: true
+  show-oauth2-endpoints: true
