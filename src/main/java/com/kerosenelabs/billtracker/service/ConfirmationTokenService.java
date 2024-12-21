@@ -65,8 +65,6 @@ public class ConfirmationTokenService {
      * Confirm the user by ensuring the confirmation token given is the one
      * associated with them.
      * 
-     * @param userEntity
-     * @param potentialTokenId
      * @throws AuthException
      */
     public void confirmUser(String confirmationTokenCandidate) throws AuthException {

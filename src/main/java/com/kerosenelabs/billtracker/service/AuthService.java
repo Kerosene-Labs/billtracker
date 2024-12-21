@@ -10,7 +10,6 @@ import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.repository.UserRepository;
 
 import com.kerosenelabs.billtracker.exception.AuthException;
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class AuthService {
@@ -82,18 +81,5 @@ public class AuthService {
     public UserEntity getUserById(UUID id) throws AuthException {
         return userRepository.findById(id).orElseThrow(
                 () -> new AuthException("A user with that ID could not be found."));
-    }
-
-    /**
-     * Establish a session for the given user.
-     * 
-     * @param userEntity
-     */
-    public void establishSession(HttpSession httpSession, UserEntity userEntity) {
-        httpSession.setAttribute("userId", userEntity.getId());
-    }
-
-    public void endSession(HttpSession httpSession) {
-        httpSession.invalidate();
     }
 }

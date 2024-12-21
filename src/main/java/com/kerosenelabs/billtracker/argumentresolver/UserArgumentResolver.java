@@ -14,7 +14,6 @@ import com.kerosenelabs.billtracker.exception.AuthException;
 import com.kerosenelabs.billtracker.service.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
@@ -33,12 +32,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-
-        HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
-        UUID userId = (UUID) session.getAttribute("userId");
-        if (userId == null) {
-            throw new AuthException("Please log in.");
-        }
-        return authService.getUserById(userId);
+        return authService.getUserById(UUID.randomUUID());
     }
 }
