@@ -11,4 +11,5 @@ import com.kerosenelabs.billtracker.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     public Optional<UserEntity> findUserByEmailAddress(String emailAddress);
+    public Optional<UserEntity> findByIdToken(String idToken);
 }

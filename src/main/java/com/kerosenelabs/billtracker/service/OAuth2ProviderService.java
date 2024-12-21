@@ -1,7 +1,10 @@
 package com.kerosenelabs.billtracker.service;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
+import com.kerosenelabs.billtracker.exception.AuthException;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public interface OAuth2ProviderService {
@@ -10,5 +13,5 @@ public interface OAuth2ProviderService {
      * @param code The code from the user's browser
      * @return The either existing or newly created user
      */
-    public UserEntity handleCode(String code);
+    public UserEntity handleCode(String code) throws IOException, AuthException;
 }

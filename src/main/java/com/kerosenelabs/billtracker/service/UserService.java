@@ -1,6 +1,5 @@
 package com.kerosenelabs.billtracker.service;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,13 +11,11 @@ import com.kerosenelabs.billtracker.repository.UserRepository;
 import com.kerosenelabs.billtracker.exception.AuthException;
 
 @Service
-public class AuthService {
+public class UserService {
     private final UserRepository userRepository;
-    private final ConfirmationTokenService confirmationTokenService;
 
-    public AuthService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.confirmationTokenService = confirmationTokenService;
     }
 
     /**
@@ -55,20 +52,7 @@ public class AuthService {
     public UserEntity createUser(String emailAddress, String idToken) {
         UserEntity userEntity = new UserEntity(emailAddress, idToken);
         userRepository.save(userEntity);
-        confirmationTokenService.createAndSendConfirmationToken(userEntity);
         return userEntity;
-    }
-
-    /**
-     * Get a user by their email.
-     * 
-     * @param emailAddress
-     * @return Optionally, the user if they were found.
-     * @throws AuthException
-     */
-    public UserEntity getUserByEmail(String emailAddress) throws AuthException {
-        return userRepository.findUserByEmailAddress(emailAddress).orElseThrow(
-                () -> new AuthException("A user with the given credentials could not be found."));
     }
 
     /**
@@ -81,5 +65,17 @@ public class AuthService {
     public UserEntity getUserById(UUID id) throws AuthException {
         return userRepository.findById(id).orElseThrow(
                 () -> new AuthException("A user with that ID could not be found."));
+    }
+
+    /**
+     * Get a user by their OpenID ID Token
+     *
+     * @param idToken
+     * @return
+     * @throws AuthException
+     */
+    public UserEntity getUserByIdToken(String idToken) throws AuthException {
+        return userRepository.findByIdToken(idToken).orElseThrow(
+                () -> new AuthException("A user with that OpenID Connect ID token could not be found."));
     }
 }

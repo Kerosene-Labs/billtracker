@@ -10,17 +10,14 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
-import com.kerosenelabs.billtracker.exception.AuthException;
-import com.kerosenelabs.billtracker.service.AuthService;
-
-import jakarta.servlet.http.HttpServletRequest;
+import com.kerosenelabs.billtracker.service.UserService;
 
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
-    private AuthService authService;
+    private UserService userService;
 
-    public UserArgumentResolver(AuthService authService) {
-        this.authService = authService;
+    public UserArgumentResolver(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -32,6 +29,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return authService.getUserById(UUID.randomUUID());
+        return userService.getUserById(UUID.randomUUID());
     }
 }
