@@ -2,6 +2,8 @@ package com.kerosenelabs.billtracker.argumentresolver;
 
 import java.util.UUID;
 
+import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.OAuth2Provider;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -29,6 +31,13 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return userService.getUserById(UUID.randomUUID());
+        // parse auth jwt
+        String authHeader = webRequest.getHeader("Authorization");
+        if (authHeader == null) {
+            throw new AuthException("Authorization header is required");
+        }
+        String userId = userService.getIdFromJwt(authHeader);
+        OAuth2Provider provider = userService.getProviderFromJwt(authHeader);
+        return userService.getUserBySubAndProvider(userId, provider);
     }
 }

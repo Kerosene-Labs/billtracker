@@ -3,7 +3,7 @@
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import Button from "$lib/tk/Button.svelte";
     import {ResponseError, SettingsApi} from "$lib/sdk";
-    import {apiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {getApiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
     import {onMount} from "svelte";
     import Card from "$lib/tk/Card.svelte";
@@ -20,7 +20,7 @@
     // calls the getIntroductions endpoint to determine if we're already set
     onMount(async () => {
         if (hideIfPopulated) {
-            await new SettingsApi(apiConfig).getIntroductions()
+            await new SettingsApi(getApiConfig()).getIntroductions()
                 .then((response) => {
                     if (response.introductorySettings!.firstName != null) {
                         hidden = true;
@@ -37,7 +37,7 @@
     })
 
     async function doSaveIntroductions() {
-        await new SettingsApi(apiConfig).setIntroductions({
+        await new SettingsApi(getApiConfig()).setIntroductions({
             setIntroductorySettingsRequest: {
                 firstName: firstName,
                 lastName: lastName,

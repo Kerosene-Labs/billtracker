@@ -4,10 +4,16 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import {addToToastQueue, ToastType} from "$lib/toast";
 import {goto} from "$app/navigation";
 
-export let apiConfig = new Configuration({
-    basePath: PUBLIC_API_URL,
-    apiKey: "fuck"
-})
+export function getApiConfig(): Configuration {
+    const jwt = sessionStorage.getItem("jwt");
+    if (!jwt) {
+        throw new Error("JWT not set, invalid session")
+    }
+    return new Configuration({
+        basePath: PUBLIC_API_URL,
+        apiKey: jwt
+    })
+}
 
 export async function getErrorMessageFromSdk(error: ResponseError): Promise<string> {
     if (error.response) {

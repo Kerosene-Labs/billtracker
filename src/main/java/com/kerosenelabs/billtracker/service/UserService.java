@@ -3,6 +3,7 @@ package com.kerosenelabs.billtracker.service;
 import java.util.UUID;
 
 import com.kerosenelabs.billtracker.model.OAuth2Provider;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -91,7 +92,24 @@ public class UserService {
     public String establishJwt(UserEntity user) {
         return Jwts.builder()
                 .subject(user.getId().toString())
+                .claim("provider", user.getProvider())
                 .signWith(new SecretKeySpec(signingKey.getBytes(), "HmacSHA256"))
                 .compact();
+    }
+
+    private Claims getClaimsFromToken(String jwt) {
+        return Jwts.parser()
+                .verifyWith(new SecretKeySpec(signingKey.getBytes(), "HmacSHA256"))
+                .build()
+                .parseSignedClaims(jwt)
+                .getPayload();
+    }
+
+    public String getIdFromJwt(String jwt) {
+        return getClaimsFromToken(jwt).getSubject();
+    }
+
+    public OAuth2Provider getProviderFromJwt(String jwt) {
+        return getClaimsFromToken(jwt).get("provider", OAuth2Provider.class);
     }
 }
