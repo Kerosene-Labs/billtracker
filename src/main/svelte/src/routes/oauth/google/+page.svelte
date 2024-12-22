@@ -8,6 +8,8 @@
     import {addToToastQueue, ToastType} from "$lib/toast";
     import {goto} from "$app/navigation";
 
+    let errorMessage: string | undefined = undefined;
+
     onMount(async () => {
         document.title = "Setting up account | BillTracker"
 
@@ -20,19 +22,25 @@
             })
             .catch(async (error: ResponseError) => {
                 await getErrorMessageFromSdk(error)
-                    .then(msg => addToToastQueue({message: msg, type: ToastType.ERROR}))
+                    .then(msg => errorMessage = msg)
             })
     })
 </script>
 
-<Card>
-    <div class="flex flex-row">
-        <div class="flex flex-col w-fit">
-            <h1>Welcome, Googler!</h1>
-            <p class="subtitle text-nowrap">Hang tight while we put the finishing touches on your account.</p>
+{#if errorMessage}
+    <Card>
+        <div class="flex flex-row">
+            <div class="flex flex-col w-fit">
+                <h1>Welcome, Googler!</h1>
+                <p class="subtitle text-nowrap">Hang tight while we put the finishing touches on your account.</p>
+            </div>
+            <div class="flex items-center w-full justify-center">
+                <Spinner></Spinner>
+            </div>
         </div>
-        <div class="flex items-center w-full justify-center">
-            <Spinner></Spinner>
-        </div>
-    </div>
-</Card>
+    </Card>
+{:else}
+    <Card title="Oops" subtitle="Something wen't wrong. Please report this.">
+        <p>{errorMessage}</p>
+    </Card>
+{/if}
