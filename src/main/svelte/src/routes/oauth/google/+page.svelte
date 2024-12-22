@@ -27,7 +27,7 @@
     })
 </script>
 
-{#if errorMessage}
+{#if !errorMessage}
     <Card>
         <div class="flex flex-row">
             <div class="flex flex-col w-fit">
@@ -40,7 +40,7 @@
         </div>
     </Card>
 {:else}
-    <Card title="Oops" subtitle="Something wen't wrong. Please report this.">
+    <Card title="Oops" subtitle="Something went wrong. Please report this.">
         <p>{errorMessage}</p>
     </Card>
 {/if}
