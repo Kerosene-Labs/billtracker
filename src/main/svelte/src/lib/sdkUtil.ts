@@ -6,6 +6,7 @@ import {goto} from "$app/navigation";
 
 export let apiConfig = new Configuration({
     basePath: PUBLIC_API_URL,
+    apiKey: "fuck"
 })
 
 export async function getErrorMessageFromSdk(error: ResponseError): Promise<string> {

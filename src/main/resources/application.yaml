@@ -4,6 +4,8 @@ spring:
 
 
 billtracker:
+  baseUrl:
+  signingKey:
   oauth2:
     providers:
       google:

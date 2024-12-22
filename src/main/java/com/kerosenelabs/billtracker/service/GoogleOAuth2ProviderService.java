@@ -3,6 +3,7 @@ package com.kerosenelabs.billtracker.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.OAuth2Provider;
 import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthUserInfoResponse;
 import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthTokenResponse;
 import okhttp3.*;
@@ -81,10 +82,10 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
         // fetch our user or create them
         Optional<UserEntity> userEntity = Optional.empty();
         try {
-            userEntity = Optional.of(userService.getUserBySub(userInfo.getSub()));
+            userEntity = Optional.of(userService.getUserBySubAndProvider(userInfo.getSub(), OAuth2Provider.GOOGLE));
         } catch (AuthException e) {
-            userEntity = Optional.of(userService.createUser(userInfo.getEmail(), userInfo.getSub(), userInfo.getGivenName(), userInfo.getFamilyName()));
+            userEntity = Optional.of(userService.createUser(userInfo.getEmail(), userInfo.getSub(), OAuth2Provider.GOOGLE, userInfo.getGivenName(), userInfo.getFamilyName()));
         }
-        return userEntity.orElseThrow(() -> new AuthException(""));
+        return userEntity.orElseThrow(() -> new AuthException("Undefined behavior, User was not found and was not created."));
     }
 }

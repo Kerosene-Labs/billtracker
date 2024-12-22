@@ -14,8 +14,9 @@
         const urlParams = new URLSearchParams(window.location.search)
         const code = urlParams.get("code");
         await new OAuth2Api().handleToken({handleTokenRequest: {code: code!}})
-            .then(() => {
-                goto("/home")
+            .then((response) => {
+                sessionStorage.setItem("jwt", response.jwt!)
+                goto("/home");
             })
             .catch(async (error: ResponseError) => {
                 await getErrorMessageFromSdk(error)

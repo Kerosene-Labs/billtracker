@@ -2,6 +2,9 @@ package com.kerosenelabs.billtracker.service;
 
 import java.util.UUID;
 
+import com.kerosenelabs.billtracker.model.OAuth2Provider;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +13,21 @@ import com.kerosenelabs.billtracker.repository.UserRepository;
 
 import com.kerosenelabs.billtracker.exception.AuthException;
 
+import javax.crypto.spec.SecretKeySpec;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final String signingKey;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(@Value("${billtracker.signingKey}") String signingKey, UserRepository userRepository) {
+        this.signingKey = signingKey;
         this.userRepository = userRepository;
     }
 
     /**
      * Get a key suitable for persistence to a database from a password.
-     * 
+     *
      * @param password The user provided password
      * @return The key
      */
@@ -32,6 +39,7 @@ public class UserService {
 
     /**
      * Checks if the given passwords match using the BCrypt algorithm
+     *
      * @param first
      * @param second
      * @return True if matches, false if doesn't
@@ -44,20 +52,20 @@ public class UserService {
     /**
      * Create a new user. Also creates a confirmation token and sends an email out
      * for confirmation.
-     * 
+     *
      * @param emailAddress
-     * @param sub The OAuth/OpenID sub token
+     * @param sub          The OAuth/OpenID sub token
      * @return The newly created entity
      */
-    public UserEntity createUser(String emailAddress, String sub, String firstName, String lastName) {
-        UserEntity userEntity = new UserEntity(emailAddress, sub, firstName, lastName);
+    public UserEntity createUser(String emailAddress, String sub, OAuth2Provider provider, String firstName, String lastName) {
+        UserEntity userEntity = new UserEntity(emailAddress, sub, provider, firstName, lastName);
         userRepository.save(userEntity);
         return userEntity;
     }
 
     /**
      * Get a user by their ID
-     * 
+     *
      * @param id
      * @return
      * @throws AuthException
@@ -68,14 +76,22 @@ public class UserService {
     }
 
     /**
-     * Get a user by their OpenID ID Token
+     * Get a user by their OpenID Connect Subject
      *
      * @param sub
+     * @param provider The OAuth2 / OpenID Provider
      * @return
      * @throws AuthException
      */
-    public UserEntity getUserBySub(String sub) throws AuthException {
-        return userRepository.findBySub(sub).orElseThrow(
-                () -> new AuthException("A user with that sub token could not be found."));
+    public UserEntity getUserBySubAndProvider(String sub, OAuth2Provider provider) throws AuthException {
+        return userRepository.findBySubAndProvider(sub, provider).orElseThrow(
+                () -> new AuthException("A user with that subject token on that provider could not be found."));
+    }
+
+    public String establishJwt(UserEntity user) {
+        return Jwts.builder()
+                .subject(user.getId().toString())
+                .signWith(new SecretKeySpec(signingKey.getBytes(), "HmacSHA256"))
+                .compact();
     }
 }
