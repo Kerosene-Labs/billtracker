@@ -41,6 +41,6 @@
     </Card>
 {:else}
     <Card title="Oops" subtitle="Something went wrong. Please report this.">
-        <p>{errorMessage}</p>
+        <p class="text-neutral-400 font-mono font-bold">{errorMessage}</p>
     </Card>
 {/if}
