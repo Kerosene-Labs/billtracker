@@ -1,12 +1,21 @@
-import {AuthApi, Configuration, ResponseError} from "$lib/sdk";
+import {Configuration, ResponseError} from "$lib/sdk";
 // @ts-ignore
 import { PUBLIC_API_URL } from '$env/static/public';
 import {addToToastQueue, ToastType} from "$lib/toast";
 import {goto} from "$app/navigation";
 
-export let apiConfig = new Configuration({
-    basePath: PUBLIC_API_URL,
-})
+export function getApiConfig(): Configuration {
+    const jwt = sessionStorage.getItem("jwt");
+    if (!jwt) {
+        throw new Error("JWT not set, invalid session")
+    }
+    return new Configuration({
+        basePath: PUBLIC_API_URL,
+        headers: {
+            "Authorization": "Bearer " + jwt
+        }
+    })
+}
 
 export async function getErrorMessageFromSdk(error: ResponseError): Promise<string> {
     if (error.response) {
@@ -18,22 +27,4 @@ export async function getErrorMessageFromSdk(error: ResponseError): Promise<stri
         // Handle network or other errors
         return error.message || "A network error occurred";
     }
-}
-
-export async function validateAndEnforceSession() {
-    await new AuthApi(apiConfig).validateSession()
-        .then((result) => {
-            if (!result.valid) {
-                addToToastQueue({message: "Your session was invalid, you've been signed out.", type: ToastType.ERROR});
-                goto("/");
-            }
-        })
-        .catch(async (error) => {
-            console.log(error)
-            await getErrorMessageFromSdk(error)
-                .then((msg) => {
-                    addToToastQueue({message: msg, type: ToastType.ERROR});
-                    goto("/");
-                })
-        })
 }

@@ -1,22 +1,9 @@
 <script lang="ts">
     import Card from "$lib/tk/Card.svelte";
     import Button from "$lib/tk/Button.svelte";
-    import {AuthApi} from "$lib/sdk";
-    import {apiConfig, validateAndEnforceSession} from "$lib/sdkUtil";
     import {goto} from "$app/navigation";
-    import {addToToastQueue, ToastType} from "$lib/toast";
-    import {onMount} from "svelte";
     import IntroductionsEditor from "$lib/components/IntroductionsCard.svelte";
 
-    onMount(async () => {
-        await validateAndEnforceSession();
-    })
-
-    async function doLogOut() {
-        await new AuthApi(apiConfig).logout();
-        addToToastQueue({message: "Logged out", type: ToastType.INFO})
-        goto("/");
-    }
 </script>
 
 
@@ -26,7 +13,6 @@
             Report a Bug
         </Button>
         <Button on:click={() => {goto("/settings")}}>Settings</Button>
-        <Button on:click={doLogOut}>Log Out</Button>
     </div>
 </Card>
 <IntroductionsEditor hideIfPopulated={true}></IntroductionsEditor>

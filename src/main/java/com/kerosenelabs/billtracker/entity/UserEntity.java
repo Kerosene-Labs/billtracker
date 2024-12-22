@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
+import com.kerosenelabs.billtracker.model.OAuth2Provider;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -31,11 +32,16 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String emailAddress;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(nullable = false, unique = true)
+    private String sub;
 
-    public UserEntity(String emailAddress, String password) {
+    private OAuth2Provider provider;
+
+    public UserEntity(String emailAddress, String sub, OAuth2Provider provider, String firstName, String lastName) {
         this.emailAddress = emailAddress;
-        this.password = password;
+        this.sub = sub;
+        this.provider = provider;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

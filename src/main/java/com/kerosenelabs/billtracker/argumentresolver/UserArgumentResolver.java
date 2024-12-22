@@ -2,6 +2,8 @@ package com.kerosenelabs.billtracker.argumentresolver;
 
 import java.util.UUID;
 
+import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.OAuth2Provider;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,18 +12,14 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.kerosenelabs.billtracker.entity.UserEntity;
-import com.kerosenelabs.billtracker.exception.AuthException;
-import com.kerosenelabs.billtracker.service.AuthService;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import com.kerosenelabs.billtracker.service.UserService;
 
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
-    private AuthService authService;
+    private UserService userService;
 
-    public UserArgumentResolver(AuthService authService) {
-        this.authService = authService;
+    public UserArgumentResolver(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -33,12 +31,13 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-
-        HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
-        UUID userId = (UUID) session.getAttribute("userId");
-        if (userId == null) {
-            throw new AuthException("Please log in.");
+        // parse auth jwt
+        String authHeader = webRequest.getHeader("Authorization");
+        if (authHeader == null) {
+            throw new AuthException("Authorization header is required");
         }
-        return authService.getUserById(userId);
+        authHeader = authHeader.replace("Bearer ", "");
+        String userId = userService.getIdFromJwt(authHeader);
+        return userService.getUserById(UUID.fromString(userId));
     }
 }

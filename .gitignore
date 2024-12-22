@@ -1,6 +1,7 @@
 node_modules
 HELP.md
 target/
+application-*.yaml
 !.mvn/wrapper/maven-wrapper.jar
 .svelte-kit
 src/main/svelte/build
