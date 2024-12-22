@@ -1,8 +1,4 @@
 import {Configuration, ResponseError} from "$lib/sdk";
-// @ts-ignore
-import { PUBLIC_API_URL } from '$env/static/public';
-import {addToToastQueue, ToastType} from "$lib/toast";
-import {goto} from "$app/navigation";
 
 export function getApiConfig(): Configuration {
     const jwt = sessionStorage.getItem("jwt");
@@ -10,7 +6,7 @@ export function getApiConfig(): Configuration {
         throw new Error("JWT not set, invalid session")
     }
     return new Configuration({
-        basePath: PUBLIC_API_URL,
+        basePath: import.meta.env.VITE_GOOGLE_OAUTH_URI,
         headers: {
             "Authorization": "Bearer " + jwt
         }
