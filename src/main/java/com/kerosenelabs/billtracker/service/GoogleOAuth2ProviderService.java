@@ -37,7 +37,7 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
         this.userService = userService;
     }
 
-    private GoogleOAuthTokenResponse getTokenResponse(String code) throws IOException {
+    private GoogleOAuthTokenResponse getTokenResponse(String code) throws IOException, AuthException {
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("client_id", clientId)
@@ -52,9 +52,12 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
+            String bodyContent = response.body().string();
+            if (!response.isSuccessful()) {
+                throw new AuthException("Got error response from provider: " + bodyContent);
+            }
             ObjectMapper mapper = new ObjectMapper();
-            String x = response.body().string();
-            GoogleOAuthTokenResponse tokenResponse = mapper.readValue(x, GoogleOAuthTokenResponse.class);
+            GoogleOAuthTokenResponse tokenResponse = mapper.readValue(bodyContent, GoogleOAuthTokenResponse.class);
             return tokenResponse;
         }
     }
