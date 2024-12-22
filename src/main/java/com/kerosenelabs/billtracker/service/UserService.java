@@ -46,11 +46,11 @@ public class UserService {
      * for confirmation.
      * 
      * @param emailAddress
-     * @param idToken The OAuth/OpenID ID Token
+     * @param sub The OAuth/OpenID sub token
      * @return The newly created entity
      */
-    public UserEntity createUser(String emailAddress, String idToken) {
-        UserEntity userEntity = new UserEntity(emailAddress, idToken);
+    public UserEntity createUser(String emailAddress, String sub, String firstName, String lastName) {
+        UserEntity userEntity = new UserEntity(emailAddress, sub, firstName, lastName);
         userRepository.save(userEntity);
         return userEntity;
     }
@@ -70,12 +70,12 @@ public class UserService {
     /**
      * Get a user by their OpenID ID Token
      *
-     * @param idToken
+     * @param sub
      * @return
      * @throws AuthException
      */
-    public UserEntity getUserByIdToken(String idToken) throws AuthException {
-        return userRepository.findByIdToken(idToken).orElseThrow(
-                () -> new AuthException("A user with that OpenID Connect ID token could not be found."));
+    public UserEntity getUserBySub(String sub) throws AuthException {
+        return userRepository.findBySub(sub).orElseThrow(
+                () -> new AuthException("A user with that sub token could not be found."));
     }
 }

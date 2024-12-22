@@ -2,11 +2,13 @@ spring:
   application:
     name: billtracker
 
+
 billtracker:
   oauth2:
     providers:
       google:
         tokenEndpoint: https://oauth2.googleapis.com/token
+        userInfoEndpoint: https://www.googleapis.com/oauth2/v3/userinfo
         clientSecret:
         clientId:
         redirectUri:

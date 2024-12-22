@@ -3,9 +3,9 @@ package com.kerosenelabs.billtracker.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerosenelabs.billtracker.entity.UserEntity;
 import com.kerosenelabs.billtracker.exception.AuthException;
+import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthUserInfoResponse;
 import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthTokenResponse;
 import okhttp3.*;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
             @Value("${billtracker.oauth2.providers.google.clientId}") String clientId,
             @Value("${billtracker.oauth2.providers.google.clientSecret}") String clientSecret,
             @Value("${billtracker.oauth2.providers.google.redirectUri}") String redirectUri,
-            @Value("${billtracker.oauth2.providers.google.userInfoEndpoint") String userInfoEndpoint,
+            @Value("${billtracker.oauth2.providers.google.userInfoEndpoint}") String userInfoEndpoint,
             UserService userService) {
         this.tokenEndpoint = tokenEndpoint;
         this.clientId = clientId;
@@ -52,33 +52,38 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
 
         try (Response response = client.newCall(request).execute()) {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(response.body().string(), GoogleOAuthTokenResponse.class);
+            String x = response.body().string();
+            GoogleOAuthTokenResponse tokenResponse = mapper.readValue(x, GoogleOAuthTokenResponse.class);
+            return tokenResponse;
         }
     }
 
-    private String getEmailFromProvider(String accessToken) {
+    private GoogleOAuthUserInfoResponse getUserInfoFromProvider(String accessToken) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(userInfoEndpoint)
                 .addHeader("Authorization", String.format("Bearer %s", accessToken))
                 .build();
-        return "";
+        try (Response response = client.newCall(request).execute()) {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(response.body().string(), GoogleOAuthUserInfoResponse.class);
+        }
     }
 
     @Override
     public UserEntity handleCode(String code) throws IOException, AuthException {
-        // get our token response from google
+        // get our token response from Google
         GoogleOAuthTokenResponse oAuthTokenResponse = getTokenResponse(code);
 
         // get our email from the provider
-        String userEmail = getEmailFromProvider(oAuthTokenResponse.getAccessToken());
+        GoogleOAuthUserInfoResponse userInfo = getUserInfoFromProvider(oAuthTokenResponse.getAccessToken());
 
         // fetch our user or create them
         Optional<UserEntity> userEntity = Optional.empty();
         try {
-            userEntity = Optional.of(userService.getUserByIdToken(oAuthTokenResponse.getIdToken()));
+            userEntity = Optional.of(userService.getUserBySub(userInfo.getSub()));
         } catch (AuthException e) {
-            userEntity = Optional.of(userService.createUser(userEmail, oAuthTokenResponse.getIdToken()));
+            userEntity = Optional.of(userService.createUser(userInfo.getEmail(), userInfo.getSub(), userInfo.getGivenName(), userInfo.getFamilyName()));
         }
         return userEntity.orElseThrow(() -> new AuthException(""));
     }
