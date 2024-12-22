@@ -11,7 +11,9 @@ export function getApiConfig(): Configuration {
     }
     return new Configuration({
         basePath: PUBLIC_API_URL,
-        apiKey: jwt
+        headers: {
+            "Authorization": "Bearer " + jwt
+        }
     })
 }
 

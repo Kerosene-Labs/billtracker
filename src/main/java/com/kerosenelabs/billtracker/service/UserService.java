@@ -110,6 +110,6 @@ public class UserService {
     }
 
     public OAuth2Provider getProviderFromJwt(String jwt) {
-        return getClaimsFromToken(jwt).get("provider", OAuth2Provider.class);
+        return OAuth2Provider.valueOf((String) getClaimsFromToken(jwt).get("provider"));
     }
 }

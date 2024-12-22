@@ -36,8 +36,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         if (authHeader == null) {
             throw new AuthException("Authorization header is required");
         }
+        authHeader = authHeader.replace("Bearer ", "");
         String userId = userService.getIdFromJwt(authHeader);
-        OAuth2Provider provider = userService.getProviderFromJwt(authHeader);
-        return userService.getUserBySubAndProvider(userId, provider);
+        return userService.getUserById(UUID.fromString(userId));
     }
 }
