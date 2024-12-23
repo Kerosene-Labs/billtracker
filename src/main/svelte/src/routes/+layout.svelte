@@ -1,6 +1,7 @@
 <script lang="ts">
-	import '../app.css';
+    import '../app.css';
     import ToastQueue from "$lib/tk/ToastQueue.svelte";
+    import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
 
     const unprotectedRoutes: string[] = ["/login", "/signup", "/"]
 
@@ -11,9 +12,8 @@
     //     await validateAndEnforceSession();
     // });
 
-	let { children } = $props();
+    let {children} = $props();
 </script>
 
 <ToastQueue></ToastQueue>
-
 {@render children()}

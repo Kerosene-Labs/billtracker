@@ -17,7 +17,7 @@
         await new OAuth2Api(getPublicApiConfig()).handleToken({handleTokenRequest: {code: code!}})
             .then((response) => {
                 sessionStorage.setItem("jwt", response.jwt!)
-                goto("/home");
+                goto("/app/home");
             })
             .catch(async (error: ResponseError) => {
                 await getErrorMessageFromSdk(error)
@@ -33,7 +33,7 @@
                 <h1>Welcome</h1>
                 <p class="subtitle">Hang tight while we put the finishing touches on your account.</p>
             </div>
-            <div class="flex items-center w-full justify-center">
+            <div class="flex items-center w-min justify-center">
                 <Spinner></Spinner>
             </div>
         </div>

@@ -36,6 +36,7 @@ export async function getErrorMessageFromSdk(error: ResponseError): Promise<stri
 }
 
 export function doLogOut() {
+    addToToastQueue({message: "You've been signed out.", type: ToastType.INFO});
     sessionStorage.removeItem("jwt");
     goto("/");
 }
