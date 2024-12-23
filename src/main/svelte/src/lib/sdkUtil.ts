@@ -1,6 +1,12 @@
 import {Configuration, ResponseError} from "$lib/sdk";
 
-export function getApiConfig(): Configuration {
+export function getPublicApiConfig(): Configuration {
+    return new Configuration({
+        basePath: import.meta.env.VITE_GOOGLE_OAUTH_URI
+    })
+}
+
+export function getPrivateApiConfig(): Configuration {
     const jwt = sessionStorage.getItem("jwt");
     if (!jwt) {
         throw new Error("JWT not set, invalid session")

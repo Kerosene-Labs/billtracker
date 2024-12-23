@@ -3,7 +3,7 @@
     import LineEdit from "$lib/tk/LineEdit.svelte";
     import Button from "$lib/tk/Button.svelte";
     import {ResponseError, SettingsApi} from "$lib/sdk";
-    import {getApiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
+    import {getPrivateApiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {addToToastQueue, ToastType} from "$lib/toast";
     import {onMount} from "svelte";
     import Card from "$lib/tk/Card.svelte";
@@ -14,7 +14,7 @@
     let birthday: Date;
 
     async function populate() {
-        await new SettingsApi(getApiConfig()).getIntroductions()
+        await new SettingsApi(getPrivateApiConfig()).getIntroductions()
             .then((response) => {
                     firstName = response.introductorySettings!.firstName!;
                     lastName = response.introductorySettings!.lastName!;
@@ -32,7 +32,7 @@
     })
 
     async function save() {
-        await new SettingsApi(getApiConfig()).setIntroductions({
+        await new SettingsApi(getPrivateApiConfig()).setIntroductions({
             setIntroductorySettingsRequest: {
                 firstName: firstName,
                 lastName: lastName,
