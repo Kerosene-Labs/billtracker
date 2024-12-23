@@ -1,10 +1,6 @@
 # BillTracker
 
-*By Kerosene Labs LLC*
-
-**Description**  
 An open source, transparent, independently auditable personal expense and income tracking solution.
----
 
 ## Table of Contents
 
@@ -14,15 +10,11 @@ An open source, transparent, independently auditable personal expense and income
 5. [License](#license)
 6. [Contact](#contact)
 
----
-
 ## Features
 
 - Fast and Minimal
 - Transparent and independently auditable
 - Open source as opposed to competitors
-
----
 
 ## Installation
 
