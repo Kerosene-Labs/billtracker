@@ -24,7 +24,7 @@
     </div>
     <div id="drawer"
          class="inset-y-y fixed h-screen w-[90%] lg:w-[25%] bg-neutral-950 z-20 translate-x-[-100%] transition-all"
-         class:translate-x-[0%]={drawerOpen}></div>
+         class:translate-x-[0%]={drawerOpen} class:pointer-events-none={!drawerOpen}></div>
     <div id="drawerBg" class="inset-y-0 fixed bg-black/50 w-screen h-screen z-10 backdrop-blur-sm transition-all"
          class:opacity-0={!drawerOpen} class:opacity-[99%]={drawerOpen} class:pointer-events-none={!drawerOpen}></div>
     <div id="pageContent" class="pt-14 h-full overflow-y-scroll">
