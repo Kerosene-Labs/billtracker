@@ -4,8 +4,7 @@
     import {onMount} from "svelte";
     import Spinner from "$lib/tk/Spinner.svelte";
     import {OAuth2Api, ResponseError} from "$lib/sdk/index.js";
-    import {getErrorMessageFromSdk} from "$lib/sdkUtil";
-    import {addToToastQueue, ToastType} from "$lib/toast";
+    import {getApiConfig, getErrorMessageFromSdk} from "$lib/sdkUtil";
     import {goto} from "$app/navigation";
 
     let errorMessage: string | undefined = undefined;
@@ -15,7 +14,7 @@
 
         const urlParams = new URLSearchParams(window.location.search)
         const code = urlParams.get("code");
-        await new OAuth2Api().handleToken({handleTokenRequest: {code: code!}})
+        await new OAuth2Api(getApiConfig()).handleToken({handleTokenRequest: {code: code!}})
             .then((response) => {
                 sessionStorage.setItem("jwt", response.jwt!)
                 goto("/home");
