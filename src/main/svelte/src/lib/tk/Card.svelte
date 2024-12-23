@@ -23,5 +23,6 @@
         @apply bg-neutral-900/35;
         @apply w-full;
         @apply break-words;
+        @apply drop-shadow-xl;
     }
 </style>
