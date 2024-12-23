@@ -15,6 +15,6 @@
         <Button on:click={() => {goto("/settings")}}>Settings</Button>
     </div>
 </Card>
-<IntroductionsEditor hideIfPopulated={true}></IntroductionsEditor>
+<IntroductionsEditor></IntroductionsEditor>
 <Card title="Expenses" subtitle="Where's your money going?"></Card>
 <Card title="Income" subtitle="How much is coming in?"></Card>
