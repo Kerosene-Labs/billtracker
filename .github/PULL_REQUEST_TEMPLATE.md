@@ -1,8 +1,3 @@
----
-name: Pull Request
-about: Submit changes to the codebase
----
-
 **Description**
 What does this PR do? Summarize your changes.
 
