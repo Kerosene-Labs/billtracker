@@ -19,7 +19,7 @@
 
 <style lang="postcss">
     .card {
-        @apply p-8 rounded-xl;
+        @apply p-8 rounded-2xl;
         @apply bg-neutral-900/35;
         @apply w-full;
     }
