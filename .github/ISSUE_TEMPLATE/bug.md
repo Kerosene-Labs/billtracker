@@ -1,6 +1,7 @@
 ---
 name: Bug Report
 about: Report a problem with the app
+title: [BUG] 
 ---
 
 **Description**
