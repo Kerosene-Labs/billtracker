@@ -2,7 +2,7 @@ import {Configuration, ResponseError} from "$lib/sdk";
 
 export function getPublicApiConfig(): Configuration {
     return new Configuration({
-        basePath: import.meta.env.VITE_GOOGLE_OAUTH_URI
+        basePath: import.meta.env.VITE_API_URL
     })
 }
 
@@ -12,7 +12,7 @@ export function getPrivateApiConfig(): Configuration {
         throw new Error("JWT not set, invalid session")
     }
     return new Configuration({
-        basePath: import.meta.env.VITE_GOOGLE_OAUTH_URI,
+        basePath: import.meta.env.VITE_API_URL,
         headers: {
             "Authorization": "Bearer " + jwt
         }
