@@ -1,6 +1,7 @@
 ---
 name: Feature Request
 about: Suggest a new feature for the app
+title: [FEATURE]
 ---
 
 **Description**
