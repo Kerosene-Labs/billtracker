@@ -1,6 +1,4 @@
 <script lang="ts">
-    import Nav from "$lib/components/Nav.svelte";
-
     export let justifyCenter: boolean = true;
 </script>
 
