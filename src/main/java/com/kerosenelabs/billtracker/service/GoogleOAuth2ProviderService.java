@@ -39,7 +39,6 @@ public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
 
     private GoogleOAuthTokenResponse getTokenResponse(String code) throws IOException, AuthException {
         OkHttpClient client = new OkHttpClient();
-        System.out.println("redirectUri is: " + redirectUri);
         RequestBody body = new FormBody.Builder()
                 .add("client_id", clientId)
                 .add("client_secret", clientSecret)
