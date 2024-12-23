@@ -28,10 +28,10 @@
 
 {#if !errorMessage}
     <Card>
-        <div class="flex flex-row">
+        <div class="flex flex-col xl:flex-row">
             <div class="flex flex-col w-fit">
-                <h1>Welcome, Googler!</h1>
-                <p class="subtitle text-nowrap">Hang tight while we put the finishing touches on your account.</p>
+                <h1>Welcome</h1>
+                <p class="subtitle">Hang tight while we put the finishing touches on your account.</p>
             </div>
             <div class="flex items-center w-full justify-center">
                 <Spinner></Spinner>

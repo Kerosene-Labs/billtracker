@@ -4,7 +4,7 @@ target/
 application-*.yaml
 !.mvn/wrapper/maven-wrapper.jar
 .svelte-kit
-src/main/svelte/build
+src/main/svelte/build/*
 src/main/svelte/android
 !**/src/main/**/target/
 !**/src/test/**/target/
