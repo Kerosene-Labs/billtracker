@@ -22,6 +22,6 @@
         @apply p-8 rounded-2xl;
         @apply bg-neutral-900/35;
         @apply w-full;
-        @apply break-all;
+        @apply break-words;
     }
 </style>

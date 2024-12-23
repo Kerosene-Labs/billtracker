@@ -1,4 +1,6 @@
 import {Configuration, ResponseError} from "$lib/sdk";
+import {goto} from "$app/navigation";
+import {addToToastQueue, ToastType} from "$lib/toast";
 
 export function getPublicApiConfig(): Configuration {
     return new Configuration({
@@ -9,7 +11,9 @@ export function getPublicApiConfig(): Configuration {
 export function getPrivateApiConfig(): Configuration {
     const jwt = sessionStorage.getItem("jwt");
     if (!jwt) {
-        throw new Error("JWT not set, invalid session")
+        addToToastQueue({message: "We couldn't find any credentials for you, please sign in.", type: ToastType.INFO})
+        goto("/");
+        throw new Error("JWT not set")
     }
     return new Configuration({
         basePath: import.meta.env.VITE_API_URL,
@@ -29,4 +33,9 @@ export async function getErrorMessageFromSdk(error: ResponseError): Promise<stri
         // Handle network or other errors
         return error.message || "A network error occurred";
     }
+}
+
+export function doLogOut() {
+    sessionStorage.removeItem("jwt");
+    goto("/");
 }
