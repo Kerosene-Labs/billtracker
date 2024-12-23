@@ -60,10 +60,6 @@
         <Button on:click={save}>Save</Button>
     </div>
 </Card>
-<Card title="Introductions"
-      subtitle="You've already introduced yourself. If you need to modify it, click the button below to navigate to your settings.">
-    <Button on:click={() => {goto("/settings")}}>Go To Settings</Button>
-</Card>
 
 <style lang="postcss">
 </style>
