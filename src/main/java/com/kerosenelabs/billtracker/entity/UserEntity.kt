@@ -7,22 +7,24 @@ import lombok.NoArgsConstructor
 import java.time.LocalDate
 import java.util.*
 
-@Table(name = "user", schema = "public")
 @Entity
+@Table(name = "user", schema = "public")
 class UserEntity(
-    @field:Column(
-        nullable = false, unique = true
-    ) private var emailAddress: String, @field:Column(
-        nullable = false, unique = true
-    ) private var sub: String, private var provider: OAuth2Provider, firstName: String?, lastName: String?
-) {
-    constructor() : this("", "", OAuth2Provider.GOOGLE, null, null)
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null
+    var id: UUID? = null,
 
-    private var firstName: String? = null
-    private var lastName: String? = null
-    private val birthday: LocalDate? = null
-}
+    @Column(nullable = false, unique = true)
+    var emailAddress: String = "",
+
+    // oauth
+    @Column(nullable = false)
+    var provider: OAuth2Provider = OAuth2Provider.GOOGLE,
+    @Column(nullable = false, unique = true)
+    var sub: String = "",
+
+    // introductions
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var birthday: LocalDate? = null,
+)

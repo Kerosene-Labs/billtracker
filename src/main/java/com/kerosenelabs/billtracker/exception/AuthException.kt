@@ -1,7 +1,3 @@
-package com.kerosenelabs.billtracker.exception;
+package com.kerosenelabs.billtracker.exception
 
-public class AuthException extends Exception {
-    public AuthException(String message) {
-        super(message);
-    }
-}
+class AuthException(message: String?) : Exception(message)

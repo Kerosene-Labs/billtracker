@@ -1,94 +1,99 @@
-package com.kerosenelabs.billtracker.service;
+package com.kerosenelabs.billtracker.service
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerosenelabs.billtracker.entity.UserEntity;
-import com.kerosenelabs.billtracker.exception.AuthException;
-import com.kerosenelabs.billtracker.model.OAuth2Provider;
-import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthUserInfoResponse;
-import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthTokenResponse;
-import okhttp3.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Optional;
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.kerosenelabs.billtracker.entity.UserEntity
+import com.kerosenelabs.billtracker.exception.AuthException
+import com.kerosenelabs.billtracker.model.OAuth2Provider
+import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthTokenResponse
+import com.kerosenelabs.billtracker.model.external.response.GoogleOAuthUserInfoResponse
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
+import java.io.IOException
+import java.util.*
 
 @Service
-public class GoogleOAuth2ProviderService implements OAuth2ProviderService {
-    public final String tokenEndpoint;
-    private final String clientId;
-    private final String clientSecret;
-    private final String redirectUri;
-    private final String userInfoEndpoint;
-    private final UserService userService;
+class GoogleOAuth2ProviderService(
+    @param:Value("\${billtracker.oauth2.providers.google.tokenEndpoint}") val tokenEndpoint: String,
+    @param:Value("\${billtracker.oauth2.providers.google.clientId}") private val clientId: String,
+    @param:Value("\${billtracker.oauth2.providers.google.clientSecret}") private val clientSecret: String,
+    @param:Value("\${billtracker.oauth2.providers.google.redirectUri}") private val redirectUri: String,
+    @param:Value("\${billtracker.oauth2.providers.google.userInfoEndpoint}") private val userInfoEndpoint: String,
+    private val userService: UserService
+) : OAuth2ProviderService {
+    @Throws(IOException::class, AuthException::class)
+    private fun getTokenResponse(code: String): GoogleOAuthTokenResponse {
+        val client = OkHttpClient()
+        val body: RequestBody = FormBody.Builder()
+            .add("client_id", clientId)
+            .add("client_secret", clientSecret)
+            .add("code", code)
+            .add("grant_type", "authorization_code")
+            .add("redirect_uri", redirectUri)
+            .build()
+        val request = Request.Builder()
+            .url(tokenEndpoint)
+            .post(body)
+            .build()
 
-    public GoogleOAuth2ProviderService(
-            @Value("${billtracker.oauth2.providers.google.tokenEndpoint}") String tokenEndpoint,
-            @Value("${billtracker.oauth2.providers.google.clientId}") String clientId,
-            @Value("${billtracker.oauth2.providers.google.clientSecret}") String clientSecret,
-            @Value("${billtracker.oauth2.providers.google.redirectUri}") String redirectUri,
-            @Value("${billtracker.oauth2.providers.google.userInfoEndpoint}") String userInfoEndpoint,
-            UserService userService) {
-        this.tokenEndpoint = tokenEndpoint;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.redirectUri = redirectUri;
-        this.userInfoEndpoint = userInfoEndpoint;
-        this.userService = userService;
-    }
-
-    private GoogleOAuthTokenResponse getTokenResponse(String code) throws IOException, AuthException {
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("client_id", clientId)
-                .add("client_secret", clientSecret)
-                .add("code", code)
-                .add("grant_type", "authorization_code")
-                .add("redirect_uri", redirectUri)
-                .build();
-        Request request = new Request.Builder()
-                .url(tokenEndpoint)
-                .post(body)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            String bodyContent = response.body().string();
-            if (!response.isSuccessful()) {
-                throw new AuthException("Got error response from provider: " + bodyContent);
+        client.newCall(request).execute().use { response ->
+            val bodyContent = response.body()!!.string()
+            if (!response.isSuccessful) {
+                throw AuthException("Got error response from provider: $bodyContent")
             }
-            ObjectMapper mapper = new ObjectMapper();
-            GoogleOAuthTokenResponse tokenResponse = mapper.readValue(bodyContent, GoogleOAuthTokenResponse.class);
-            return tokenResponse;
+            val mapper = ObjectMapper()
+            val tokenResponse = mapper.readValue(
+                bodyContent,
+                GoogleOAuthTokenResponse::class.java
+            )
+            return tokenResponse
         }
     }
 
-    private GoogleOAuthUserInfoResponse getUserInfoFromProvider(String accessToken) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(userInfoEndpoint)
-                .addHeader("Authorization", String.format("Bearer %s", accessToken))
-                .build();
-        try (Response response = client.newCall(request).execute()) {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(response.body().string(), GoogleOAuthUserInfoResponse.class);
+    @Throws(IOException::class)
+    private fun getUserInfoFromProvider(accessToken: String): GoogleOAuthUserInfoResponse {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url(userInfoEndpoint)
+            .addHeader("Authorization", String.format("Bearer %s", accessToken))
+            .build()
+        client.newCall(request).execute().use { response ->
+            val mapper = ObjectMapper()
+            return mapper.readValue(response.body()!!.string(), GoogleOAuthUserInfoResponse::class.java)
         }
     }
 
-    @Override
-    public UserEntity handleCode(String code) throws IOException, AuthException {
+    @Throws(IOException::class, AuthException::class)
+    override fun handleCode(code: String): UserEntity? {
         // get our token response from Google
-        GoogleOAuthTokenResponse oAuthTokenResponse = getTokenResponse(code);
+        val oAuthTokenResponse = getTokenResponse(code)
 
         // get our email from the provider
-        GoogleOAuthUserInfoResponse userInfo = getUserInfoFromProvider(oAuthTokenResponse.getAccessToken());
+        val userInfo = getUserInfoFromProvider(oAuthTokenResponse.getAccessToken())
 
         // fetch our user or create them
-        Optional<UserEntity> userEntity = Optional.empty();
+        var userEntity: Optional<UserEntity?> = Optional.empty()
         try {
-            userEntity = Optional.of(userService.getUserBySubAndProvider(userInfo.getSub(), OAuth2Provider.GOOGLE));
-        } catch (AuthException e) {
-            userEntity = Optional.of(userService.createUser(userInfo.getEmail(), userInfo.getSub(), OAuth2Provider.GOOGLE, userInfo.getGivenName(), userInfo.getFamilyName()));
+            userEntity =
+                Optional.of<UserEntity?>(userService.getUserBySubAndProvider(userInfo.getSub(), OAuth2Provider.GOOGLE))
+        } catch (e: AuthException) {
+            userEntity = Optional.of<UserEntity?>(
+                userService.createUser(
+                    userInfo.getEmail(),
+                    userInfo.getSub(),
+                    OAuth2Provider.GOOGLE,
+                    userInfo.getGivenName(),
+                    userInfo.getFamilyName()
+                )
+            )
         }
-        return userEntity.orElseThrow(() -> new AuthException("Undefined behavior, User was not found and was not created."));
+        return userEntity.orElseThrow {
+            AuthException(
+                "Undefined behavior, User was not found and was not created."
+            )
+        }
     }
 }

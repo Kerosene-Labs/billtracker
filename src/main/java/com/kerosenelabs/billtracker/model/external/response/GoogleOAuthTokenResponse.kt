@@ -1,26 +1,26 @@
-package com.kerosenelabs.billtracker.model.external.response;
+package com.kerosenelabs.billtracker.model.external.response
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty
+import lombok.AllArgsConstructor
+import lombok.Data
+import lombok.NoArgsConstructor
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GoogleOAuthTokenResponse {
+class GoogleOAuthTokenResponse {
     @JsonProperty("access_token")
-    private String accessToken;
+    private var accessToken: String? = null
 
     @JsonProperty("expires_in")
-    private Integer expiresIn;
+    private var expiresIn: Int? = null
 
     @JsonProperty("scope")
-    private String scope;
+    private var scope: String? = null
 
     @JsonProperty("token_type")
-    private String tokenType;
+    private var tokenType: String? = null
 
     @JsonProperty("id_token")
-    private String idToken;
+    private var idToken: String? = null
 }

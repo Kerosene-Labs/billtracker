@@ -1,45 +1,40 @@
-package com.kerosenelabs.billtracker.config;
+package com.kerosenelabs.billtracker.config
 
-import java.util.List;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.kerosenelabs.billtracker.argumentresolver.UserArgumentResolver;
+import com.kerosenelabs.billtracker.argumentresolver.UserArgumentResolver
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.http.MediaType
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
-    private UserArgumentResolver userArgumentResolver;
-
-    public WebConfig(UserArgumentResolver userArgumentResolver) {
-        this.userArgumentResolver = userArgumentResolver;
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(userArgumentResolver);
+open class WebConfig(private val userArgumentResolver: UserArgumentResolver) : WebMvcConfigurer {
+    override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
+        resolvers.add(userArgumentResolver)
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
+    open fun corsConfigurer(): WebMvcConfigurer {
+        return object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "https://localhost", "https://dev.billtracker.kerosenelabs.com", "https://billtracker.kerosenelabs.com")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                        .allowedHeaders("*")
-                        .allowCredentials(true)
-                        .maxAge(3600);
+                    .allowedOrigins(
+                        "http://localhost:5173",
+                        "https://localhost",
+                        "https://dev.billtracker.kerosenelabs.com",
+                        "https://billtracker.kerosenelabs.com"
+                    )
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                    .allowedHeaders("*")
+                    .allowCredentials(true)
+                    .maxAge(3600)
             }
-        };
+        }
     }
 
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.defaultContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+    override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {
+        configurer.defaultContentType(MediaType.APPLICATION_JSON)
     }
 }

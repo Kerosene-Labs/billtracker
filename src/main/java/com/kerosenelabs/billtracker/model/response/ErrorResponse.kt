@@ -1,12 +1,5 @@
-package com.kerosenelabs.billtracker.model.response;
+package com.kerosenelabs.billtracker.model.response
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ErrorResponse {
-    private String message;
-}
+data class ErrorResponse(
+    var message: String
+)

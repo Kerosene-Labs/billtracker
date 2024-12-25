@@ -1,6 +1,6 @@
-package com.kerosenelabs.billtracker.model;
+package com.kerosenelabs.billtracker.model
 
-public enum OAuth2Provider {
+enum class OAuth2Provider {
     GOOGLE,
     FACEBOOK,
     MICROSOFT,
