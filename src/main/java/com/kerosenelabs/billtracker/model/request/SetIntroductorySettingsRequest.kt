@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull
 import org.hibernate.validator.constraints.Length
 import java.time.LocalDate
 
-class SetIntroductorySettingsRequest(
+data class SetIntroductorySettingsRequest(
     @NotEmpty @NotNull @Length(min = 1, max = 30) val firstName: String,
     @NotEmpty @NotNull @Length(min = 1, max = 30) val lastName: String,
     @NotEmpty @NotNull @Length(min = 1, max = 30) val birthday: LocalDate,

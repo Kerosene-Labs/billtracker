@@ -40,7 +40,7 @@ class GoogleOAuth2ProviderService(
             .build()
 
         client.newCall(request).execute().use { response ->
-            val bodyContent = response.body()!!.string()
+            val bodyContent = response.body!!.string()
             if (!response.isSuccessful) {
                 throw AuthException("Got error response from provider: $bodyContent")
             }
@@ -62,7 +62,7 @@ class GoogleOAuth2ProviderService(
             .build()
         client.newCall(request).execute().use { response ->
             val mapper = ObjectMapper()
-            return mapper.readValue(response.body()!!.string(), GoogleOAuthUserInfoResponse::class.java)
+            return mapper.readValue(response.body!!.string(), GoogleOAuthUserInfoResponse::class.java)
         }
     }
 
@@ -75,18 +75,18 @@ class GoogleOAuth2ProviderService(
         val userInfo = getUserInfoFromProvider(oAuthTokenResponse.accessToken)
 
         // fetch our user or create them
-        var userEntity: Optional<UserEntity?> = Optional.empty()
+        var userEntity: Optional<UserEntity> = Optional.empty()
         try {
             userEntity =
-                Optional.of<UserEntity?>(userService.getUserBySubAndProvider(userInfo.getSub(), OAuth2Provider.GOOGLE))
+                Optional.of<UserEntity?>(userService.getUserBySubAndProvider(userInfo.sub, OAuth2Provider.GOOGLE))
         } catch (e: AuthException) {
             userEntity = Optional.of<UserEntity?>(
                 userService.createUser(
-                    userInfo.getEmail(),
-                    userInfo.getSub(),
+                    userInfo.email,
+                    userInfo.sub,
                     OAuth2Provider.GOOGLE,
-                    userInfo.getGivenName(),
-                    userInfo.getFamilyName()
+                    userInfo.givenName,
+                    userInfo.familyName
                 )
             )
         }
