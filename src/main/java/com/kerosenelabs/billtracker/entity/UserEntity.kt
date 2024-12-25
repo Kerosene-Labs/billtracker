@@ -2,8 +2,6 @@ package com.kerosenelabs.billtracker.entity
 
 import com.kerosenelabs.billtracker.model.OAuth2Provider
 import jakarta.persistence.*
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.time.LocalDate
 import java.util.*
 

@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface ExpenseEventRepository : JpaRepository<UUID?, ExpenseEventEntity?>
+interface ExpenseEventRepository : JpaRepository<ExpenseEventEntity, UUID>

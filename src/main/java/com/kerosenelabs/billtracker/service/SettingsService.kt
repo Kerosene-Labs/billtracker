@@ -28,6 +28,6 @@ class SettingsService(private val userRepository: UserRepository) {
      * @return
      */
     fun getIntroductorySettings(user: UserEntity): IntroductorySettings {
-        return IntroductorySettings(user.firstName, user.lastName, user.birthday)
+        return IntroductorySettings(user.firstName!!, user.lastName!!, user.birthday!!)
     }
 }

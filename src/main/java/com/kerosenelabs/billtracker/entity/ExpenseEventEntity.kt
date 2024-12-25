@@ -1,9 +1,6 @@
 package com.kerosenelabs.billtracker.entity
 
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.*

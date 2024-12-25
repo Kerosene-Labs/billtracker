@@ -94,7 +94,7 @@ class UserService(
      * @throws AuthException
      */
     @Throws(AuthException::class)
-    fun getUserBySubAndProvider(sub: String?, provider: OAuth2Provider?): UserEntity {
+    fun getUserBySubAndProvider(sub: String, provider: OAuth2Provider): UserEntity {
         return userRepository.findBySubAndProvider(sub, provider)?.orElseThrow(
             Supplier { AuthException("A user with that subject token on that provider could not be found.") })!!
     }

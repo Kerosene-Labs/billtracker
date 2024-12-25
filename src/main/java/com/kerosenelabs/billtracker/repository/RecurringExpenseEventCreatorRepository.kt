@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface RecurringExpenseEventCreatorRepository : JpaRepository<UUID?, RecurringExpenseEventCreatorEntity?>
+interface RecurringExpenseEventCreatorRepository : JpaRepository<RecurringExpenseEventCreatorEntity, UUID>
