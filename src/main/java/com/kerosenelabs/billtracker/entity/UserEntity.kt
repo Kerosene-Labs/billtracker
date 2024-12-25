@@ -1,47 +1,28 @@
-package com.kerosenelabs.billtracker.entity;
+package com.kerosenelabs.billtracker.entity
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
+import com.kerosenelabs.billtracker.model.OAuth2Provider
+import jakarta.persistence.*
+import lombok.Data
+import lombok.NoArgsConstructor
+import java.time.LocalDate
+import java.util.*
 
-import com.kerosenelabs.billtracker.model.OAuth2Provider;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
 @Table(name = "user", schema = "public")
 @Entity
-public class UserEntity {
+class UserEntity(
+    @field:Column(
+        nullable = false, unique = true
+    ) private var emailAddress: String, @field:Column(
+        nullable = false, unique = true
+    ) private var sub: String, private var provider: OAuth2Provider, firstName: String?, lastName: String?
+) {
+    constructor() : this("", "", OAuth2Provider.GOOGLE, null, null)
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private val id: UUID? = null
 
-    private String firstName = null;
-    private String lastName = null;
-    private LocalDate birthday = null;
-
-    @Column(nullable = false, unique = true)
-    private String emailAddress;
-
-    @Column(nullable = false, unique = true)
-    private String sub;
-
-    private OAuth2Provider provider;
-
-    public UserEntity(String emailAddress, String sub, OAuth2Provider provider, String firstName, String lastName) {
-        this.emailAddress = emailAddress;
-        this.sub = sub;
-        this.provider = provider;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private var firstName: String? = null
+    private var lastName: String? = null
+    private val birthday: LocalDate? = null
 }

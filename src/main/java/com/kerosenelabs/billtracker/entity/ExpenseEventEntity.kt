@@ -1,24 +1,33 @@
-package com.kerosenelabs.billtracker.entity;
+package com.kerosenelabs.billtracker.entity
 
-import jakarta.persistence.*;
+import jakarta.persistence.*
+import lombok.AllArgsConstructor
+import lombok.Data
+import lombok.NoArgsConstructor
+import java.math.BigDecimal
+import java.time.Instant
+import java.util.*
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.UUID;
-
+/**
+ * Represents an actual expense. This could be a one-off (typically indicated by
+ * [ExpenseEventEntity.recurringExpenseEventCreator] being `null`).
+ */
 @Entity
-public class ExpenseEventEntity {
+class ExpenseEventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private var id: UUID? = null
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private var amount: BigDecimal? = null
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private UserEntity user;
+    private var user: UserEntity? = null
 
     @Column(nullable = false)
-    private Instant date;
+    private var date: Instant? = null
+
+    @ManyToOne
+    private var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null
 }
