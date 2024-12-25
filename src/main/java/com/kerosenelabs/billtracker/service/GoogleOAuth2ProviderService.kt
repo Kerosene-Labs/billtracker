@@ -67,12 +67,12 @@ class GoogleOAuth2ProviderService(
     }
 
     @Throws(IOException::class, AuthException::class)
-    override fun handleCode(code: String): UserEntity? {
+    override fun handleCode(code: String): UserEntity {
         // get our token response from Google
         val oAuthTokenResponse = getTokenResponse(code)
 
         // get our email from the provider
-        val userInfo = getUserInfoFromProvider(oAuthTokenResponse.getAccessToken())
+        val userInfo = getUserInfoFromProvider(oAuthTokenResponse.accessToken)
 
         // fetch our user or create them
         var userEntity: Optional<UserEntity?> = Optional.empty()
