@@ -1,5 +1,6 @@
 package com.kerosenelabs.billtracker.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.kerosenelabs.billtracker.argumentresolver.UserArgumentResolver
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,6 +33,12 @@ open class WebConfig(private val userArgumentResolver: UserArgumentResolver) : W
                     .maxAge(3600)
             }
         }
+    }
+
+    @Bean
+    open fun objectMapper(): ObjectMapper {
+        return ObjectMapper()
+            .findAndRegisterModules();
     }
 
     override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {

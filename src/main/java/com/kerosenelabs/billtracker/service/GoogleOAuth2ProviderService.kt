@@ -22,7 +22,8 @@ class GoogleOAuth2ProviderService(
     @param:Value("\${billtracker.oauth2.providers.google.clientSecret}") private val clientSecret: String,
     @param:Value("\${billtracker.oauth2.providers.google.redirectUri}") private val redirectUri: String,
     @param:Value("\${billtracker.oauth2.providers.google.userInfoEndpoint}") private val userInfoEndpoint: String,
-    private val userService: UserService
+    private val userService: UserService,
+    private val objectMapper: ObjectMapper
 ) : OAuth2ProviderService {
     @Throws(IOException::class, AuthException::class)
     private fun getTokenResponse(code: String): GoogleOAuthTokenResponse {
@@ -44,8 +45,7 @@ class GoogleOAuth2ProviderService(
             if (!response.isSuccessful) {
                 throw AuthException("Got error response from provider: $bodyContent")
             }
-            val mapper = ObjectMapper()
-            val tokenResponse = mapper.readValue(
+            val tokenResponse = objectMapper.readValue(
                 bodyContent,
                 GoogleOAuthTokenResponse::class.java
             )
@@ -61,8 +61,7 @@ class GoogleOAuth2ProviderService(
             .addHeader("Authorization", String.format("Bearer %s", accessToken))
             .build()
         client.newCall(request).execute().use { response ->
-            val mapper = ObjectMapper()
-            return mapper.readValue(response.body!!.string(), GoogleOAuthUserInfoResponse::class.java)
+            return objectMapper.readValue(response.body!!.string(), GoogleOAuthUserInfoResponse::class.java)
         }
     }
 
