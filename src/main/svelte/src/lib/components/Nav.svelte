@@ -37,7 +37,7 @@
                     <p>Home</p>
                 </div>
             </NavItem>
-            <NavItem>
+            <NavItem on:click={() => {goto("/app/expenses"); toggleDrawer()}}>
                 <div class="flex flex-row gap-4 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="size-8">
