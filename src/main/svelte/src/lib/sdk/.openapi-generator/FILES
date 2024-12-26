@@ -4,6 +4,8 @@ apis/SettingsApi.ts
 apis/index.ts
 index.ts
 models/CreateOneOffExpenseRequest.ts
+models/ExpenseEvent.ts
+models/GetExpenseEventsResponse.ts
 models/GetIntroductorySettingsResponse.ts
 models/HandleOAuth2TokenResponse.ts
 models/HandleTokenRequest.ts
