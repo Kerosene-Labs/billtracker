@@ -8,10 +8,11 @@
     import {goto} from "$app/navigation";
 
     let amount: number = 0.00;
+    let description: string;
     let date: string = "";
 
     function createOneOff() {
-        new ExpensesApi(getPrivateApiConfig()).createOneOff({createOneOffExpenseRequest: {amount, date: new Date(date)}})
+        new ExpensesApi(getPrivateApiConfig()).createOneOff({createOneOffExpenseRequest: {amount, date: new Date(date), description: description}})
             .then((response) => {
                     addToToastQueue({message: "Successfully created one-off expense.", type: ToastType.SUCCESS})
                     goto("/app/expenses")
@@ -28,6 +29,7 @@
     <div class="flex flex-col gap-4">
         <div class="flex flex-col xl:flex-row gap-4 h-fit w-full">
             <LineEdit id="amount" type="number" label="Amount" bind:value={amount}></LineEdit>
+            <LineEdit id="description" type="text" label="Description" bind:value={description}></LineEdit>
             <LineEdit id="date" type="date" label="Date" bind:value={date}></LineEdit>
         </div>
         <Button on:click={createOneOff}>Create</Button>
