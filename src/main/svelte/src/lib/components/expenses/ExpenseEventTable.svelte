@@ -31,18 +31,18 @@
     </div>
     {#if expenses === undefined}
         <!--Loading Spinner-->
-        <div class="flex w-full justify-center p-12 scale-[180%]">
+        <div class="flex w-full justify-center p-6">
             <Spinner></Spinner>
         </div>
     {:else}
         <!--Content-->
         <div class="flex flex-col font-semibold text-white overflow-y-auto">
             {#each expenses as expense}
-                <div class="grid grid-cols-4 hover:bg-neutral-700/10 active:bg-neutral-700/20 p-4 transition-colors border-b border-b-neutral-700/50">
+                <div class="grid grid-cols-4 items-center hover:bg-neutral-700/10 active:bg-neutral-700/20 p-4 transition-colors border-b border-b-neutral-700/50">
                     <span>${expense.amount}</span>
                     <span>{expense.date.toDateString()}</span>
                     <span>...</span>
-                    <span>...</span>
+                    <span class="bg-neutral-900/50 p-2 rounded-xl font-mono text-neutral-300 text-sm">One-off</span>
                 </div>
             {/each}
         </div>
