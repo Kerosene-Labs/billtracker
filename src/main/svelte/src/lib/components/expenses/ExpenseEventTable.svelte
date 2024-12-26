@@ -23,7 +23,7 @@
 
 <div class="rounded-2xl bg-neutral-800 flex flex-col gap-2 text-center">
     <!-- Header -->
-    <div class="grid grid-cols-4 font-mono font-bold text-sm rounded-t-2xl bg-neutral-900 p-4">
+    <div class="grid grid-cols-4 font-mono font-bold text-sm rounded-t-2xl bg-neutral-900/80 p-4 text-neutral-400">
         <span>Amount</span>
         <span>Date</span>
         <span>Description</span>
@@ -36,7 +36,7 @@
         </div>
     {:else}
         <!--Content-->
-        <div class="flex flex-col gap-2 p-2">
+        <div class="flex flex-col gap-2 p-2 font-semibold text-white">
             {#each expenses as expense}
                 <div class="grid grid-cols-4">
                     <span>${expense.amount}</span>
