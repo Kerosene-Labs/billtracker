@@ -1,9 +1,6 @@
 package com.kerosenelabs.billtracker.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.util.*
 
 /**
@@ -14,6 +11,7 @@ import java.util.*
  * occurrences and will create the [ExpenseEventEntity] for these events.
  */
 @Entity
+@Table(name = "recurring_expense_event_creator", schema = "public")
 class RecurringExpenseEventCreatorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
