@@ -46,7 +46,7 @@
                 <div class="grid grid-cols-4 items-center hover:bg-neutral-700/10 active:bg-neutral-700/20 p-4 transition-colors border-b border-b-neutral-700/50">
                     <span>${expense.amount}</span>
                     <span>{expense.date.toDateString()}</span>
-                    <span>...</span>
+                    <span>{expense.description}</span>
                     <span class="bg-neutral-900/50 p-2 rounded-xl font-mono text-neutral-300 text-sm">One-off</span>
                 </div>
             {/each}
