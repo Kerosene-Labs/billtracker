@@ -31,6 +31,12 @@ export interface CreateOneOffExpenseRequest {
      * @memberof CreateOneOffExpenseRequest
      */
     date: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOneOffExpenseRequest
+     */
+    description: string;
 }
 
 /**
@@ -39,6 +45,7 @@ export interface CreateOneOffExpenseRequest {
 export function instanceOfCreateOneOffExpenseRequest(value: object): value is CreateOneOffExpenseRequest {
     if (!('amount' in value) || value['amount'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
     return true;
 }
 
@@ -54,6 +61,7 @@ export function CreateOneOffExpenseRequestFromJSONTyped(json: any, ignoreDiscrim
         
         'amount': json['amount'],
         'date': (new Date(json['date'])),
+        'description': json['description'],
     };
 }
 
@@ -70,6 +78,7 @@ export function CreateOneOffExpenseRequestToJSONTyped(value?: CreateOneOffExpens
         
         'amount': value['amount'],
         'date': ((value['date']).toISOString()),
+        'description': value['description'],
     };
 }
 

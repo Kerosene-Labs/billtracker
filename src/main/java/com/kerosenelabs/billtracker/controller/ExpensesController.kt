@@ -23,7 +23,7 @@ class ExpensesController(private val expenseService: ExpenseService) {
         @Parameter(hidden = true) user: UserEntity,
         @Valid @RequestBody request: CreateOneOffExpenseRequest,
     ) {
-        expenseService.createOneOffExpense(request.amount, user, request.date)
+        expenseService.createOneOffExpense(request.amount, user, request.date, request.description)
     }
 
     @GetMapping("/expenses")

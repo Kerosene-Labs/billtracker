@@ -20,11 +20,12 @@ class ExpenseService(
      * Creates a one-off expense. For example, one might create a one-off expense for purchasing dinner or groceries.
      * @see ExpenseEventEntity
      */
-    fun createOneOffExpense(amount: BigDecimal, user: UserEntity, date: Instant): ExpenseEventEntity {
+    fun createOneOffExpense(amount: BigDecimal, user: UserEntity, date: Instant, description: String): ExpenseEventEntity {
         val expenseEvent = ExpenseEventEntity(
             amount = amount,
             user = user,
             date = date,
+            description = description
         )
         return expenseEventRepository.save(expenseEvent)
     }
@@ -47,6 +48,7 @@ class ExpenseService(
             date = expenseEventEntity.date,
             expenseEventType = ExpenseEventType.ONE_OFF,
             amount = expenseEventEntity.amount,
+            description = expenseEventEntity.description,
         )
     }
 }

@@ -10,6 +10,7 @@ import java.util.*
  * [ExpenseEventEntity.recurringExpenseEventCreator] being `null`).
  */
 @Entity
+@Table(name = "expense_event", schema = "public")
 class ExpenseEventEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +25,9 @@ class ExpenseEventEntity(
 
     @Column(nullable = false)
     var date: Instant = Instant.now(),
+
+    @Column(nullable = false)
+    var description: String = "",
 
     @ManyToOne
     var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null

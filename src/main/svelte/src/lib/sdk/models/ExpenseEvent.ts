@@ -43,6 +43,12 @@ export interface ExpenseEvent {
      * @memberof ExpenseEvent
      */
     expenseEventType: ExpenseEventExpenseEventTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExpenseEvent
+     */
+    description: string;
 }
 
 
@@ -65,6 +71,7 @@ export function instanceOfExpenseEvent(value: object): value is ExpenseEvent {
     if (!('amount' in value) || value['amount'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
     if (!('expenseEventType' in value) || value['expenseEventType'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
     return true;
 }
 
@@ -82,6 +89,7 @@ export function ExpenseEventFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'amount': json['amount'],
         'date': (new Date(json['date'])),
         'expenseEventType': json['expenseEventType'],
+        'description': json['description'],
     };
 }
 
@@ -100,6 +108,7 @@ export function ExpenseEventToJSONTyped(value?: ExpenseEvent | null, ignoreDiscr
         'amount': value['amount'],
         'date': ((value['date']).toISOString()),
         'expenseEventType': value['expenseEventType'],
+        'description': value['description'],
     };
 }
 

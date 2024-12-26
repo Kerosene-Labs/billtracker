@@ -8,5 +8,6 @@ data class ExpenseEvent(
     val id: UUID,
     val amount: BigDecimal,
     val date: Instant,
-    val expenseEventType: ExpenseEventType
+    val expenseEventType: ExpenseEventType,
+    val description: String
 )
