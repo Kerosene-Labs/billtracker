@@ -5,6 +5,7 @@ import com.kerosenelabs.billtracker.model.request.HandleTokenRequest
 import com.kerosenelabs.billtracker.model.response.HandleOAuth2TokenResponse
 import com.kerosenelabs.billtracker.service.GoogleOAuth2ProviderService
 import com.kerosenelabs.billtracker.service.UserService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,6 +22,7 @@ class OAuth2Controller(
 ) {
     @PostMapping("/oauth/google")
     @ResponseStatus(HttpStatus.OK)
+    @SecurityRequirement(name = "")
     @Throws(
         IOException::class,
         AuthException::class
