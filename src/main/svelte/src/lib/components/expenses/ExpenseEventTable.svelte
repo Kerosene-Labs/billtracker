@@ -22,19 +22,24 @@
 </script>
 
 <div class="rounded-2xl bg-neutral-800 flex flex-col text-center overflow-clip max-h-[20rem]">
-    <!-- Header -->
-    <div class="grid grid-cols-4 font-mono font-bold text-sm rounded-t-2xl bg-neutral-900/80 p-4 text-neutral-400">
-        <span>Amount</span>
-        <span>Occurred On</span>
-        <span>Description</span>
-        <span>Type</span>
-    </div>
     {#if expenses === undefined}
         <!--Loading Spinner-->
         <div class="flex w-full justify-center p-6">
             <Spinner></Spinner>
         </div>
+    {:else if expenses !== undefined && expenses.length == 0}
+        <div class="flex p-8 items-center justify-center flex-col gap-2">
+            <p class="font-mono font-black text-2xl text-neutral-300">🦗...crickets</p>
+            <p class="text-neutral-100 font-semibold">There's no expenses here.</p>
+        </div>
     {:else}
+        <!-- Header -->
+        <div class="grid grid-cols-4 font-mono font-bold text-sm rounded-t-2xl bg-neutral-900/80 p-4 text-neutral-400">
+            <span>Amount</span>
+            <span>Occurred On</span>
+            <span>Description</span>
+            <span>Type</span>
+        </div>
         <!--Content-->
         <div class="flex flex-col font-semibold text-white overflow-y-auto">
             {#each expenses as expense}
