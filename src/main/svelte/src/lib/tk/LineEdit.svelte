@@ -2,7 +2,7 @@
     export let id: string;
     export let label: string;
     export let type: InputTypes
-    export let value: string | Date;
+    export let value: string | Date | number;
     type InputTypes =
         | "button"
         | "checkbox"

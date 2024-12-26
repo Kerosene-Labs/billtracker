@@ -24,13 +24,14 @@ export interface HandleOAuth2TokenResponse {
      * @type {string}
      * @memberof HandleOAuth2TokenResponse
      */
-    jwt?: string;
+    jwt: string;
 }
 
 /**
  * Check if a given object implements the HandleOAuth2TokenResponse interface.
  */
 export function instanceOfHandleOAuth2TokenResponse(value: object): value is HandleOAuth2TokenResponse {
+    if (!('jwt' in value) || value['jwt'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function HandleOAuth2TokenResponseFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'jwt': json['jwt'] == null ? undefined : json['jwt'],
+        'jwt': json['jwt'],
     };
 }
 

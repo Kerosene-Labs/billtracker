@@ -72,7 +72,7 @@
             class="inset-y-0 fixed bg-black/50 w-screen h-screen z-10 backdrop-blur-sm transition-all"
             class:opacity-0={!drawerOpen} class:opacity-[99%]={drawerOpen}
             class:pointer-events-none={!drawerOpen}></button>
-    <div id="pageContent" class="pt-14 h-full overflow-y-scroll">
+    <div id="pageContent" class="pt-14 h-full overflow-y-auto">
         <slot></slot>
     </div>
 </main>

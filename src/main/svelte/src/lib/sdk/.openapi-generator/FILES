@@ -1,7 +1,9 @@
+apis/ExpensesApi.ts
 apis/OAuth2Api.ts
 apis/SettingsApi.ts
 apis/index.ts
 index.ts
+models/CreateOneOffExpenseRequest.ts
 models/GetIntroductorySettingsResponse.ts
 models/HandleOAuth2TokenResponse.ts
 models/HandleTokenRequest.ts

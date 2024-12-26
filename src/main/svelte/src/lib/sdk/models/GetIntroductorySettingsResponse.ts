@@ -32,13 +32,14 @@ export interface GetIntroductorySettingsResponse {
      * @type {IntroductorySettings}
      * @memberof GetIntroductorySettingsResponse
      */
-    introductorySettings?: IntroductorySettings;
+    introductorySettings: IntroductorySettings;
 }
 
 /**
  * Check if a given object implements the GetIntroductorySettingsResponse interface.
  */
 export function instanceOfGetIntroductorySettingsResponse(value: object): value is GetIntroductorySettingsResponse {
+    if (!('introductorySettings' in value) || value['introductorySettings'] === undefined) return false;
     return true;
 }
 
@@ -52,7 +53,7 @@ export function GetIntroductorySettingsResponseFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'introductorySettings': json['introductorySettings'] == null ? undefined : IntroductorySettingsFromJSON(json['introductorySettings']),
+        'introductorySettings': IntroductorySettingsFromJSON(json['introductorySettings']),
     };
 }
 

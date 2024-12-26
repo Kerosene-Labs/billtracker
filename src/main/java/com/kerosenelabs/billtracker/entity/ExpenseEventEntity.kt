@@ -10,21 +10,21 @@ import java.util.*
  * [ExpenseEventEntity.recurringExpenseEventCreator] being `null`).
  */
 @Entity
-class ExpenseEventEntity {
+class ExpenseEventEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private var id: UUID? = null
+    var id: UUID? = null,
 
     @Column(nullable = false)
-    private var amount: BigDecimal? = null
+    var amount: BigDecimal = BigDecimal.ZERO,
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private var user: UserEntity? = null
+    var user: UserEntity = UserEntity(),
 
     @Column(nullable = false)
-    private var date: Instant? = null
+    var date: Instant = Instant.now(),
 
     @ManyToOne
-    private var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null
-}
+    var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null
+)

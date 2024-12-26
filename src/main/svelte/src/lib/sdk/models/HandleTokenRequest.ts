@@ -24,13 +24,14 @@ export interface HandleTokenRequest {
      * @type {string}
      * @memberof HandleTokenRequest
      */
-    code?: string;
+    code: string;
 }
 
 /**
  * Check if a given object implements the HandleTokenRequest interface.
  */
 export function instanceOfHandleTokenRequest(value: object): value is HandleTokenRequest {
+    if (!('code' in value) || value['code'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function HandleTokenRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'code': json['code'] == null ? undefined : json['code'],
+        'code': json['code'],
     };
 }
 
