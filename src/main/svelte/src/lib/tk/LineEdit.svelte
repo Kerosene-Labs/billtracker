@@ -46,5 +46,16 @@
     @apply focus:ring-2 focus:ring-neutral-400;
     @apply transition-all;
     @apply outline-none;
+    @apply font-semibold;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
   }
 </style>

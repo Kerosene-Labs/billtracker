@@ -6,8 +6,6 @@
   import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
-  import DollarEdit from "$lib/eureka/EurekaInput.svelte";
-  import EurekaInput from "$lib/eureka/EurekaInput.svelte";
 
   let amount: number = 0.0;
   let description: string;
@@ -43,13 +41,8 @@
 >
   <div class="flex flex-col gap-4">
     <div class="flex h-fit w-full flex-col gap-4 xl:flex-row">
-      <EurekaInput
-        id="amount"
-        label="Amount"
-        bind:value={amount}
-        type="number"
-        suffix="$"
-      ></EurekaInput>
+      <LineEdit id="amount" label="Dollars" type="number" bind:value={amount}
+      ></LineEdit>
       <LineEdit
         id="description"
         type="text"

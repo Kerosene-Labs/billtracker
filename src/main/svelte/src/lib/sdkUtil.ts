@@ -45,3 +45,17 @@ export function doLogOut() {
   sessionStorage.removeItem("jwt");
   goto("/");
 }
+
+export function isEmpty(value: any): boolean {
+  return (
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    value === 0 ||
+    value === false ||
+    (Array.isArray(value) && value.length === 0) ||
+    (typeof value === "object" &&
+      value !== null &&
+      Object.keys(value).length === 0)
+  );
+}
