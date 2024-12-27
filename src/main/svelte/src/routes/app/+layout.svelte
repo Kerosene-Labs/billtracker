@@ -1,7 +1,7 @@
 <script>
-    import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
+  import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
 </script>
 
 <BaseNavLayout>
-    <slot></slot>
+  <slot></slot>
 </BaseNavLayout>

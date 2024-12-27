@@ -1,7 +1,7 @@
 <script>
-    import BaseLayout from "$lib/components/BaseLayout.svelte";
+  import BaseLayout from "$lib/components/BaseLayout.svelte";
 </script>
 
 <BaseLayout justifyCenter={true}>
-    <slot></slot>
+  <slot></slot>
 </BaseLayout>
