@@ -6,7 +6,7 @@
   import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
-  import DollarEdit from "$lib/tk/DollarEdit.svelte";
+  import DollarEdit from "$lib/eureka/DollarEdit.svelte";
 
   let amount: number = 0.0;
   let description: string;
