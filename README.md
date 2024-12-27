@@ -27,6 +27,10 @@ As stated above, it is generally discouraged to self-host BillTracker. If you ca
 there is a desire in the future from the community to offer a self-hosted version, we're willing to revisit this concept.
 We do accept pull requests and issues from the community,
 
+## Issues
+
+Our Jira is at https://kerosenelabs.atlassian.net/jira/software/projects/BIL/boards/2
+
 ## License
 
 Please see [LICENSE.md](LICENSE.md).
