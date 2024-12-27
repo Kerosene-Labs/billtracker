@@ -9,7 +9,7 @@
   title="Introduction"
   subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend."
 >
-  <div class="xl:fex-col flex flex-row gap-2 text-nowrap">
+  <div class="flex flex-col xl:flex-row gap-2">
     <Button disabled={true}>Create Calendar-based</Button>
     <Button disabled={true}>Create Time-based</Button>
     <Button
