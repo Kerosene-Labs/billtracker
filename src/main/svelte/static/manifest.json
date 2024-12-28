@@ -4,8 +4,8 @@
   "description": "Track your personal income and expenses.",
   "start_url": "/login",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#171717",
+  "theme_color": "#262626",
   "icons": [
     {
       "src": "/icon-192px.png",

@@ -8,6 +8,5 @@ import java.time.Instant
 data class CreateOneOffExpenseRequest(
     @field:Positive val amount: BigDecimal,
     val date: Instant,
-    @field:NotBlank
-    val description: String,
+    @field:NotBlank val description: String,
 )

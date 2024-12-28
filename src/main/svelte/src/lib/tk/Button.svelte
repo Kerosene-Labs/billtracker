@@ -48,7 +48,6 @@
     @apply rounded-lg px-5 py-2;
     @apply text-neutral-500;
     @apply bg-neutral-800;
-    @apply focus:ring-2 focus:ring-neutral-400;
     @apply transition-all;
   }
 </style>

@@ -3,22 +3,31 @@
   import Button from "$lib/tk/Button.svelte";
   import { goto } from "$app/navigation";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
+  import Table from "$lib/components/Table.svelte";
+  import RecurringExpenseEventCreatorTable from "$lib/components/expenses/RecurringExpenseEventCreatorTable.svelte";
 </script>
 
 <Card
   title="Introduction"
-  subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend."
+  subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend. Let's get started!"
 >
-  <div class="xl:fex-col flex flex-row gap-2 text-nowrap">
-    <Button disabled={true}>Create Calendar-based</Button>
-    <Button disabled={true}>Create Time-based</Button>
+  <div class="flex flex-col xl:flex-row gap-2">
+    <Button on:click={() => {
+      goto("/app/expenses/createFixed")
+    }}>Create Fixed
+    </Button>
     <Button
       on:click={() => {
         goto("/app/expenses/createOneOff");
-      }}>Create One-off</Button
+      }}>Create One-off
+    </Button
     >
   </div>
 </Card>
-<Card title="Your Expenses">
+<Card title="Posted Expenses" subtitle="These should appear as charges in your bank account.">
   <ExpenseEventTable></ExpenseEventTable>
+</Card>
+<Card title="Recurring Expenses"
+      subtitle="Expenses that occur on a fixed schedule, like your mortgage. We can take care of posting these, and when they do, you'll see them under your Posted Expenses.">
+  <RecurringExpenseEventCreatorTable></RecurringExpenseEventCreatorTable>
 </Card>
