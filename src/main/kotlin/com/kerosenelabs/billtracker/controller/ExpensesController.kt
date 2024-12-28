@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Tag(name = "Expenses", description = "Personal expenses")
-class ExpensesController(private val expenseService: Expens eService) {
+class ExpensesController(private val expenseService: ExpenseService) {
     @PostMapping("/expenses/oneOffs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createOneOff(
@@ -53,14 +53,14 @@ class ExpensesController(private val expenseService: Expens eService) {
         )
     }
 
-    @GetMapping("/expenses/recurringCreators")
-    @ResponseStatus(HttpStatus.OK)
-    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
-        return GetExpenseEventsResponse(
-            expenseService.(user)
-                .stream()
-                .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
-                .toList()
-        )
-    }
+//    @GetMapping("/expenses/recurringCreators")
+//    @ResponseStatus(HttpStatus.OK)
+//    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
+//        return GetExpenseEventsResponse(
+//            expenseService.(user)
+//                .stream()
+//                .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
+//                .toList()
+//        )
+//    }
 }

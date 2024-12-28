@@ -89,10 +89,10 @@ class ExpenseService(
      * Map a RecurringExpenseEventCreatorEntity (aka an recurring expense event from the database) to a model
      * suitable for consumption by the user.
      */
-    fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreator): RecurringExpenseEventCreator {
-        return RecurringExpenseEventCreator(
-            id = recurringExpenseEventCreator.id!!,
-            recursEveryCalendarDays = recurringExpenseEventCreator,
-        )
-    }
+//    fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreator): RecurringExpenseEventCreator {
+//        return RecurringExpenseEventCreator(
+//            id = recurringExpenseEventCreator.id!!,
+////            recursEveryCalendarDays = recurringExpenseEventCreator,
+//        )
+//    }
 }
