@@ -1,4 +1,4 @@
-ikoname: Develop
+name: Develop
 on:
   push:
     branches:
