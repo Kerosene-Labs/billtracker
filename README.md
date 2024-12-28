@@ -6,9 +6,9 @@ An open source, transparent, independently auditable personal expense and income
 
 1. [Features](#features)
 2. [Installation](#installation)
-4. [Contributing](#contributing)
-5. [License](#license)
-6. [Contact](#contact)
+3. [Contributing](#contributing)
+4. [License](#license)
+5. [Contact](#contact)
 
 ## Features
 

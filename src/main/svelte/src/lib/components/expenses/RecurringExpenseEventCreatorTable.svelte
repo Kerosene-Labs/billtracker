@@ -6,6 +6,7 @@
   import Spinner from "$lib/tk/Spinner.svelte";
   import Button from "$lib/tk/Button.svelte";
   import Table from "$lib/components/Table.svelte";
+  import { goto } from "$app/navigation";
 
   let expenses: ExpenseEvent[] | undefined = undefined;
   let expenseRows: String[][] = [];
@@ -16,13 +17,18 @@
       .then((response) => {
         expenses = response.expenseEvents;
         expenses.forEach((expense) => {
-          expenseRows.push(["$" + expense.amount.toFixed(2), expense.date.toDateString(), expense.description, expense.expenseEventType])
-        })
+          expenseRows.push([
+            "$" + expense.amount.toFixed(2),
+            expense.date.toDateString(),
+            expense.description,
+            expense.expenseEventType,
+          ]);
+        });
       })
       .catch(async (error: ResponseError) => {
         addToToastQueue({
           message: "Failed to get Expenses.",
-          type: ToastType.ERROR
+          type: ToastType.ERROR,
         });
       });
   });
@@ -30,8 +36,12 @@
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-2 text-nowrap xl:ml-auto xl:flex-row">
-    <Button disabled={true}>Export CSV</Button>
-    <Button disabled={true}>Export JSON</Button>
+    <Button
+      on:click={() => {
+        goto("/app/expenses/createRecurringCreator");
+      }}
+      >Create Recurring
+    </Button>
   </div>
   {#if expenses === undefined}
     <!--Loading Spinner-->
@@ -46,6 +56,9 @@
       <p class="font-semibold text-neutral-100">There's no expenses here.</p>
     </div>
   {:else}
-    <Table headers={["Amount", "Interval", "Description", "Type"]} rows={expenseRows}></Table>
+    <Table
+      headers={["Amount", "Interval", "Description", "Type"]}
+      rows={expenseRows}
+    ></Table>
   {/if}
 </div>

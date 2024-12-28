@@ -1,7 +1,7 @@
 ---
 name: General Issue
 about: Use this for issues that don't fit other templates
-title: [GENERAL] 
+title: [GENERAL]
 ---
 
 **Description**
