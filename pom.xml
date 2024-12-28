@@ -200,7 +200,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.kerosenelabs.billtracker.BilltrackerApplication</mainClass>
+                    <mainClass>com.kerosenelabs.billtracker.BilltrackerApplicationKt</mainClass>
                 </configuration>
             </plugin>
         </plugins>
