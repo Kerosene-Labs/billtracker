@@ -55,7 +55,7 @@
       <p class="font-mono text-2xl font-black text-neutral-300">
         🦗...crickets
       </p>
-      <p class="font-semibold text-neutral-100">There's no expenses here.</p>
+      <p class="font-semibold text-neutral-100">There's nothing here.</p>
     </div>
   {:else}
     <Table

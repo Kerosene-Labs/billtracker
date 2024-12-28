@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Tag(name = "Expenses", description = "Personal expenses")
 class ExpensesController(private val expenseService: ExpenseService) {
-    @PostMapping("/expenses/oneOff")
+    @PostMapping("/expenses/oneOffs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createOneOff(
         @Parameter(hidden = true) user: UserEntity,
@@ -27,7 +27,7 @@ class ExpensesController(private val expenseService: ExpenseService) {
         expenseService.createOneOffExpense(request.amount, user, request.date, request.description)
     }
 
-    @PostMapping("/expenses/recurringCreator")
+    @PostMapping("/expenses/recurringCreators")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createRecurringExpenseCreator(
         @Parameter(hidden = true) user: UserEntity,
@@ -36,12 +36,23 @@ class ExpensesController(private val expenseService: ExpenseService) {
         expenseService.createRecurringExpenseEventCreator(
             request.amount,
             user,
-            request.recursEveryDays,
+            request.recursEveryCalendarDay,
             request.description
         )
     }
 
     @GetMapping("/expenses")
+    @ResponseStatus(HttpStatus.OK)
+    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetExpenseEventsResponse {
+        return GetExpenseEventsResponse(
+            expenseService.getExpenseEventEntitiesByUser(user)
+                .stream()
+                .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
+                .toList()
+        )
+    }
+
+    @GetMapping("/expenses/recurringCreators")
     @ResponseStatus(HttpStatus.OK)
     fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetExpenseEventsResponse {
         return GetExpenseEventsResponse(

@@ -43,13 +43,13 @@ class ExpenseService(
     fun createRecurringExpenseEventCreator(
         amount: BigDecimal,
         user: UserEntity,
-        recursEveryDays: Int,
+        recursEveryCalendarDay: Int,
         description: String
     ): RecurringExpenseEventCreatorEntity {
         return RecurringExpenseEventCreatorEntity(
             amount = amount,
             user = user,
-            recursEveryDays = recursEveryDays,
+            recursEveryCalendarDay = recursEveryCalendarDay,
             description = description
         )
     }

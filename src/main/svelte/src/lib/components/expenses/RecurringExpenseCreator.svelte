@@ -10,6 +10,29 @@
   let amount: number;
   let description: string;
   let calendarDay: number;
+
+  function createRecurringExpenseCreator() {
+    new ExpensesApi(getPrivateApiConfig())
+      .createRecurringExpenseCreator({
+        createRecurringExpenseCreatorRequest: {
+          amount: amount,
+          description: description,
+          recursEveryCalendarDay: calendarDay
+        },
+      })
+      .then((response) => {
+        addToToastQueue({
+          message: "Successfully created recurring expense.",
+          type: ToastType.SUCCESS,
+        });
+        goto("/app/expenses");
+      })
+      .catch(async (error: ResponseError) => {
+        await getErrorMessageFromSdk(error).then((msg) =>
+          addToToastQueue({ message: msg, type: ToastType.ERROR }),
+        );
+      });
+  }
 </script>
 
 <Card
@@ -30,6 +53,6 @@
                 min={1} max={28} title="Must be between 1 and 28, reprenseting all days possible within the shortest month."
       ></LineEdit>
     </div>
-    <Button disabled={true}>Create</Button>
+    <Button on:click={createRecurringExpenseCreator}>Create</Button>
   </div>
 </Card>

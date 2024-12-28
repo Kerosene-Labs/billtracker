@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './CreateOneOffExpenseRequest';
+export * from './CreateRecurringExpenseCreatorRequest';
 export * from './ExpenseEvent';
 export * from './GetExpenseEventsResponse';
 export * from './GetIntroductorySettingsResponse';
