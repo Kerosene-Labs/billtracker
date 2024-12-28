@@ -2,6 +2,7 @@ package com.kerosenelabs.billtracker.controller
 
 import com.kerosenelabs.billtracker.entity.UserEntity
 import com.kerosenelabs.billtracker.model.request.CreateOneOffExpenseRequest
+import com.kerosenelabs.billtracker.model.request.CreateRecurringExpenseCreatorRequest
 import com.kerosenelabs.billtracker.model.response.GetExpenseEventsResponse
 import com.kerosenelabs.billtracker.service.ExpenseService
 import io.swagger.v3.oas.annotations.Parameter
@@ -24,6 +25,20 @@ class ExpensesController(private val expenseService: ExpenseService) {
         @Valid @RequestBody request: CreateOneOffExpenseRequest,
     ) {
         expenseService.createOneOffExpense(request.amount, user, request.date, request.description)
+    }
+
+    @PostMapping("/expenses/recurringCreator")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun createRecurringExpenseCreator(
+        @Parameter(hidden = true) user: UserEntity,
+        @Valid @RequestBody request: CreateRecurringExpenseCreatorRequest
+    ) {
+        expenseService.createRecurringExpenseEventCreator(
+            request.amount,
+            user,
+            request.recursEveryDays,
+            request.description
+        )
     }
 
     @GetMapping("/expenses")

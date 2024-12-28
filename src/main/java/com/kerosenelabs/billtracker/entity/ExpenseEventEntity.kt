@@ -12,23 +12,15 @@ import java.util.*
 @Entity
 @Table(name = "expense_event", schema = "public")
 class ExpenseEventEntity(
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: UUID? = null,
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) var id: UUID? = null,
 
-    @Column(nullable = false)
-    var amount: BigDecimal = BigDecimal.ZERO,
+    @Column(nullable = false) var amount: BigDecimal = BigDecimal.ZERO,
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    var user: UserEntity = UserEntity(),
+    @ManyToOne @JoinColumn(nullable = false) var user: UserEntity = UserEntity(),
 
-    @Column(nullable = false)
-    var date: Instant = Instant.now(),
+    @Column(nullable = false) var date: Instant = Instant.now(),
 
-    @Column(nullable = false)
-    var description: String = "",
+    @Column(nullable = false) var description: String = "",
 
-    @ManyToOne
-    var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null
+    @ManyToOne var recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity? = null
 )

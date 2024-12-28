@@ -46,6 +46,6 @@
       <p class="font-semibold text-neutral-100">There's no expenses here.</p>
     </div>
   {:else}
-    <Table headers={["Amount", "Occurred On", "Description", "Type"]} rows={expenseRows}></Table>
+    <Table headers={["Amount", "Interval", "Description", "Type"]} rows={expenseRows}></Table>
   {/if}
 </div>

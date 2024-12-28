@@ -1,19 +1,19 @@
 package com.kerosenelabs.billtracker.entity
 
 import jakarta.persistence.*
-import java.util.*
+import java.math.BigDecimal
+import java.util.UUID
 
-/**
- * `RecurringExpenseEventCreators` are representations of expense events that recur on a regular basis. For example, a
- * Recurring Expense Event might be a bill that comes out on the first of every month, like a mortgage. Another example
- * is an event that occurs every thirty days, like a power bill. If you have a one-off expense, you would add an
- * [ExpenseEventEntity] directly. The application will run a scheduled task in Spring every minute to check for
- * occurrences and will create the [ExpenseEventEntity] for these events.
- */
 @Entity
 @Table(name = "recurring_expense_event_creator", schema = "public")
-class RecurringExpenseEventCreatorEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private var id: UUID? = null
-}
+class RecurringExpenseEventCreatorEntity(
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) var id: UUID? = null,
+    @Column(nullable = false) var recursEveryDays: Int = 0,
+    @Column(nullable = false) var amount: BigDecimal = BigDecimal.ZERO,
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    var user: UserEntity = UserEntity(),
+
+    @Column(nullable = false) var description: String = "",
+)
