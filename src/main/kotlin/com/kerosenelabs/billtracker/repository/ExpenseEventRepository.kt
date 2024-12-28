@@ -8,5 +8,5 @@ import java.util.*
 
 @Repository
 interface ExpenseEventRepository : JpaRepository<ExpenseEventEntity, UUID> {
-    fun findExpenseEventEntitiesByUser(user: UserEntity): List<ExpenseEventEntity>
+    fun findAllByUser(user: UserEntity): List<ExpenseEventEntity>
 }

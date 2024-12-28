@@ -4,6 +4,7 @@ import com.kerosenelabs.billtracker.entity.UserEntity
 import com.kerosenelabs.billtracker.model.request.CreateOneOffExpenseRequest
 import com.kerosenelabs.billtracker.model.request.CreateRecurringExpenseCreatorRequest
 import com.kerosenelabs.billtracker.model.response.GetExpenseEventsResponse
+import com.kerosenelabs.billtracker.model.response.GetRecurringExpenseEventCreatorsResponse
 import com.kerosenelabs.billtracker.service.ExpenseService
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Tag(name = "Expenses", description = "Personal expenses")
-class ExpensesController(private val expenseService: ExpenseService) {
+class ExpensesController(private val expenseService: Expens eService) {
     @PostMapping("/expenses/oneOffs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createOneOff(
@@ -54,9 +55,9 @@ class ExpensesController(private val expenseService: ExpenseService) {
 
     @GetMapping("/expenses/recurringCreators")
     @ResponseStatus(HttpStatus.OK)
-    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetExpenseEventsResponse {
+    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
         return GetExpenseEventsResponse(
-            expenseService.getExpenseEventEntitiesByUser(user)
+            expenseService.(user)
                 .stream()
                 .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
                 .toList()

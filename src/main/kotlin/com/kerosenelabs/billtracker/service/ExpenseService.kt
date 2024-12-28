@@ -5,6 +5,7 @@ import com.kerosenelabs.billtracker.entity.RecurringExpenseEventCreatorEntity
 import com.kerosenelabs.billtracker.entity.UserEntity
 import com.kerosenelabs.billtracker.model.expense.ExpenseEvent
 import com.kerosenelabs.billtracker.model.expense.ExpenseEventType
+import com.kerosenelabs.billtracker.model.expense.RecurringExpenseEventCreator
 import com.kerosenelabs.billtracker.repository.ExpenseEventRepository
 import com.kerosenelabs.billtracker.repository.RecurringExpenseEventCreatorRepository
 import org.hibernate.sql.ast.tree.expression.Every
@@ -59,7 +60,15 @@ class ExpenseService(
      * @see ExpenseEventEntity
      */
     fun getExpenseEventEntitiesByUser(user: UserEntity): List<ExpenseEventEntity> {
-        return expenseEventRepository.findExpenseEventEntitiesByUser(user)
+        return expenseEventRepository.findAllByUser(user)
+    }
+
+    /**
+     * Helper function to get all recurring expense event creators by a user.
+     * @see RecurringExpenseEventCreatorEntity
+     */
+    fun getRecurringExpenseEventCreatorsByUser(user: UserEntity): List<RecurringExpenseEventCreatorEntity> {
+        return recurringExpenseEventCreatorRepository.findAllByUser(user)
     }
 
     /**
@@ -73,6 +82,17 @@ class ExpenseService(
             expenseEventType = ExpenseEventType.ONE_OFF,
             amount = expenseEventEntity.amount,
             description = expenseEventEntity.description,
+        )
+    }
+
+    /**
+     * Map a RecurringExpenseEventCreatorEntity (aka an recurring expense event from the database) to a model
+     * suitable for consumption by the user.
+     */
+    fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreator): RecurringExpenseEventCreator {
+        return RecurringExpenseEventCreator(
+            id = recurringExpenseEventCreator.id!!,
+            recursEveryCalendarDays = recurringExpenseEventCreator,
         )
     }
 }
