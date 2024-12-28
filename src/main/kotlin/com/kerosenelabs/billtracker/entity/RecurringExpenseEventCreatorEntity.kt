@@ -8,7 +8,7 @@ import java.util.UUID
 @Table(name = "recurring_expense_event_creator", schema = "public")
 class RecurringExpenseEventCreatorEntity(
     @Id @GeneratedValue(strategy = GenerationType.AUTO) var id: UUID? = null,
-    @Column(nullable = false) var recursEveryDays: Int = 0,
+    @Column(nullable = false) var recursEveryCalendarDay: Int = 0,
     @Column(nullable = false) var amount: BigDecimal = BigDecimal.ZERO,
 
     @ManyToOne

@@ -4,6 +4,7 @@ apis/SettingsApi.ts
 apis/index.ts
 index.ts
 models/CreateOneOffExpenseRequest.ts
+models/CreateRecurringExpenseCreatorRequest.ts
 models/ExpenseEvent.ts
 models/GetExpenseEventsResponse.ts
 models/GetIntroductorySettingsResponse.ts

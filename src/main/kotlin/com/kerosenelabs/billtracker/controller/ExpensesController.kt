@@ -4,6 +4,7 @@ import com.kerosenelabs.billtracker.entity.UserEntity
 import com.kerosenelabs.billtracker.model.request.CreateOneOffExpenseRequest
 import com.kerosenelabs.billtracker.model.request.CreateRecurringExpenseCreatorRequest
 import com.kerosenelabs.billtracker.model.response.GetExpenseEventsResponse
+import com.kerosenelabs.billtracker.model.response.GetRecurringExpenseEventCreatorsResponse
 import com.kerosenelabs.billtracker.service.ExpenseService
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Tag(name = "Expenses", description = "Personal expenses")
 class ExpensesController(private val expenseService: ExpenseService) {
-    @PostMapping("/expenses/oneOff")
+    @PostMapping("/expenses/oneOffs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createOneOff(
         @Parameter(hidden = true) user: UserEntity,
@@ -27,7 +28,7 @@ class ExpensesController(private val expenseService: ExpenseService) {
         expenseService.createOneOffExpense(request.amount, user, request.date, request.description)
     }
 
-    @PostMapping("/expenses/recurringCreator")
+    @PostMapping("/expenses/recurringCreators")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun createRecurringExpenseCreator(
         @Parameter(hidden = true) user: UserEntity,
@@ -36,7 +37,7 @@ class ExpensesController(private val expenseService: ExpenseService) {
         expenseService.createRecurringExpenseEventCreator(
             request.amount,
             user,
-            request.recursEveryDays,
+            request.recursEveryCalendarDay,
             request.description
         )
     }
@@ -51,4 +52,15 @@ class ExpensesController(private val expenseService: ExpenseService) {
                 .toList()
         )
     }
+
+//    @GetMapping("/expenses/recurringCreators")
+//    @ResponseStatus(HttpStatus.OK)
+//    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
+//        return GetExpenseEventsResponse(
+//            expenseService.(user)
+//                .stream()
+//                .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
+//                .toList()
+//        )
+//    }
 }

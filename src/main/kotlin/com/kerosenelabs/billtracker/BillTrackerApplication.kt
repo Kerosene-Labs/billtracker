@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin
 )
 @CrossOrigin
 @SpringBootApplication
-open class BilltrackerApplication
+open class BillTrackerApplication
 
 fun main(args: Array<String>) {
-    runApplication<BilltrackerApplication>(*args)
+    runApplication<BillTrackerApplication>(*args)
 }

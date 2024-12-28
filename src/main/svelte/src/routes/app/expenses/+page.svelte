@@ -10,24 +10,20 @@
 <Card
   title="Introduction"
   subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend. Let's get started!"
+></Card>
+<Card
+  title="Posted Expenses"
+  subtitle="These should appear as charges in your bank account."
 >
-  <div class="flex flex-col xl:flex-row gap-2">
-    <Button on:click={() => {
-      goto("/app/expenses/createFixed")
-    }}>Create Fixed
-    </Button>
-    <Button
-      on:click={() => {
-        goto("/app/expenses/createOneOff");
-      }}>Create One-off
-    </Button
-    >
+  <div class="flex flex-col gap-2">
+    <ExpenseEventTable></ExpenseEventTable>
   </div>
 </Card>
-<Card title="Posted Expenses" subtitle="These should appear as charges in your bank account.">
-  <ExpenseEventTable></ExpenseEventTable>
-</Card>
-<Card title="Recurring Expenses"
-      subtitle="Expenses that occur on a fixed schedule, like your mortgage. We can take care of posting these, and when they do, you'll see them under your Posted Expenses.">
-  <RecurringExpenseEventCreatorTable></RecurringExpenseEventCreatorTable>
+<Card
+  title="Recurring Expenses"
+  subtitle="Expenses that occur on a fixed schedule, like your mortgage. We can take care of posting these, and when they do, you'll see them under your Posted Expenses."
+>
+  <div class="flex flex-col gap-2">
+    <RecurringExpenseEventCreatorTable></RecurringExpenseEventCreatorTable>
+  </div>
 </Card>

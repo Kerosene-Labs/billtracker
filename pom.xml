@@ -147,6 +147,7 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -200,7 +201,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.kerosenelabs.billtracker.BilltrackerApplicationKt</mainClass>
+                    <mainClass>com.kerosenelabs.billtracker.BillTrackerApplicationKt</mainClass>
                 </configuration>
             </plugin>
         </plugins>

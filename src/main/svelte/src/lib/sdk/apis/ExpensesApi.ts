@@ -16,17 +16,24 @@
 import * as runtime from '../runtime';
 import type {
   CreateOneOffExpenseRequest,
+  CreateRecurringExpenseCreatorRequest,
   GetExpenseEventsResponse,
 } from '../models/index';
 import {
     CreateOneOffExpenseRequestFromJSON,
     CreateOneOffExpenseRequestToJSON,
+    CreateRecurringExpenseCreatorRequestFromJSON,
+    CreateRecurringExpenseCreatorRequestToJSON,
     GetExpenseEventsResponseFromJSON,
     GetExpenseEventsResponseToJSON,
 } from '../models/index';
 
 export interface CreateOneOffRequest {
     createOneOffExpenseRequest: CreateOneOffExpenseRequest;
+}
+
+export interface CreateRecurringExpenseCreatorOperationRequest {
+    createRecurringExpenseCreatorRequest: CreateRecurringExpenseCreatorRequest;
 }
 
 /**
@@ -73,6 +80,47 @@ export class ExpensesApi extends runtime.BaseAPI {
      */
     async createOneOff(requestParameters: CreateOneOffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.createOneOffRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     */
+    async createRecurringExpenseCreatorRaw(requestParameters: CreateRecurringExpenseCreatorOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['createRecurringExpenseCreatorRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createRecurringExpenseCreatorRequest',
+                'Required parameter "createRecurringExpenseCreatorRequest" was null or undefined when calling createRecurringExpenseCreator().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/expenses/recurringCreator`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateRecurringExpenseCreatorRequestToJSON(requestParameters['createRecurringExpenseCreatorRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async createRecurringExpenseCreator(requestParameters: CreateRecurringExpenseCreatorOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createRecurringExpenseCreatorRaw(requestParameters, initOverrides);
     }
 
     /**
