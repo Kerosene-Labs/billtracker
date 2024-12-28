@@ -11,5 +11,5 @@ h2 {
 }
 
 p.subtitle {
-  @apply font-semibold text-neutral-300;
+  @apply font-semibold text-neutral-400;
 }

@@ -4,11 +4,12 @@
   import { goto } from "$app/navigation";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
   import Table from "$lib/components/Table.svelte";
+  import RecurringExpenseEventCreatorTable from "$lib/components/expenses/RecurringExpenseEventCreatorTable.svelte";
 </script>
 
 <Card
   title="Introduction"
-  subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend."
+  subtitle="For example, an expense could be your mortgage payment, a power bill, or dinner with a friend. Let's get started!"
 >
   <div class="flex flex-col xl:flex-row gap-2">
     <Button on:click={() => {
@@ -23,10 +24,10 @@
     >
   </div>
 </Card>
-<Card title="Posted Expenses">
+<Card title="Posted Expenses" subtitle="These should appear as charges in your bank account.">
   <ExpenseEventTable></ExpenseEventTable>
 </Card>
 <Card title="Recurring Expenses"
-      subtitle="Expenses that occur on a fixed schedule, like your mortgage. When these post, you'll see them under your Posted Expenses.">
-  <Table headers={[""]}></Table>
+      subtitle="Expenses that occur on a fixed schedule, like your mortgage. We can take care of posting these, and when they do, you'll see them under your Posted Expenses.">
+  <RecurringExpenseEventCreatorTable></RecurringExpenseEventCreatorTable>
 </Card>

@@ -10,7 +10,7 @@
         <h1>{title}</h1>
       {/if}
       {#if subtitle}
-        <p class="subtitle">{subtitle}</p>
+        <p class="subtitle pt-2">{subtitle}</p>
       {/if}
     </div>
   {/if}
