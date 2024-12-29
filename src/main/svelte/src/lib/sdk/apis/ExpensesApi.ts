@@ -18,6 +18,7 @@ import type {
   CreateOneOffExpenseRequest,
   CreateRecurringExpenseCreatorRequest,
   GetExpenseEventsResponse,
+  GetRecurringExpenseEventCreatorsResponse,
 } from '../models/index';
 import {
     CreateOneOffExpenseRequestFromJSON,
@@ -26,6 +27,8 @@ import {
     CreateRecurringExpenseCreatorRequestToJSON,
     GetExpenseEventsResponseFromJSON,
     GetExpenseEventsResponseToJSON,
+    GetRecurringExpenseEventCreatorsResponseFromJSON,
+    GetRecurringExpenseEventCreatorsResponseToJSON,
 } from '../models/index';
 
 export interface CreateOneOffRequest {
@@ -66,7 +69,7 @@ export class ExpensesApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/expenses/oneOff`,
+            path: `/expenses/oneOffs`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -107,7 +110,7 @@ export class ExpensesApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/expenses/recurringCreator`,
+            path: `/expenses/recurringCreators`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -152,6 +155,38 @@ export class ExpensesApi extends runtime.BaseAPI {
      */
     async getExpenses(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetExpenseEventsResponse> {
         const response = await this.getExpensesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getRecurringExpenseCreatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRecurringExpenseEventCreatorsResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/expenses/recurringCreators`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRecurringExpenseEventCreatorsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getRecurringExpenseCreators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRecurringExpenseEventCreatorsResponse> {
+        const response = await this.getRecurringExpenseCreatorsRaw(initOverrides);
         return await response.value();
     }
 

@@ -47,11 +47,13 @@ class ExpenseService(
         recursEveryCalendarDay: Int,
         description: String
     ): RecurringExpenseEventCreatorEntity {
-        return RecurringExpenseEventCreatorEntity(
-            amount = amount,
-            user = user,
-            recursEveryCalendarDay = recursEveryCalendarDay,
-            description = description
+        return recurringExpenseEventCreatorRepository.save(
+            RecurringExpenseEventCreatorEntity(
+                amount = amount,
+                user = user,
+                recursEveryCalendarDay = recursEveryCalendarDay,
+                description = description
+            )
         )
     }
 
@@ -89,10 +91,12 @@ class ExpenseService(
      * Map a RecurringExpenseEventCreatorEntity (aka an recurring expense event from the database) to a model
      * suitable for consumption by the user.
      */
-//    fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreator): RecurringExpenseEventCreator {
-//        return RecurringExpenseEventCreator(
-//            id = recurringExpenseEventCreator.id!!,
-////            recursEveryCalendarDays = recurringExpenseEventCreator,
-//        )
-//    }
+    fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(entity: RecurringExpenseEventCreatorEntity): RecurringExpenseEventCreator {
+        return RecurringExpenseEventCreator(
+            id = entity.id!!,
+            description = entity.description,
+            amount = entity.amount,
+            recursEveryCalendarDay = entity.recursEveryCalendarDay,
+        )
+    }
 }
