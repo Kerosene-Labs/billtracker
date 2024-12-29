@@ -13,8 +13,10 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @Tag(name = "Expenses", description = "Personal expenses")
@@ -55,11 +57,18 @@ class ExpensesController(private val expenseService: ExpenseService) {
 
     @GetMapping("/expenses/recurringCreators")
     @ResponseStatus(HttpStatus.OK)
-    fun getRecurringExpenseCreators(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
+    fun getRecurringExpenseCreators(
+        @Parameter(hidden = true) user: UserEntity,
+        @RequestParam(name = "ids", required = false) ids: List<UUID>?
+    ): GetRecurringExpenseEventCreatorsResponse {
         return GetRecurringExpenseEventCreatorsResponse(
-            expenseService.getRecurringExpenseEventCreatorsByUser(user)
+            expenseService.getRecurringExpenseEventCreatorsByUser(user, Optional.ofNullable(ids))
                 .stream()
-                .map { entity -> expenseService.mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(entity) }
+                .map { entity ->
+                    expenseService.mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(
+                        entity
+                    )
+                }
                 .toList()
         )
     }

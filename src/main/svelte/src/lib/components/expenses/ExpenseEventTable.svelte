@@ -27,7 +27,7 @@
       })
       .catch(async (error: ResponseError) => {
         addToToastQueue({
-          message: "Failed to get Expenses.",
+          message: "Failed to get expenses.",
           type: ToastType.ERROR,
         });
       });

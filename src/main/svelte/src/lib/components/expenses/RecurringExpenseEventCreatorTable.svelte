@@ -43,7 +43,7 @@
       })
       .catch(async (error: ResponseError) => {
         addToToastQueue({
-          message: "Failed to get Expenses.",
+          message: "Failed to get recurring expenses.",
           type: ToastType.ERROR,
         });
       });

@@ -16,6 +16,8 @@ import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 
 @Service
@@ -60,11 +62,12 @@ class ExpenseService(
     }
 
     /**
-     * Helper function to get all recurring expense event creators by a user.
+     * Helper function to get all recurring expense event creators by a user. Optionally, you can pass in IDs to
+     * further filter by Recurring Expense Event Creator ID.
      * @see RecurringExpenseEventCreatorEntity
      */
-    fun getRecurringExpenseEventCreatorsByUser(user: UserEntity): List<RecurringExpenseEventCreatorEntity> {
-        return recurringExpenseEventCreatorRepository.findAllByUser(user)
+    fun getRecurringExpenseEventCreatorsByUser(user: UserEntity, ids: Optional<List<UUID>> = Optional.empty()): List<RecurringExpenseEventCreatorEntity> {
+        return recurringExpenseEventCreatorRepository.findAllByUserAndOptionalIds(user, ids.getOrNull())
     }
 
     /**
