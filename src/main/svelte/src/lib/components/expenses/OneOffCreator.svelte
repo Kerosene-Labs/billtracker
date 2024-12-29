@@ -45,6 +45,7 @@
       <ENumberInput
         id="amount"
         label="Dollars"
+        prefix="$"
         bind:value={amount}
       ></ENumberInput>
       <LineEdit
