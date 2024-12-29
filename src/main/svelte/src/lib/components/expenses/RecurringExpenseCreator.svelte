@@ -17,7 +17,7 @@
         createRecurringExpenseCreatorRequest: {
           amount: amount,
           description: description,
-          recursEveryCalendarDay: calendarDay
+          recursEveryCalendarDay: calendarDay,
         },
       })
       .then((response) => {
@@ -49,8 +49,14 @@
         label="Description"
         bind:value={description}
       ></LineEdit>
-      <LineEdit id="calendarDay" label="Calendar Day" type="number" bind:value={calendarDay}
-                min={1} max={28} title="Must be between 1 and 28, reprenseting all days possible within the shortest month."
+      <LineEdit
+        id="calendarDay"
+        label="Calendar Day"
+        type="number"
+        bind:value={calendarDay}
+        min={1}
+        max={28}
+        title="Must be between 1 and 28, reprenseting all days possible within the shortest month."
       ></LineEdit>
     </div>
     <Button on:click={createRecurringExpenseCreator}>Create</Button>

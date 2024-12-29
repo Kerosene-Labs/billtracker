@@ -1,20 +1,29 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { getPrivateApiConfig } from "$lib/sdkUtil";
-  import { type ExpenseEvent, ExpensesApi, type RecurringExpenseEventCreator, ResponseError } from "$lib/sdk";
+  import {
+    type ExpenseEvent,
+    ExpensesApi,
+    type RecurringExpenseEventCreator,
+    ResponseError,
+  } from "$lib/sdk";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import Spinner from "$lib/tk/Spinner.svelte";
   import Button from "$lib/tk/Button.svelte";
   import Table from "$lib/components/Table.svelte";
   import { goto } from "$app/navigation";
 
-  let recurringExpenseEventCreators: RecurringExpenseEventCreator[] | undefined = undefined;
+  let recurringExpenseEventCreators:
+    | RecurringExpenseEventCreator[]
+    | undefined = undefined;
   let rows: String[][] = [];
 
   function getOrdinal(num: number) {
     const suffixes = ["th", "st", "nd", "rd"];
     const value = num % 100;
-    return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+    return (
+      num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0])
+    );
   }
 
   onMount(() => {
@@ -22,22 +31,23 @@
       .getRecurringExpenseCreators()
       .then((response) => {
         recurringExpenseEventCreators = response.recurringExpenseEventCreators;
-        recurringExpenseEventCreators.forEach((recurringExpenseEventCreator) => {
-          rows.push([
-            "$" + recurringExpenseEventCreator.amount.toFixed(2),
-            getOrdinal(recurringExpenseEventCreator.recursEveryCalendarDay),
-            recurringExpenseEventCreator.description
-          ]);
+        recurringExpenseEventCreators.forEach(
+          (recurringExpenseEventCreator) => {
+            rows.push([
+              "$" + recurringExpenseEventCreator.amount.toFixed(2),
+              getOrdinal(recurringExpenseEventCreator.recursEveryCalendarDay),
+              recurringExpenseEventCreator.description,
+            ]);
+          },
+        );
+      })
+      .catch(async (error: ResponseError) => {
+        addToToastQueue({
+          message: "Failed to get Expenses.",
+          type: ToastType.ERROR,
+        });
       });
-  })
-    .catch(async (error: ResponseError) => {
-      addToToastQueue({
-        message: "Failed to get Expenses.",
-        type: ToastType.ERROR
-      });
-    });
-  })
-  ;
+  });
 </script>
 
 <div class="flex flex-col gap-4">
@@ -46,7 +56,7 @@
       on:click={() => {
         goto("/app/expenses/createRecurringCreator");
       }}
-    >Create Recurring
+      >Create Recurring
     </Button>
   </div>
   {#if recurringExpenseEventCreators === undefined}
@@ -62,9 +72,7 @@
       <p class="font-semibold text-neutral-100">There's nothing here.</p>
     </div>
   {:else}
-    <Table
-      headers={["Amount", "Interval (every month)", "Description"]}
-      rows={rows}
+    <Table headers={["Amount", "Interval (every month)", "Description"]} {rows}
     ></Table>
   {/if}
 </div>
