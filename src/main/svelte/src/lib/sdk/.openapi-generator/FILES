@@ -8,9 +8,11 @@ models/CreateRecurringExpenseCreatorRequest.ts
 models/ExpenseEvent.ts
 models/GetExpenseEventsResponse.ts
 models/GetIntroductorySettingsResponse.ts
+models/GetRecurringExpenseEventCreatorsResponse.ts
 models/HandleOAuth2TokenResponse.ts
 models/HandleTokenRequest.ts
 models/IntroductorySettings.ts
+models/RecurringExpenseEventCreator.ts
 models/SetIntroductorySettingsRequest.ts
 models/index.ts
 runtime.ts

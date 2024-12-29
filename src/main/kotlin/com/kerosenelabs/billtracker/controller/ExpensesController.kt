@@ -53,14 +53,14 @@ class ExpensesController(private val expenseService: ExpenseService) {
         )
     }
 
-//    @GetMapping("/expenses/recurringCreators")
-//    @ResponseStatus(HttpStatus.OK)
-//    fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
-//        return GetExpenseEventsResponse(
-//            expenseService.(user)
-//                .stream()
-//                .map { entity -> expenseService.mapExpenseEventEntityToExpenseEvent(entity) }
-//                .toList()
-//        )
-//    }
+    @GetMapping("/expenses/recurringCreators")
+    @ResponseStatus(HttpStatus.OK)
+    fun getRecurringExpenseCreators(@Parameter(hidden = true) user: UserEntity): GetRecurringExpenseEventCreatorsResponse {
+        return GetRecurringExpenseEventCreatorsResponse(
+            expenseService.getRecurringExpenseEventCreatorsByUser(user)
+                .stream()
+                .map { entity -> expenseService.mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(entity) }
+                .toList()
+        )
+    }
 }
