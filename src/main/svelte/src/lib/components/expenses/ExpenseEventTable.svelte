@@ -5,7 +5,7 @@
   import { addToToastQueue, ToastType } from "$lib/toast";
   import Spinner from "$lib/tk/Spinner.svelte";
   import Button from "$lib/tk/Button.svelte";
-  import Table from "$lib/components/Table.svelte";
+  import Table from "$lib/eureka/table/Table.svelte";
   import { goto } from "$app/navigation";
 
   let expenses: ExpenseEvent[] | undefined = undefined;
