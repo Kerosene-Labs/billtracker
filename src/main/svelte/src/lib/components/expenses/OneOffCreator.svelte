@@ -42,11 +42,7 @@
 >
   <div class="flex flex-col gap-4">
     <div class="flex h-fit w-full flex-col gap-4 xl:flex-row">
-      <ENumberInput
-        id="amount"
-        label="Dollars"
-        prefix="$"
-        bind:value={amount}
+      <ENumberInput id="amount" label="Dollars" prefix="$" bind:value={amount}
       ></ENumberInput>
       <LineEdit
         id="description"

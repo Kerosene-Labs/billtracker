@@ -6,9 +6,11 @@
 <div class="card drop-shadow-2xl">
   {#if title || subtitle}
     <div class="pb-4">
-      {#if title}
-        <h1>{title}</h1>
-      {/if}
+      <div class="flex flex-row items-center gap-4">
+        {#if title}
+          <h1>{title}</h1>
+        {/if}
+      </div>
       {#if subtitle}
         <p class="subtitle pt-2">{subtitle}</p>
       {/if}

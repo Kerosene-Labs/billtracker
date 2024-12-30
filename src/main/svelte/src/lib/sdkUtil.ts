@@ -43,7 +43,7 @@ export async function getErrorMessageFromSdk(
 export function doLogOut() {
   addToToastQueue({ message: "You've been signed out.", type: ToastType.INFO });
   sessionStorage.removeItem("jwt");
-  goto("/");
+  goto("/login");
 }
 
 export function isEmpty(value: any): boolean {

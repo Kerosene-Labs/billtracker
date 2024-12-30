@@ -10,37 +10,39 @@
 
 <div class="flex flex-col">
   <label class="text-sm font-semibold uppercase text-neutral-600" for={id}
-  >{label}</label
+    >{label}</label
   >
-  <div class="flex flex-row items-center gap-2 bg-neutral-900/40 rounded-lg pl-4">
+  <div
+    class="flex flex-row items-center gap-2 rounded-lg bg-neutral-900/40 pl-4"
+  >
     {#if prefix}
-      <span class="text-neutral-500 font-mono font-bold">{prefix}</span>
+      <span class="font-mono font-bold text-neutral-500">{prefix}</span>
     {/if}
     <input bind:value {id} {min} {max} {required} type="number" />
   </div>
 </div>
 
 <style lang="postcss">
-    input {
-        @apply w-full;
-        @apply rounded-lg px-5 py-2;
-        @apply text-neutral-300;
-        @apply bg-neutral-800;
-        @apply hover:bg-neutral-700/70;
-        @apply focus:bg-neutral-700/95;
-        @apply focus:ring-2 focus:ring-neutral-400;
-        @apply transition-all;
-        @apply outline-none;
-        @apply font-semibold;
-    }
+  input {
+    @apply w-full;
+    @apply rounded-lg px-5 py-2;
+    @apply text-neutral-300;
+    @apply bg-neutral-800;
+    @apply hover:bg-neutral-700/70;
+    @apply focus:bg-neutral-700/95;
+    @apply focus:ring-2 focus:ring-neutral-400;
+    @apply transition-all;
+    @apply outline-none;
+    @apply font-semibold;
+  }
 
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
-    input[type="number"] {
-        -moz-appearance: textfield; /* For Firefox */
-    }
+  input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+  }
 </style>

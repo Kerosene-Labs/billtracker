@@ -4,7 +4,7 @@
   import { goto } from "$app/navigation";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
   import Table from "$lib/components/Table.svelte";
-  import RecurringExpenseEventCreatorTable from "$lib/components/expenses/RecurringExpenseEventCreatorTable.svelte";
+  import RecurringExpenseEventCreatorTable from "./recurring/RecurringExpenseEventCreatorTable.svelte";
 </script>
 
 <Card
