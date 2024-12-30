@@ -1,8 +1,5 @@
 <script lang="ts">
-  import Button from "$lib/tk/Button.svelte";
-
-  export let headers: String[] = ["Col 1", "Col 2", "Col 3"];
-  export let rows: String[][] = [["Val 1", "Val 2", "Val 3"]];
+  export let headers: string[] = ["Col 1", "Col 2", "Col 3"];
 </script>
 
 <div class="flex w-full overflow-auto rounded-xl bg-neutral-800">
@@ -17,17 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each rows as row}
-        <tr
-          class="transition-colors hover:bg-neutral-700/20 active:bg-neutral-900/50"
-        >
-          {#each row as cell}
-            <td class="p-4 text-center font-semibold text-neutral-200"
-              >{cell}</td
-            >
-          {/each}
-        </tr>
-      {/each}
+      <slot></slot>
     </tbody>
   </table>
 </div>

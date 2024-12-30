@@ -1,10 +1,9 @@
 <script>
   import Card from "$lib/tk/Card.svelte";
-  import Button from "$lib/tk/Button.svelte";
-  import { goto } from "$app/navigation";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
-  import Table from "$lib/eureka/table/Table.svelte";
   import RecurringExpenseEventCreatorTable from "./recurring/RecurringExpenseEventCreatorTable.svelte";
+
+  document.title = "Expenses | BillTracker";
 </script>
 
 <Card

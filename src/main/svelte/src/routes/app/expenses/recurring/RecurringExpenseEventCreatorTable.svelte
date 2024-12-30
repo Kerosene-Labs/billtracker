@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import { getPrivateApiConfig } from "$lib/sdkUtil";
   import {
-    type ExpenseEvent,
     ExpensesApi,
     type RecurringExpenseEventCreator,
     ResponseError,
@@ -12,11 +11,11 @@
   import Button from "$lib/tk/Button.svelte";
   import Table from "$lib/eureka/table/Table.svelte";
   import { goto } from "$app/navigation";
+  import TableRow from "$lib/eureka/table/TableRow.svelte";
 
   let recurringExpenseEventCreators:
     | RecurringExpenseEventCreator[]
     | undefined = undefined;
-  let rows: String[][] = [];
 
   function getOrdinal(num: number) {
     const suffixes = ["th", "st", "nd", "rd"];
@@ -31,15 +30,6 @@
       .getRecurringExpenseCreators()
       .then((response) => {
         recurringExpenseEventCreators = response.recurringExpenseEventCreators;
-        recurringExpenseEventCreators.forEach(
-          (recurringExpenseEventCreator) => {
-            rows.push([
-              "$" + recurringExpenseEventCreator.amount.toFixed(2),
-              getOrdinal(recurringExpenseEventCreator.recursEveryCalendarDay),
-              recurringExpenseEventCreator.description,
-            ]);
-          },
-        );
       })
       .catch(async (error: ResponseError) => {
         addToToastQueue({
@@ -72,7 +62,19 @@
       <p class="font-semibold text-neutral-100">There's nothing here.</p>
     </div>
   {:else}
-    <Table headers={["Amount", "Interval (every month)", "Description"]} {rows}
-    ></Table>
+    <Table headers={["Amount", "Interval (every month)", "Description"]}>
+      {#each recurringExpenseEventCreators as row}
+        <TableRow
+          on:click={() => {
+            goto("/app/expenses/recurring/" + row.id);
+          }}
+          row={[
+            row.amount.toString(),
+            row.recursEveryCalendarDay.toString(),
+            row.description,
+          ]}
+        ></TableRow>
+      {/each}
+    </Table>
   {/if}
 </div>
