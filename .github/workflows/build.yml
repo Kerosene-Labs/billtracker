@@ -5,7 +5,7 @@ on:
     #   - 'src/**'
 
 jobs:
-  backend:
+  build_backend:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -44,3 +44,23 @@ jobs:
           name: backend
           path: |
             ./backend/target/billtracker-backend-1.0.0.jar
+  build_frontend:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+      security-events: write
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/set-target
+      
+      - name: Install NPM Packages
+        run: npm i
+      
+      - name: Build NPM Packages
+        run: 
