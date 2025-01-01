@@ -1,8 +1,9 @@
 name: Build
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'src/**'
+
 jobs:
   backend:
     runs-on: ubuntu-24.04
