@@ -1,8 +1,7 @@
 FROM ghcr.io/graalvm/jdk-community:21
-ARG PROJECT_VERSION=0.0.0
 
 # copy the app
-COPY billtracker-backend-${PROJECT_VERSION}.jar /app/app.jar
+COPY billtracker-backend-1.0.0.jar /app/app.jar
 
 # run the app
 WORKDIR /app

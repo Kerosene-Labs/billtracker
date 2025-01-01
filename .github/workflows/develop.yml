@@ -1,8 +1,10 @@
 name: Develop
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+# on:
+  # push:
+    # branches:
+    #   - main
 
 jobs:
   ###
@@ -46,7 +48,7 @@ jobs:
         with:
           name: backend
           path: |
-            target/billtracker-backend-${{ github.sha }}.jar
+            ./backend/target/billtracker-backend-${{ github.sha }}.jar
 
   build_frontend:
     runs-on: ubuntu-latest
@@ -97,7 +99,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: backend
+          path: ./backend
 
+      - run: ls
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -111,7 +115,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./backend
           push: true
           tags: ghcr.io/kerosene-labs/billtracker-backend:${{ github.sha }}
           build-args: PROJECT_VERSION=${{ github.sha }}
