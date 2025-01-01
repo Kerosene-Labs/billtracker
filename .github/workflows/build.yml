@@ -1,0 +1,42 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  backend:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "corretto"
+          server-id: github
+          settings-path: ${{ github.workspace }}
+          cache: "maven"
+      
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        run: ./mvnw -B package --file pom.xml -Dproject.version=${{ github.sha }}
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend
+          path: |
+            ./backend/target/billtracker-backend-${{ github.sha }}.jar
