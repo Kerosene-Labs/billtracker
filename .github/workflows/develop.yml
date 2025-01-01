@@ -41,14 +41,14 @@ jobs:
       - name: Build with Maven
         run: ./mvnw -B package --file pom.xml -Dproject.version=${{ github.sha }}
 
-      - run: ls target
+      - run: ls ${{ github.workspace }} && ls ${{ github.workspace }}/target
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend
           path: |
-            ./target/billtracker-backend-${{ github.sha }}.jar
+            ${{ github.workspace }}/target/billtracker-backend-${{ github.sha }}.jar
 
   build_frontend:
     runs-on: ubuntu-latest
