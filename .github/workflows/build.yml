@@ -65,6 +65,6 @@ jobs:
       - name: Build Distributable
         uses: ./.github/actions/target-specific-command
         with:
-          working_dir: ./frontend
+          working_directory: ./frontend
           production: npm run build -- --mode=production
           develop: npm run build -- --mode=develop
