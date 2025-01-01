@@ -41,8 +41,6 @@ jobs:
       - name: Build with Maven
         run: ./mvnw -B package --file pom.xml -Dproject.version=${{ github.sha }}
 
-      - run: ls ${{ github.workspace }} && ls ${{ github.workspace }}/target
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
