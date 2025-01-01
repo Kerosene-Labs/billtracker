@@ -7,6 +7,10 @@ runs:
       run: |
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           echo "ENV=production" >> $GITHUB_ENV
-        elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]
+        elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
           echo "ENV=develop" >> $GITHUB_ENV
+        else
+          echo "Invalid ref: ${{ github.ref }}"
+          exit 1
+        fi
       shell: bash
