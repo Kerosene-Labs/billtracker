@@ -1,8 +1,10 @@
 name: Build
 on:
   push:
-    # paths:
-    #   - 'src/**'
+    branches:
+      - develop
+    tags:
+      - "v*"
 
 jobs:
   build_backend:
