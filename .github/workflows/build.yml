@@ -1,4 +1,4 @@
-name: Buildc
+name: Build
 on:
   push:
     # paths:
@@ -14,7 +14,7 @@ jobs:
       security-events: write
     defaults:
       run:
-        working-directory: ./my-folder
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
 
