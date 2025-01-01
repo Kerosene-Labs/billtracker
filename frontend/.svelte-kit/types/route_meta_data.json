@@ -1,0 +1,38 @@
+{
+	"/": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/app": [
+		"src/routes/+layout.ts"
+	],
+	"/app/expenses": [
+		"src/routes/+layout.ts"
+	],
+	"/app/expenses/createOneOff": [
+		"src/routes/+layout.ts"
+	],
+	"/app/expenses/recurring/create": [
+		"src/routes/+layout.ts"
+	],
+	"/app/expenses/recurring/[id]": [
+		"src/routes/app/expenses/recurring/[id]/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/app/home": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/app/settings": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/login": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/oauth/google": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	]
+}
