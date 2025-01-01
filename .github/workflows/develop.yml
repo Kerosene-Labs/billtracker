@@ -88,6 +88,9 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_backend
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
 
