@@ -13,9 +13,12 @@
   import TableRow from "$lib/eureka/table/TableRow.svelte";
   import Spinner from "$lib/tk/Spinner.svelte";
   import { getOrdinal } from "$lib/sdkUtil";
+  import Modal from "$lib/tk/Modal.svelte";
+  import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
 
   export let id: string;
   let data: RecurringExpenseEventCreator | undefined = undefined;
+  let supersedeModalVisible: boolean = false;
 
   onMount(() => {
     new ExpensesApi(getPrivateApiConfig())
@@ -30,6 +33,10 @@
       });
   });
 </script>
+
+<Modal title="Supersede" subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over and which have changed, and we'll seamlessly handle the transition." bind:visible={supersedeModalVisible}>
+  <ENumberInput></ENumberInput>
+</Modal>
 
 <Card title="Details" subtitle="In-depth details of this Recurring Expense.">
   {#if data}
@@ -46,7 +53,9 @@
 </Card>
 <Card title="Actions" subtitle="Actions you can perform that change the state of this Recurring Expense.">
   <div class="flex flex-col xl:flex-row gap-2">
-    <Button disabled={true} title="Supersede this recurring expense with a new one.">Supersede</Button>
+    <Button on:click={() => {supersedeModalVisible = true}} title="Supersede this recurring expense">
+      Supersede
+    </Button>
     <Button
       disabled={true}
       title="Delete this recurring expense. It will no longer post automatically, but existing posted expenses will remain.">
