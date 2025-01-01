@@ -15,7 +15,7 @@ runs:
   steps:
     - name: Set environment variable based on branch
       run: |
-        if [[ -n ${{ inputs.working_directory }} ]]; then
+        if [[ -n "${{ inputs.working_directory }}" ]]; then
           cd ${{ inputs.working_directory }}
         fi
 
