@@ -31,10 +31,6 @@
 <div class="flex flex-col gap-4 rounded-b-xl bg-neutral-800 px-4 py-8">
   {#if !loading}
     <h1>Hello, {firstName}.</h1>
-    <p class="font-semibold text-neutral-300">
-      Did you know that Octopuses have three hearts, and two of them stop
-      beating when they swim!
-    </p>
   {:else}
     <div class="flex w-full justify-center">
       <Spinner></Spinner>

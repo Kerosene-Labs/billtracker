@@ -39,6 +39,10 @@ export interface CreateRecurringExpenseCreatorOperationRequest {
     createRecurringExpenseCreatorRequest: CreateRecurringExpenseCreatorRequest;
 }
 
+export interface GetRecurringExpenseCreatorsRequest {
+    ids?: Array<string>;
+}
+
 /**
  * 
  */
@@ -160,8 +164,12 @@ export class ExpensesApi extends runtime.BaseAPI {
 
     /**
      */
-    async getRecurringExpenseCreatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRecurringExpenseEventCreatorsResponse>> {
+    async getRecurringExpenseCreatorsRaw(requestParameters: GetRecurringExpenseCreatorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRecurringExpenseEventCreatorsResponse>> {
         const queryParameters: any = {};
+
+        if (requestParameters['ids'] != null) {
+            queryParameters['ids'] = requestParameters['ids'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -185,8 +193,8 @@ export class ExpensesApi extends runtime.BaseAPI {
 
     /**
      */
-    async getRecurringExpenseCreators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRecurringExpenseEventCreatorsResponse> {
-        const response = await this.getRecurringExpenseCreatorsRaw(initOverrides);
+    async getRecurringExpenseCreators(requestParameters: GetRecurringExpenseCreatorsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRecurringExpenseEventCreatorsResponse> {
+        const response = await this.getRecurringExpenseCreatorsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

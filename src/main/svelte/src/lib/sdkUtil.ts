@@ -43,7 +43,7 @@ export async function getErrorMessageFromSdk(
 export function doLogOut() {
   addToToastQueue({ message: "You've been signed out.", type: ToastType.INFO });
   sessionStorage.removeItem("jwt");
-  goto("/");
+  goto("/login");
 }
 
 export function isEmpty(value: any): boolean {
@@ -58,4 +58,10 @@ export function isEmpty(value: any): boolean {
       value !== null &&
       Object.keys(value).length === 0)
   );
+}
+
+export function getOrdinal(num: number) {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const value = num % 100;
+  return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
 }

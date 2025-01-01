@@ -6,6 +6,7 @@
   import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
+  import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
 
   let amount: number;
   let description: string;
@@ -41,8 +42,8 @@
 >
   <div class="flex flex-col gap-4">
     <div class="flex h-fit w-full flex-col gap-4 xl:flex-row">
-      <LineEdit id="amount" label="Dollars" type="number" bind:value={amount}
-      ></LineEdit>
+      <ENumberInput id="amount" label="Amount" prefix="$" bind:value={amount}
+      ></ENumberInput>
       <LineEdit
         id="description"
         type="text"

@@ -2,6 +2,7 @@
   export let id: string;
   export let label: string;
   export let value: string | Date | number | undefined = undefined;
+  export let prefix: string | undefined = undefined;
   export let required: boolean = false;
   export let min: number | null = null;
   export let max: number | null = null;
@@ -11,7 +12,14 @@
   <label class="text-sm font-semibold uppercase text-neutral-600" for={id}
     >{label}</label
   >
-  <input bind:value {id} type="number" />
+  <div
+    class="flex flex-row items-center gap-2 rounded-lg bg-neutral-900/40 pl-4"
+  >
+    {#if prefix}
+      <span class="font-mono font-bold text-neutral-500">{prefix}</span>
+    {/if}
+    <input bind:value {id} {min} {max} {required} type="number" />
+  </div>
 </div>
 
 <style lang="postcss">

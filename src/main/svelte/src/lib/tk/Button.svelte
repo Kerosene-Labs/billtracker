@@ -1,9 +1,10 @@
 <script lang="ts">
   export let spinning: boolean = false;
   export let disabled: boolean = false;
+  export let title: string | undefined = undefined;
 </script>
 
-<button aria-label="Button" {disabled} on:click>
+<button aria-label="Button" {disabled} on:click {title}>
   <span class="flex flex-row items-center justify-center gap-4">
     <slot></slot>
     {#if spinning}

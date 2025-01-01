@@ -1,9 +1,11 @@
 package com.kerosenelabs.billtracker
 
+import com.kerosenelabs.billtracker.service.ExpenseService
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.servers.Server
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.bind.annotation.CrossOrigin
 
 @OpenAPIDefinition(
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 )
 @CrossOrigin
 @SpringBootApplication
+@EnableScheduling
 open class BillTrackerApplication
 
 fun main(args: Array<String>) {
