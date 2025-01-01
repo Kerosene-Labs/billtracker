@@ -90,7 +90,7 @@ jobs:
       - build_backend
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
 
