@@ -59,14 +59,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/set-target
-
       - name: Install NPM Packages
         run: npm i
       
       - name: Build Distributable
-        run: |
-          if [[ "$ENV" == "develop" ]]; then
-            npm run build -- --mode=develop
-          elif [[ "$ENV" == "production" ]]
-            npm run build -- --mode=production
+        uses: ./.github/actions/target-specific-command
+        with:
+          production: npm run build -- --mode=production
+          develop: npm run build -- --mode=develop
