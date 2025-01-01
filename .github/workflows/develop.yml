@@ -48,7 +48,7 @@ jobs:
         with:
           name: backend
           path: |
-            target/billtracker-backend-${{ github.sha }}.jar
+            ./target/billtracker-backend-${{ github.sha }}.jar
 
   build_frontend:
     runs-on: ubuntu-latest
