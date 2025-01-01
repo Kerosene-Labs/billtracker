@@ -34,7 +34,7 @@
   });
 </script>
 
-<Modal title="Supersede" subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over and which have changed, and we'll seamlessly handle the transition." bind:visible={supersedeModalVisible}>
+<Modal title="Supersede" subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over, which have changed, and we'll seamlessly handle the transition." bind:visible={supersedeModalVisible}>
   <ENumberInput></ENumberInput>
 </Modal>
 

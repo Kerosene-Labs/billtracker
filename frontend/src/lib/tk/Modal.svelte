@@ -3,10 +3,14 @@
   import { fly, fade } from "svelte/transition";
   import Button from "$lib/tk/Button.svelte";
 
-  export let visible: boolean = true;
-  export let title: string | undefined = undefined;
-  export let subtitle: string | undefined = undefined;
-  export let showCloseButton: boolean = true;
+  interface Props {
+    visible: boolean;
+    title?: string;
+    subtitle?: string;
+    closeButtonVisible?: boolean;
+  }
+
+  let {visible = $bindable(false), title, subtitle, closeButtonVisible = true}: Props = $props();
 </script>
 
 {#if visible}
@@ -24,7 +28,7 @@
             <p class="text-neutral-300 font-semibold">{subtitle}</p>
           {/if}
           <slot></slot>
-          {#if showCloseButton}
+          {#if closeButtonVisible}
             <Button on:click={() => {visible = !visible}}>Close</Button>
           {/if}
         </div>
