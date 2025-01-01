@@ -70,7 +70,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Navigate and Install Dependencies
-        run: cd src/main/svelte && npm i
+        run:  npm i
 
       - name: Build Distributable
         run: npm run build -- --mode develop
@@ -79,8 +79,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend
-          path: |
-            src/main/svelte/build
+          path: build
 
   ###
   ### PUBLISH PACKAGES
