@@ -185,4 +185,4 @@ jobs:
           deployment_private_key: ${{secrets.DEPLOYMENT_PRIVATE_KEY}}
           deployment_ssh_user: infra
           deployment_server: mars1d
-          command: ls
+          command: cd billtracker && docker compose pull frontend backend && docker compose up frontend backend -d
