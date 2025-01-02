@@ -171,7 +171,8 @@ jobs:
     needs:
       - frontend_oci_image
     steps:
-      - uses: ./.github/actions/remote-command
+      - name: Remote Command on Infrastructure
+        uses: ./.github/actions/remote-command
         with:
           server: mars1d
           user: infra
