@@ -154,6 +154,8 @@ jobs:
       
       - name: Install NPM Packages
         run: npm i
+
+      - run: ls
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
