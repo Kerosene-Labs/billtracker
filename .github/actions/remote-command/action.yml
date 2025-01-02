@@ -1,0 +1,39 @@
+name: Remote Command
+description: Run a command on one of our servers.
+inputs:
+  server:
+    description: Name of the server
+    required: true
+  user:
+    description: Name of the user on the server
+    required: true
+  command:
+    description: Shell command to run for develop
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Write Keys
+      run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
+      shell: bash
+
+    - name: Set Key Permissions
+      run: chmod 600 ~/.ssh/bastion && chmod 600 ~/.ssh/deployment
+      shell: bash
+
+    - name: Start ssh-agent and add keys
+      run: |
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/bastion
+        ssh-add ~/.ssh/deployment
+        echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+        echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Acknowledge Host Key on Bastion
+      run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}
+      shell: bash
+
+    - name: Run Command
+      run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 ${{inputs.user}}@${{inputs.server}}.kerosenelabs.com "${{inputs.command}}"
+      shell: bash
