@@ -18,6 +18,6 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
-    environment: ${{ env.TARGET }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }} # pretty major shortcoming of GHA here...
     steps:
       - run: ls
