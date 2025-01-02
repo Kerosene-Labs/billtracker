@@ -183,6 +183,6 @@ jobs:
           bastion_ssh_user: ${{ secrets.BASTION_SSH_USER }}
           bastion_ssh_host: ${{ secrets.BASTION_HOST }}
           deployment_private_key: ${{secrets.DEPLOYMENT_PRIVATE_KEY}}
-          deployment_user: infra
+          deployment_ssh_user: infra
           deployment_server: mars1d
           command: ls
