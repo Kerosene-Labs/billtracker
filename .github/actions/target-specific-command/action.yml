@@ -24,7 +24,7 @@ runs:
         elif [[ "${{env.TARGET}}" == "develop" ]]; then
           ${{ inputs.develop }}
         else
-          echo "Invalid target: ${{env.TARGET}}. Did you run the 'set-target' action?"
+          echo "Invalid target: '${{env.TARGET}}', did you run the 'set-target' action?"
           exit 1
         fi
       shell: bash

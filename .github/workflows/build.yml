@@ -64,7 +64,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.ACCESS_TOKEN }}
-
+      
+      - name: Set Target
+        uses: ./.github/actions/set-target
+      
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -97,8 +100,11 @@ jobs:
       
       - name: Install NPM Packages
         run: npm i
-      
-      - name: Build Distributable
+
+      - name: Set Target
+        uses: ./.github/actions/set-target
+
+      - name: Build Distributable for Target
         uses: ./.github/actions/target-specific-command
         with:
           working_directory: ./frontend
