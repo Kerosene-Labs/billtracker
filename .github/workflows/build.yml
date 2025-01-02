@@ -69,7 +69,12 @@ jobs:
       
       - name: Set Target
         uses: ./.github/actions/set-target
-      
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: backend
+          path: ./backend
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
