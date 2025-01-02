@@ -11,9 +11,8 @@
     </parent>
     <groupId>com.kerosenelabs</groupId>
     <artifactId>billtracker-backend</artifactId>
-    <version>${project.version}</version>
+    <version>1.0.0</version>
     <properties>
-        <project.version>0.0.0</project.version>
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>

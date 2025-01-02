@@ -1,0 +1,20 @@
+name: Set Target
+description: Sets the $TARGET environment variable.
+runs:
+  using: composite
+  steps:
+    - name: Set environment variable based on branch
+      run: |
+        if [[ -n "${{ inputs.working_directory }}" ]]; then
+          cd ${{ inputs.working_directory }}
+        fi
+
+        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "TARGET=production" >> $GITHUB_ENV
+        elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+          echo "TARGET=develop" >> $GITHUB_ENV
+        else
+          echo "Invalid ref: ${{ github.ref }}"
+          exit 1
+        fi
+      shell: bash
