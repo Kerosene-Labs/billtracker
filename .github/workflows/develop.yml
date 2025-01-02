@@ -168,6 +168,9 @@ jobs:
   
   frontend_deploy:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./frontend
     needs:
       - frontend_oci_image
     steps:
