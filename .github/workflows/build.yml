@@ -151,7 +151,10 @@ jobs:
         with:
           name: frontend
           path: ./frontend
-
+      
+      - name: Install NPM Packages
+        run: npm i
+      
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
