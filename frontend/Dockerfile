@@ -1,4 +1,4 @@
-FROM node:lts
+FROM oven/bun:latest
 
 # copy dist
 RUN mkdir /app
@@ -8,4 +8,4 @@ COPY build /app
 COPY node_modules /app/node_modules
 
 WORKDIR /app
-ENTRYPOINT [ "node", "index.js"]
+ENTRYPOINT [ "bun", "index.js"]
