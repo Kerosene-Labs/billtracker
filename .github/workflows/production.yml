@@ -166,7 +166,7 @@ jobs:
     needs:
       - frontend_oci_image
       - backend_oci_image
-    environment: develop
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
