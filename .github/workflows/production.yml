@@ -78,7 +78,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/kerosene-labs/billtracker-backend:${{ env.TARGET }}
+          tags: ghcr.io/kerosene-labs/billtracker-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -139,9 +139,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.ACCESS_TOKEN }}
       
-      - name: Set Target
-        uses: ./.github/actions/set-target
-
       - uses: actions/download-artifact@v4
         with:
           name: frontend
@@ -157,7 +154,7 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ghcr.io/kerosene-labs/billtracker-frontend:${{ env.TARGET }}
+          tags: ghcr.io/kerosene-labs/billtracker-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
   
@@ -169,7 +166,7 @@ jobs:
     needs:
       - frontend_oci_image
       - backend_oci_image
-    environment: develop
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
