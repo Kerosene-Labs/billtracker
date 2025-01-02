@@ -166,13 +166,15 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
   
-  frontend_deploy:
+  deploy:
     runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./frontend
     needs:
       - frontend_oci_image
+      - backend_oci_image
+    environment: develop
     steps:
       - uses: actions/checkout@v4
 
