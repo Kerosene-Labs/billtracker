@@ -1,10 +1,8 @@
-name: Build
+name: CI/CD - Develop
 on:
   push:
     branches:
       - develop
-    tags:
-      - "v*"
 
 jobs:
   backend_dist:
