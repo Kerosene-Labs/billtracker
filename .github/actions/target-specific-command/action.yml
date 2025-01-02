@@ -1,5 +1,5 @@
 name: Target-specific command
-description: Run a shell command dependning on the intended deployment target
+description: Run a shell command dependning on the intended deployment target. This also sets the $TARGET environment variable.
 inputs:
   production:
     description: Shell command to run for production
@@ -21,8 +21,10 @@ runs:
 
         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           ${{ inputs.production }}
+          echo "TARGET=production" >> $GITHUB_ENV
         elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
           ${{ inputs.develop }}
+          echo "TARGET=develop" >> $GITHUB_ENV
         else
           echo "Invalid ref: ${{ github.ref }}"
           exit 1
