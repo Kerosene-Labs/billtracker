@@ -35,11 +35,9 @@
     @apply w-full;
     @apply font-semibold;
     @apply rounded-lg px-5 py-2;
-    @apply text-neutral-300;
-    @apply bg-neutral-700;
-    @apply hover:dark:bg-neutral-600/70;
-    @apply active:dark:bg-neutral-600/95;
-    @apply focus:ring-2 focus:ring-neutral-400;
+    @apply text-neutral-800 dark:text-neutral-300;
+    @apply bg-neutral-200 hover:bg-neutral-300 active:bg-zinc-400;
+    @apply dark:bg-neutral-700 hover:dark:bg-neutral-600 active:dark:bg-zinc-700;
     @apply transition-all;
   }
 
@@ -47,8 +45,8 @@
     @apply w-full;
     @apply font-semibold;
     @apply rounded-lg px-5 py-2;
-    @apply text-neutral-500;
-    @apply bg-neutral-800;
+    /*@apply text-neutral-500;*/
+    /*@apply bg-neutral-800;*/
     @apply transition-all;
   }
 </style>

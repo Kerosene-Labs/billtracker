@@ -3,7 +3,7 @@
   export let subtitle: string | undefined = undefined;
 </script>
 
-<div class="bg-card rounded-2xl p-8">
+<div class="bg-zinc-100 dark:bg-neutral-800 shadow-lg rounded-2xl p-8">
   {#if title || subtitle}
     <div class="pb-4">
       <div class="flex flex-row items-center gap-4">
