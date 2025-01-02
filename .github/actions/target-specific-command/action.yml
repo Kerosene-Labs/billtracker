@@ -19,9 +19,9 @@ runs:
           cd ${{ inputs.working_directory }}
         fi
 
-        if [[ -n "${{env.TARGET}}" == production ]]; then
+        if [[ "${{env.TARGET}}" == "production" ]]; then
           ${{ inputs.production }}
-        elif [[ -n "${{env.TARGET}}" == develop ]]; then
+        elif [[ "${{env.TARGET}}" == "develop" ]]; then
           ${{ inputs.develop }}
         else
           echo "Invalid target: ${{env.TARGET}}. Did you run the 'set-target' action?
