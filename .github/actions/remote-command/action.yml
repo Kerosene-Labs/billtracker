@@ -53,5 +53,5 @@ runs:
       shell: bash
 
     - name: Run Command
-      run: ssh -o "StrictHostKeyChecking no" -A -J ${{ inputs.bastion_ssh_user }}@${{ inputs.bastion_ssh_host}}:2222 ${{ inputs.deployments_ssh_user }}@${{ inputs.deployment_server }}.kerosenelabs.com "${{ inputs.command }}"
+      run: ssh -o "StrictHostKeyChecking no" -A -J ${{ inputs.bastion_ssh_user }}@${{ inputs.bastion_ssh_host}}:2222 ${{ inputs.deployment_ssh_user }}@${{ inputs.deployment_server }}.kerosenelabs.com "${{ inputs.command }}"
       shell: bash
