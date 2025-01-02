@@ -110,9 +110,9 @@ jobs:
 
       - name: Set Target
         uses: ./.github/actions/set-target
-
+      
       - name: Build Distributable
-        run: npm run build -- --mode=develop
+        run: npm run build -- --mode=production
 
       - run: ls
       - name: Upload Artifact
