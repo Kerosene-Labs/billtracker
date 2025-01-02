@@ -52,6 +52,8 @@ jobs:
     defaults:
       run:
         working-directory: ./frontend
+    needs:
+      - backend_dist
     steps:
       - uses: actions/checkout@v4
       
