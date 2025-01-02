@@ -5,16 +5,8 @@ on:
     workflows: ["Build"]
     types: [completed]
 jobs:
-  init:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Set Target
-        uses: ./.github/actions/set-target
-  
   backend_oci_container:
     runs-on: ubuntu-24.04
-    needs:
-      - init
     defaults:
       run:
         working-directory: ./backend
