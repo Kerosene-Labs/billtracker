@@ -1,8 +1,8 @@
-name: CI/CD - Develop
+name: CI/CD - Production
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - "v*"
 
 jobs:
   backend_dist:
@@ -108,9 +108,9 @@ jobs:
 
       - name: Set Target
         uses: ./.github/actions/set-target
-
+      
       - name: Build Distributable
-        run: npm run build -- --mode=develop
+        run: npm run build -- --mode=production
 
       - run: ls
       - name: Upload Artifact

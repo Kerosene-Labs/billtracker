@@ -1,20 +1,38 @@
 name: Remote Command
 description: Run a command on one of our servers.
+  
 inputs:
-  server:
-    description: Name of the server
+  # bastion
+  bastion_private_key:
+    description: The private SSH key of the bastion
     required: true
-  user:
+  bastion_ssh_user:
+    description: The user of the bastion
+    required: true
+  bastion_ssh_host:
+    description: The host of the bastion
+    required: true
+  
+  # deployment server
+  deployment_private_key:
+    description: The private SSH key for the deployment server
+    required: true
+  deployment_ssh_user:
     description: Name of the user on the server
     required: true
+  deployment_server:
+    description: Name of the server
+    required: true
+
+  # other
   command:
-    description: Shell command to run for develop
+    description: Shell command to run
     required: true
 runs:
   using: composite
   steps:
     - name: Write Keys
-      run: mkdir -p ~/.ssh && echo "${{secrets.BASTION_PRIVATE_KEY}}" >> ~/.ssh/bastion && echo "${{secrets.DEPLOYMENT_PRIVATE_KEY}}" >> ~/.ssh/deployment
+      run: mkdir -p ~/.ssh && echo "${{ inputs.bastion_private_key}}" >> ~/.ssh/bastion && echo "${{ inputs.deployment_private_key}}" >> ~/.ssh/deployment
       shell: bash
 
     - name: Set Key Permissions
@@ -31,9 +49,9 @@ runs:
       shell: bash
 
     - name: Acknowledge Host Key on Bastion
-      run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}
+      run: ssh -T -i ~/.ssh/bastion -o "StrictHostKeyChecking no" -p 2222 ${{ inputs.bastion_ssh_user}}@${{ inputs.bastion_ssh_host}}
       shell: bash
 
     - name: Run Command
-      run: ssh -o "StrictHostKeyChecking no" -A -J ${{secrets.BASTION_SSH_USER}}@${{secrets.BASTION_HOST}}:2222 ${{inputs.user}}@${{inputs.server}}.kerosenelabs.com "${{inputs.command}}"
+      run: ssh -o "StrictHostKeyChecking no" -A -J ${{ inputs.bastion_ssh_user }}@${{ inputs.bastion_ssh_host}}:2222 ${{ inputs.deployment_ssh_user }}@${{ inputs.deployment_server }}.kerosenelabs.com "${{ inputs.command }}"
       shell: bash
