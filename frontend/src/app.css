@@ -3,11 +3,11 @@
 @import "tailwindcss/utilities";
 
 h1, h2, h3, h4, h5 {
-    @apply text-neutral-700 dark:text-white font-black;
+    @apply text-neutral-700 dark:text-white font-black text-xl;
 }
 
 h1 {
-    @apply text-xl desktop:text-3xl;
+    @apply text-2xl desktop:text-4xl;
 }
 
 p {

@@ -44,7 +44,7 @@
   <div class="flex flex-col gap-2 text-nowrap xl:ml-auto xl:flex-row">
     <Button
       on:click={() => {
-        goto("/app/expenses/recurring/create");
+        goto("/app/expenses/recurring/(create)");
       }}
       >Create Recurring
     </Button>
