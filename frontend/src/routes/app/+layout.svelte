@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
   import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
+
+  let { children } = $props();
 </script>
 
 <BaseNavLayout>
-  <slot></slot>
+  {@render children()}
 </BaseNavLayout>

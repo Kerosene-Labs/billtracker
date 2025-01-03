@@ -1,9 +1,13 @@
 <script>
   import Card from "$lib/tk/Card.svelte";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
-  import RecurringExpenseEventCreatorTable from "./recurring/RecurringExpenseEventCreatorTable.svelte";
+  import RecurringExpenseEventCreatorTable from "./recurring/RecurringExpenseTable.svelte";
+  import { onMount } from "svelte";
+  import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
 
-  document.title = "Expenses | BillTracker";
+  onMount(() => {
+    document.title = "Expenses | BillTracker";
+  });
 </script>
 
 <Card

@@ -10,17 +10,7 @@ export default {
       },
       colors: {
         brand: {
-          DEFAULT: "#1e3a8a",
-          dark: "#2563eb",
-        },
-      },
-      backgroundColor: {
-        page: "var(--bg-page)",
-        card: "var(--bg-card)",
-      },
-      textColor: {
-        primary: "var(--text-primary)",
-        muted: "var(--text-muted)",
+        }
       },
     },
   },
