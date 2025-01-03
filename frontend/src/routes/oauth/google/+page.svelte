@@ -34,11 +34,11 @@
     <div class="flex flex-col xl:flex-row">
       <div class="flex w-fit flex-col">
         <h1>Welcome</h1>
-        <p class="subtitle">
+        <p class="subtitle desktop:text-nowrap">
           Hang tight while we put the finishing touches on your account.
         </p>
       </div>
-      <div class="flex w-min items-center justify-center">
+      <div class="flex w-full items-center justify-center">
         <Spinner></Spinner>
       </div>
     </div>

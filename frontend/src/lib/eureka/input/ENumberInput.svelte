@@ -30,7 +30,6 @@
     @apply bg-neutral-800;
     @apply hover:bg-neutral-700/70;
     @apply focus:bg-neutral-700/95;
-    @apply focus:ring-2 focus:ring-neutral-400;
     @apply transition-all;
     @apply outline-none;
     @apply font-semibold;

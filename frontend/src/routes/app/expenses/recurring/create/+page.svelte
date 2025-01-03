@@ -1,7 +1,11 @@
 <script>
-  import RecurringExpenseCreator from "../RecurringExpenseCreator.svelte";
+  import RecurringExpenseCreator from "./RecurringExpenseCreator.svelte";
+  import { onMount } from "svelte";
+  import BaseBackLayout from "$lib/components/BaseBackLayout.svelte";
 
-  document.title = "Create Recurring Expense | BillTracker";
+  onMount(() => {
+    document.title = "Create Recurring Expense | BillTracker";
+  });
 </script>
 
 <RecurringExpenseCreator></RecurringExpenseCreator>

@@ -14,7 +14,7 @@
 <main class="h-screen max-h-screen min-h-screen overflow-clip">
   <div
     id="appBar"
-    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-neutral-900 px-4 drop-shadow-lg"
+    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-zinc-100 dark:bg-neutral-800 px-4"
   >
     <button aria-label="App Drawer Toggle" on:click={toggleDrawer}>
       <svg
@@ -23,7 +23,7 @@
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-8 text-neutral-100 transition-colors hover:text-neutral-200 active:text-neutral-400"
+        class="size-8 transition-colors dark:text-neutral-100 dark:hover:text-neutral-200 dark:active:text-neutral-400"
       >
         <path
           stroke-linecap="round"
@@ -35,7 +35,7 @@
   </div>
   <div
     id="drawer"
-    class="inset-y-y fixed z-20 h-screen w-[90%] translate-x-[-100%] bg-neutral-900 transition-all lg:w-96"
+    class="inset-y-y fixed z-20 h-screen w-[90%] translate-x-[-100%] bg-neutral-200 dark:bg-neutral-900 transition-all lg:w-96"
     class:translate-x-[0%]={drawerOpen}
     class:pointer-events-none={!drawerOpen}
   >
