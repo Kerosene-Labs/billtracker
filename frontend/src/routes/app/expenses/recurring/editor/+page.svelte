@@ -3,13 +3,17 @@
   import { onMount } from "svelte";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
+  import BaseBackLayout from "$lib/components/BaseBackLayout.svelte";
 
   export let data;
   const id = data.id;
 
   onMount(() => {
     if (id == null) {
-      addToToastQueue({ message: "Unable to open the Recurring Expense editor. Unspecified ID.", type: ToastType.ERROR });
+      addToToastQueue({
+        message: "Unable to open the Recurring Expense editor. Unspecified ID.",
+        type: ToastType.ERROR
+      });
       goto("/app/expenses");
     }
 
@@ -17,6 +21,8 @@
   });
 </script>
 
-{#if id}
-  <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
-{/if}
+<BaseBackLayout>
+  {#if id}
+    <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
+  {/if}
+</BaseBackLayout>
