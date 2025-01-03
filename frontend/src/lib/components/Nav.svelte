@@ -13,7 +13,7 @@
 <!--please note that our main will clip any content that is overflowing in an effort to maintain a decent user experience-->
 <main class="h-screen max-h-screen min-h-screen overflow-clip">
   <div
-    id="appbar"
+    id="appBar"
     class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-zinc-100 dark:bg-neutral-800 px-4"
   >
     <button aria-label="App Drawer Toggle" on:click={toggleDrawer}>
@@ -152,9 +152,3 @@
     <slot></slot>
   </div>
 </main>
-
-<style lang="postcss">
-  #appbar {
-      view-transition-name: header;
-  }
-</style>
