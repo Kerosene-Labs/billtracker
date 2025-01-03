@@ -1,5 +1,5 @@
 <script>
-  import RecurringExpenseCreator from "../RecurringExpenseCreator.svelte";
+  import RecurringExpenseCreator from "./RecurringExpenseCreator.svelte";
   import { onMount } from "svelte";
 
   onMount(() => {

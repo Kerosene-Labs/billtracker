@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    @apply text-2xl desktop:text-4xl;
+    @apply text-2xl desktop:text-3xl;
 }
 
 p {

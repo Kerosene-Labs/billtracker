@@ -1,6 +1,7 @@
 <script lang="ts">
   import Card from "$lib/tk/Card.svelte";
   import { onMount } from "svelte";
+  import Spinner from "$lib/tk/Spinner.svelte";
 
   onMount(() => {
     document.title = "Home | BillTracker";
