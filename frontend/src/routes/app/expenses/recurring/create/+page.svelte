@@ -8,6 +8,4 @@
   });
 </script>
 
-<BaseBackLayout>
-  <RecurringExpenseCreator></RecurringExpenseCreator>
-</BaseBackLayout>
+<RecurringExpenseCreator></RecurringExpenseCreator>

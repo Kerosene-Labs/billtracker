@@ -26,7 +26,7 @@
             <h1>{title}</h1>
           {/if}
           {#if subtitle}
-            <p class="text-neutral-300 font-semibold pb-2">{subtitle}</p>
+            <p class="font-semibold pb-2">{subtitle}</p>
           {/if}
         </div>
         <div class="flex flex-col gap-2">

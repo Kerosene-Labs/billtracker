@@ -3,6 +3,4 @@
   import BaseBackLayout from "$lib/components/BaseBackLayout.svelte";
 </script>
 
-<BaseBackLayout>
-  <OneOffCreator></OneOffCreator>
-</BaseBackLayout>
+<OneOffCreator></OneOffCreator>

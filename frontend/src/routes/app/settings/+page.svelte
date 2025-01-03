@@ -4,6 +4,4 @@
   import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
 </script>
 
-<BaseNavLayout>
-  <IntroductionsCard></IntroductionsCard>
-</BaseNavLayout>
+<IntroductionsCard></IntroductionsCard>

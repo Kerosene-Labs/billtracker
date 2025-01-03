@@ -56,10 +56,10 @@
     </div>
   {:else if recurringExpenseEventCreators !== undefined && recurringExpenseEventCreators.length === 0}
     <div class="flex flex-col items-center justify-center gap-2 p-8">
-      <p class="font-mono text-2xl font-black text-neutral-300">
-        🦗...crickets
+      <p class="font-mono text-2xl font-black ">
+        🦗...Just crickets
       </p>
-      <p class="font-semibold text-neutral-100">There's nothing here.</p>
+      <p class="font-semibold">There's nothing here.</p>
     </div>
   {:else}
     <Table headers={["Amount", "Interval (every month)", "Description"]}>

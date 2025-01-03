@@ -6,7 +6,7 @@
 
 <div class="flex h-screen w-screen justify-center p-6 xl:pt-24">
   <div
-    class="flex h-fit max-w-[50rem] flex-col items-center justify-center gap-4 rounded-3xl bg-neutral-900/30 p-12 text-center shadow-xl transition-all hover:scale-[101%] hover:bg-neutral-900/30 hover:shadow-2xl"
+    class="flex h-fit max-w-[50rem] flex-col items-center justify-center gap-4 rounded-3xl bg-neutral-900/30 p-12 text-center transition-all hover:scale-[101%] hover:bg-neutral-900/30 hover:shadow-2xl"
   >
     <h1 class="text-3xl xl:text-5xl">Introducing BillTracker</h1>
     <p class="font-semibold text-neutral-400">

@@ -9,7 +9,5 @@
   });
 </script>
 
-<BaseNavLayout>
-  <Card title="Projections" subtitle="There's nothing here yet. Check back soon."
-  ></Card>
-</BaseNavLayout>
+<Card title="Projections" subtitle="There's nothing here yet. Check back soon."
+></Card>

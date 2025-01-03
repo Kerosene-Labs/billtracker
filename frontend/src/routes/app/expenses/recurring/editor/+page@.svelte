@@ -21,8 +21,9 @@
   });
 </script>
 
+<!--this is kinda stinky, but oh well-->
 <BaseBackLayout>
-  {#if id}
-    <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
-  {/if}
+{#if id}
+  <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
+{/if}
 </BaseBackLayout>
