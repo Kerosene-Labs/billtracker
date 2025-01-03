@@ -34,19 +34,20 @@
   button {
     @apply w-full;
     @apply font-semibold;
-    @apply rounded-lg px-5 py-2;
+    @apply rounded-lg px-5 py-2 border;
     @apply text-neutral-800 dark:text-neutral-300;
-    @apply bg-neutral-200 hover:bg-neutral-300 active:bg-zinc-400;
-    @apply dark:bg-neutral-700 hover:dark:bg-neutral-600 active:dark:bg-zinc-700;
+    @apply bg-neutral-200 hover:bg-neutral-300 active:bg-zinc-400 border-stone-300/50;
+    @apply dark:bg-neutral-700 hover:dark:bg-neutral-600 active:dark:bg-zinc-700 dark:border-stone-600/50;
     @apply transition-all;
   }
 
   button[disabled] {
     @apply w-full;
     @apply font-semibold;
-    @apply rounded-lg px-5 py-2;
-    /*@apply text-neutral-500;*/
-    /*@apply bg-neutral-800;*/
+    @apply rounded-xl px-5 py-2;
+    @apply text-neutral-700;
+    @apply bg-neutral-300 border-stone-400/50;
+    @apply dark:bg-neutral-800 dark:border-stone-700/50;
     @apply transition-all;
   }
 </style>

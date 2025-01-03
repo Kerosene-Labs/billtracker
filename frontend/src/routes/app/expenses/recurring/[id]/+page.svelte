@@ -3,8 +3,11 @@
   import RecurringExpenseEventCreatorEditor from "../RecurringExpenseEventCreatorEditor.svelte";
   import Modal from "$lib/tk/Modal.svelte";
   import Button from "$lib/tk/Button.svelte";
+  import { onMount } from "svelte";
 
-  document.title = "Modify Recurring Expense | BillTracker";
+  onMount(() => {
+    document.title = "Modify Recurring Expense | BillTracker";
+  })
 
   let modal = false;
 </script>

@@ -2,8 +2,11 @@
   import Card from "$lib/tk/Card.svelte";
   import ExpenseEventTable from "$lib/components/expenses/ExpenseEventTable.svelte";
   import RecurringExpenseEventCreatorTable from "./recurring/RecurringExpenseEventCreatorTable.svelte";
+  import { onMount } from "svelte";
 
-  document.title = "Expenses | BillTracker";
+  onMount(() => {
+    document.title = "Expenses | BillTracker";
+  })
 </script>
 
 <Card
