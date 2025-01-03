@@ -35,7 +35,7 @@
   </div>
   <div
     id="drawer"
-    class="inset-y-y fixed z-20 h-screen w-[90%] translate-x-[-100%] bg-neutral-900 transition-all lg:w-96"
+    class="inset-y-y fixed z-20 h-screen w-[90%] translate-x-[-100%] bg-neutral-200 dark:bg-neutral-900 transition-all lg:w-96"
     class:translate-x-[0%]={drawerOpen}
     class:pointer-events-none={!drawerOpen}
   >
