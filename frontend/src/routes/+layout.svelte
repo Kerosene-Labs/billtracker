@@ -5,7 +5,6 @@
 
   let { children } = $props();
 
-
   onNavigate((navigation) => {
     if (!document.startViewTransition) return;
 
@@ -21,6 +20,7 @@
 
 <ToastQueue></ToastQueue>
 {@render children()}
+
 
 <style lang="postcss">
     @keyframes fade-in {

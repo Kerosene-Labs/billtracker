@@ -7,9 +7,10 @@
   import Button from "$lib/tk/Button.svelte";
   import Table from "$lib/eureka/table/Table.svelte";
   import { goto } from "$app/navigation";
+  import TableRow from "$lib/eureka/table/TableRow.svelte";
 
   let expenses: ExpenseEvent[] | undefined = undefined;
-  let expenseRows: String[][] = [];
+  let expenseRows: string[][] = [];
 
   onMount(() => {
     new ExpensesApi(getPrivateApiConfig())
@@ -21,14 +22,14 @@
             "$" + expense.amount.toFixed(2),
             expense.date.toDateString(),
             expense.description,
-            expense.expenseEventType,
+            expense.expenseEventType
           ]);
         });
       })
       .catch(async (error: ResponseError) => {
         addToToastQueue({
           message: "Failed to get expenses.",
-          type: ToastType.ERROR,
+          type: ToastType.ERROR
         });
       });
   });
@@ -40,7 +41,7 @@
       on:click={() => {
         goto("/app/expenses/createOneOff");
       }}
-      >Create One-off
+    >Create One-off
     </Button>
     <Button disabled={true}>Export CSV</Button>
     <Button disabled={true}>Export JSON</Button>
@@ -58,9 +59,10 @@
       <p class="font-semibold ">There's nothing here.</p>
     </div>
   {:else}
-    <Table
-      headers={["Amount", "Occurred On", "Description", "Type"]}
-      rows={expenseRows}
-    ></Table>
+    <Table headers={["Amount", "Occurred On", "Description", "Type"]}>
+      {#each expenseRows as row}
+        <TableRow {row}></TableRow>
+      {/each}
+    </Table>
   {/if}
 </div>
