@@ -9,8 +9,8 @@
   import { onMount } from "svelte";
   import Card from "$lib/tk/Card.svelte";
   import Button from "$lib/tk/Button.svelte";
-  import Table from "$lib/eureka/table/Table.svelte";
-  import TableRow from "$lib/eureka/table/TableRow.svelte";
+  import Table from "$lib/eureka/table/ETable.svelte";
+  import TableRow from "$lib/eureka/table/ETableRow.svelte";
   import Spinner from "$lib/tk/Spinner.svelte";
   import { getOrdinal } from "$lib/sdkUtil";
   import Modal from "$lib/tk/Modal.svelte";
@@ -35,7 +35,7 @@
 </script>
 
 <Modal title="Supersede" subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over, which have changed, and we'll seamlessly handle the transition." bind:visible={supersedeModalVisible}>
-<!--  <ENumberInput></ENumberInput>-->
+  <ENumberInput></ENumberInput>
 </Modal>
 
 <Card title="Details" subtitle="In-depth details of this Recurring Expense.">

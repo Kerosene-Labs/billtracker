@@ -9,9 +9,9 @@
   import { addToToastQueue, ToastType } from "$lib/toast";
   import Spinner from "$lib/tk/Spinner.svelte";
   import Button from "$lib/tk/Button.svelte";
-  import Table from "$lib/eureka/table/Table.svelte";
+  import Table from "$lib/eureka/table/ETable.svelte";
   import { goto } from "$app/navigation";
-  import TableRow from "$lib/eureka/table/TableRow.svelte";
+  import TableRow from "$lib/eureka/table/ETableRow.svelte";
 
   let recurringExpenseEventCreators:
     | RecurringExpenseEventCreator[]

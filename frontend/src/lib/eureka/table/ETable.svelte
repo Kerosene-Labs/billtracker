@@ -5,16 +5,14 @@
 <div class="flex w-full overflow-auto rounded-xl bg-neutral-800 border border-neutral-700/50">
   <table class="w-full table-auto">
     <thead class="bg-zinc-900">
-      <tr>
-        {#each headers as header}
-          <th class="p-4 font-mono text-sm font-bold text-neutral-400"
-            >{header}</th
-          >
-        {/each}
-      </tr>
+    <tr>
+      {#each headers as header}
+        <th class="p-4 font-mono text-sm font-bold text-neutral-400">{header}</th>
+      {/each}
+    </tr>
     </thead>
     <tbody>
-      <slot></slot>
+    <slot></slot>
     </tbody>
   </table>
 </div>
