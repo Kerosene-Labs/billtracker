@@ -16,23 +16,23 @@
     id="appbar"
     class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-zinc-100/50 dark:bg-neutral-800/50 border-b border-neutral-300/50 dark:border-zinc-700/50 backdrop-blur-lg px-4"
   >
-    <button aria-label="App Drawer Toggle" onclick={toggleDrawer} class="z-50">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="size-8 transition-colors dark:text-neutral-100 dark:hover:text-neutral-200 dark:active:text-neutral-400"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 9h16.5m-16.5 6.75h16.5"
-        />
-      </svg>
-    </button>
   </div>
+  <button aria-label="App Drawer Toggle" onclick={toggleDrawer} class="absolute z-50 h-14  px-4">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="size-8 transition-colors dark:text-neutral-100 dark:hover:text-neutral-200 dark:active:text-neutral-400"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3.75 9h16.5m-16.5 6.75h16.5"
+      />
+    </svg>
+  </button>
   <div
     id="drawer"
     class="inset-y-y fixed z-40 h-screen w-[90%] translate-x-[-100%] bg-neutral-200 dark:bg-neutral-900 transition-all lg:w-96"
@@ -152,9 +152,3 @@
     <slot></slot>
   </div>
 </main>
-
-<style lang="postcss">
-    #appbar {
-        view-transition-name: header;
-    }
-</style>
