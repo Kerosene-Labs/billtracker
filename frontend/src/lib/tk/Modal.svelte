@@ -4,17 +4,18 @@
   import Button from "$lib/tk/Button.svelte";
 
   interface Props {
-    visible: boolean;
+    visible?: boolean;
     title?: string;
     subtitle?: string;
     closeButtonVisible?: boolean;
+    children?: any;
   }
 
-  let { visible = $bindable(false), title, subtitle, closeButtonVisible = true }: Props = $props();
+  let { visible = $bindable(false), title, subtitle, closeButtonVisible = true, children}: Props = $props();
 </script>
 
 {#if visible}
-  <div class="fixed inset-0 w-screen h-screen bg-black/50 z-50 backdrop-blur-sm"
+  <div class="fixed inset-0 w-screen h-screen bg-black/50 z-50 backdrop-blur-lg"
        transition:fade={{duration: 75}}>
     <div class="flex w-full h-full items-center justify-center">
       <div
@@ -30,7 +31,7 @@
           {/if}
         </div>
         <div class="flex flex-col gap-2">
-          <slot></slot>
+          {@render children()}
           {#if closeButtonVisible}
             <Button on:click={() => {visible = !visible}}>Close</Button>
           {/if}

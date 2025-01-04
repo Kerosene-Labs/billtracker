@@ -13,3 +13,7 @@ h1 {
 p {
     @apply text-neutral-900 dark:text-neutral-300 font-semibold;
 }
+
+.no-view-transition {
+    view-transition-name: header;
+}

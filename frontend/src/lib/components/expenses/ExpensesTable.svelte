@@ -5,9 +5,9 @@
   import { addToToastQueue, ToastType } from "$lib/toast";
   import Spinner from "$lib/tk/Spinner.svelte";
   import Button from "$lib/tk/Button.svelte";
-  import Table from "$lib/eureka/table/Table.svelte";
+  import ETable from "$lib/eureka/table/ETable.svelte";
   import { goto } from "$app/navigation";
-  import TableRow from "$lib/eureka/table/TableRow.svelte";
+  import ETableRow from "$lib/eureka/table/ETableRow.svelte";
 
   let expenses: ExpenseEvent[] | undefined = undefined;
   let expenseRows: string[][] = [];
@@ -59,10 +59,10 @@
       <p class="font-semibold ">There's nothing here.</p>
     </div>
   {:else}
-    <Table headers={["Amount", "Occurred On", "Description", "Type"]}>
+    <ETable headers={["Amount", "Occurred On", "Description", "Type"]}>
       {#each expenseRows as row}
-        <TableRow {row}></TableRow>
+        <ETableRow {row}></ETableRow>
       {/each}
-    </Table>
+    </ETable>
   {/if}
 </div>

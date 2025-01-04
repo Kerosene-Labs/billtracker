@@ -1,5 +1,5 @@
 <script lang="ts">
-  import RecurringExpenseEventCreatorEditor from "./RecurringExpenseEditor.svelte";
+  import RecurringExpenseEditor from "$lib/components/expenses/RecurringExpenseEditor.svelte";
   import { onMount } from "svelte";
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
@@ -24,6 +24,6 @@
 <!--this is kinda stinky, but oh well-->
 <BaseBackLayout title="Edit a Recurring Expense">
 {#if id}
-  <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
+  <RecurringExpenseEditor {id}></RecurringExpenseEditor>
 {/if}
 </BaseBackLayout>

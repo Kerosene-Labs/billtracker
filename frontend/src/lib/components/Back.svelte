@@ -11,7 +11,7 @@
 <main class="h-screen max-h-screen min-h-screen overflow-clip">
   <div
     id="backBar"
-    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center px-4 gap-8"
+    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center px-4 gap-8 bg-inherit backdrop-blur-lg"
   >
     <button aria-label="App Drawer Toggle" on:click={() => {history.back()}}>
       <span class="font-semibold text-2xl text-neutral-300 hover:text-neutral-400 dark:text-neutral-600 dark:hover:text-neutral-500 transition-colors">&lt;</span>
