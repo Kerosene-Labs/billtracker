@@ -16,7 +16,7 @@
     <button aria-label="App Drawer Toggle" on:click={() => {history.back()}}>
       <span class="font-semibold text-2xl text-neutral-300 hover:text-neutral-400 dark:text-neutral-600 dark:hover:text-neutral-500 transition-colors">&lt;</span>
     </button>
-    <span class="font-bold desktop:text-xl text-neutral-800 dark:text-neutral-400 ">{title}</span>
+    <span class="font-semibold desktop:text-xl text-neutral-800 dark:text-neutral-400 ">{title}</span>
   </div>
   <div id="pageContent" class="h-full overflow-y-auto pt-14">
     {@render children()}

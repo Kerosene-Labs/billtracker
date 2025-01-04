@@ -8,7 +8,7 @@
     min?: number;
     max?: number;
   }
-  let { id, label, value, prefix, required, min, max } = $props();
+  let { id, label, value = $bindable(), prefix, required, min, max }: Props = $props();
 </script>
 
 <div class="flex flex-col">

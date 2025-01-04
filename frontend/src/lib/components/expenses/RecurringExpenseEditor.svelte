@@ -16,10 +16,13 @@
   import Modal from "$lib/tk/Modal.svelte";
   import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
 
+  // props
   export let id: string;
+
+  // state
   let data: RecurringExpenseEventCreator | undefined = undefined;
   let supersedeModalVisible: boolean = false;
-
+  let amount: number;
   onMount(() => {
     new ExpensesApi(getPrivateApiConfig())
       .getRecurringExpenseCreators({ ids: [id] })
@@ -34,8 +37,10 @@
   });
 </script>
 
-<Modal title="Supersede" subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over, which have changed, and we'll seamlessly handle the transition." bind:visible={supersedeModalVisible}>
-  <ENumberInput prefix="$"></ENumberInput>
+<Modal title="Supersede"
+       subtitle="In a nutshell, this will create a new iteration of this Recurring Expense. You can pick which details carry over, which have changed, and we'll seamlessly handle the transition."
+       bind:visible={supersedeModalVisible}>
+  <ENumberInput id="amount" label="Amount" prefix="$" bind:value={amount}></ENumberInput>
 </Modal>
 
 <Card title="Details" subtitle="In-depth details of this Recurring Expense.">
