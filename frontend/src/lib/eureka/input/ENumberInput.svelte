@@ -26,10 +26,6 @@
   input {
     @apply w-full;
     @apply rounded-lg px-5 py-2;
-    @apply text-neutral-300;
-    @apply bg-neutral-800;
-    @apply hover:bg-neutral-700/70;
-    @apply focus:bg-neutral-700/95;
     @apply transition-all;
     @apply outline-none;
     @apply font-semibold;

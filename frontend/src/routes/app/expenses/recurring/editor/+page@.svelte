@@ -22,7 +22,7 @@
 </script>
 
 <!--this is kinda stinky, but oh well-->
-<BaseBackLayout>
+<BaseBackLayout title="Edit a Recurring Expense">
 {#if id}
   <RecurringExpenseEventCreatorEditor {id}></RecurringExpenseEventCreatorEditor>
 {/if}
