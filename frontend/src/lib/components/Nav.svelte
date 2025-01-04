@@ -14,9 +14,9 @@
 <main class="h-screen max-h-screen min-h-screen overflow-clip">
   <div
     id="appbar"
-    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-zinc-100 dark:bg-neutral-800 px-4"
+    class="absolute z-30 flex h-14 max-h-14 w-screen flex-row items-center bg-zinc-100/50 dark:bg-neutral-800/50 border-b border-neutral-300/50 dark:border-zinc-700/50 backdrop-blur-lg px-4"
   >
-    <button aria-label="App Drawer Toggle" on:click={toggleDrawer}>
+    <button aria-label="App Drawer Toggle" onclick={toggleDrawer} class="z-50">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -35,14 +35,14 @@
   </div>
   <div
     id="drawer"
-    class="inset-y-y fixed z-20 h-screen w-[90%] translate-x-[-100%] bg-neutral-200 dark:bg-neutral-900 transition-all lg:w-96"
+    class="inset-y-y fixed z-40 h-screen w-[90%] translate-x-[-100%] bg-neutral-200 dark:bg-neutral-900 transition-all lg:w-96"
     class:translate-x-[0%]={drawerOpen}
     class:pointer-events-none={!drawerOpen}
   >
     <div class="flex flex-col pt-14">
       <NavUserCard></NavUserCard>
       <NavItem
-        on:click={() => {
+        onclick={() => {
           goto("/app/home");
           toggleDrawer();
         }}
@@ -66,7 +66,7 @@
         </div>
       </NavItem>
       <NavItem
-        on:click={() => {
+        onclick={() => {
           goto("/app/expenses");
           toggleDrawer();
         }}
@@ -109,7 +109,7 @@
         </div>
       </NavItem>
       <NavItem
-        on:click={() => {
+        onclick={() => {
           goto("/app/settings");
           toggleDrawer();
         }}
@@ -140,7 +140,7 @@
     </div>
   </div>
   <button
-    on:click={toggleDrawer}
+    onclick={toggleDrawer}
     aria-label="App Drawer Toggle (Background)"
     id="drawerBg"
     class="fixed inset-y-0 z-10 h-screen w-screen bg-black/50 backdrop-blur-sm transition-all"
@@ -154,7 +154,7 @@
 </main>
 
 <style lang="postcss">
-  #appbar {
-      view-transition-name: header;
-  }
+    #appbar {
+        view-transition-name: header;
+    }
 </style>
