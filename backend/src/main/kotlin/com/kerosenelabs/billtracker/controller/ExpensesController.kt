@@ -58,6 +58,15 @@ class ExpensesController(private val expenseService: ExpenseService) {
         )
     }
 
+    @DeleteMapping("/expenses/recurringCreators/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteRecurringExpenseCreator(
+        @Parameter(hidden = true) user: UserEntity,
+        @PathVariable("id", required = true) id: String,
+        @RequestBody request: CreateRecurringExpenseCreatorRequest
+    ) {
+    }
+
     @GetMapping("/expenses")
     @ResponseStatus(HttpStatus.OK)
     fun getExpenses(@Parameter(hidden = true) user: UserEntity): GetExpenseEventsResponse {

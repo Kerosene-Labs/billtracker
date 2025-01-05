@@ -3,13 +3,16 @@ package com.kerosenelabs.billtracker.service
 import com.kerosenelabs.billtracker.entity.ExpenseEventEntity
 import com.kerosenelabs.billtracker.entity.RecurringExpenseEventCreatorEntity
 import com.kerosenelabs.billtracker.entity.UserEntity
+import com.kerosenelabs.billtracker.exception.BadRequestException
 import com.kerosenelabs.billtracker.model.expense.ExpenseEvent
 import com.kerosenelabs.billtracker.model.expense.ExpenseEventType
 import com.kerosenelabs.billtracker.model.expense.RecurringExpenseEventCreator
 import com.kerosenelabs.billtracker.repository.ExpenseEventRepository
 import com.kerosenelabs.billtracker.repository.RecurringExpenseEventCreatorRepository
+import org.postgresql.util.PSQLException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -62,15 +65,23 @@ class ExpenseService(
         recursEveryCalendarDay: Int,
         description: String
     ): RecurringExpenseEventCreatorEntity {
-        return recurringExpenseEventCreatorRepository.save(
-            RecurringExpenseEventCreatorEntity(
-                amount = amount,
-                user = predecessor.user,
-                recursEveryCalendarDay = recursEveryCalendarDay,
-                description = description,
-                predecessor = predecessor
+        try {
+            return recurringExpenseEventCreatorRepository.save(
+                RecurringExpenseEventCreatorEntity(
+                    amount = amount,
+                    user = predecessor.user,
+                    recursEveryCalendarDay = recursEveryCalendarDay,
+                    description = description,
+                    predecessor = predecessor
+                )
             )
-        )
+        } catch (e: DataIntegrityViolationException) {
+            if (e.message.toString().contains("violates unique constraint")) {
+                throw BadRequestException("This Recurring Expense Event Creator has already been superseded, you may not supersede it again. To supersede this, find the most recent iteration in the chain and supersede it.")
+            } else {
+                throw RuntimeException("Unexpected error: ${e.message}", e)
+            }
+        }
     }
 
     /**

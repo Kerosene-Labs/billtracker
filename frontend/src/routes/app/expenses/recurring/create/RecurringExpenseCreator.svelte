@@ -7,6 +7,8 @@
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
   import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
+  import ETextInput from "$lib/eureka/input/ETextInput.svelte";
+  import EDateInput from "$lib/eureka/input/EDateInput.svelte";
 
   let amount: number;
   let description: string;
@@ -44,13 +46,13 @@
     <div class="flex h-fit w-full flex-col gap-4 xl:flex-row">
       <ENumberInput id="amount" label="Amount" prefix="$" bind:value={amount}
       ></ENumberInput>
-      <LineEdit
+      <ETextInput
         id="description"
         type="text"
         label="Description"
         bind:value={description}
-      ></LineEdit>
-      <LineEdit
+      ></ETextInput>
+      <EDateInput
         id="calendarDay"
         label="Calendar Day"
         type="number"
@@ -58,7 +60,7 @@
         min={1}
         max={28}
         title="Must be between 1 and 28, reprenseting all days possible within the shortest month."
-      ></LineEdit>
+      ></EDateInput>
     </div>
     <Button on:click={createRecurringExpenseCreator}>Create</Button>
   </div>

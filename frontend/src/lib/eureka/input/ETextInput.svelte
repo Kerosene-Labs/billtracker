@@ -24,14 +24,4 @@
         @apply bg-neutral-200 hover:bg-zinc-300 focus:bg-zinc-300;
         @apply dark:bg-neutral-900 hover:dark:bg-neutral-700 focus:bg-neutral-700;
     }
-
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield; /* For Firefox */
-    }
 </style>
