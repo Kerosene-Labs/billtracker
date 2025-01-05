@@ -1,7 +1,8 @@
 <script lang="ts">
   import "../app.css";
-  import ToastQueue from "$lib/tk/ToastQueue.svelte";
+  import ToastQueue from "$lib/eureka/toast/EToastQueue.svelte";
   import { onNavigate } from "$app/navigation";
+  import { addToToastQueue, ToastType } from "$lib/toast";
 
   let { children } = $props();
 

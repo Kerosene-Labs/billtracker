@@ -3,13 +3,16 @@ package com.kerosenelabs.billtracker.service
 import com.kerosenelabs.billtracker.entity.ExpenseEventEntity
 import com.kerosenelabs.billtracker.entity.RecurringExpenseEventCreatorEntity
 import com.kerosenelabs.billtracker.entity.UserEntity
+import com.kerosenelabs.billtracker.exception.BadRequestException
 import com.kerosenelabs.billtracker.model.expense.ExpenseEvent
 import com.kerosenelabs.billtracker.model.expense.ExpenseEventType
 import com.kerosenelabs.billtracker.model.expense.RecurringExpenseEventCreator
 import com.kerosenelabs.billtracker.repository.ExpenseEventRepository
 import com.kerosenelabs.billtracker.repository.RecurringExpenseEventCreatorRepository
+import org.postgresql.util.PSQLException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -54,6 +57,46 @@ class ExpenseService(
     }
 
     /**
+     * Supersede a Recurring Expense Event Creator. T
+     */
+    fun supersedeRecurringExpenseEventCreator(
+        predecessor: RecurringExpenseEventCreatorEntity,
+        amount: BigDecimal,
+        recursEveryCalendarDay: Int,
+        description: String
+    ): RecurringExpenseEventCreatorEntity {
+        try {
+            return recurringExpenseEventCreatorRepository.save(
+                RecurringExpenseEventCreatorEntity(
+                    amount = amount,
+                    user = predecessor.user,
+                    recursEveryCalendarDay = recursEveryCalendarDay,
+                    description = description,
+                    predecessor = predecessor
+                )
+            )
+        } catch (e: DataIntegrityViolationException) {
+            if (e.message.toString().contains("violates unique constraint")) {
+                throw BadRequestException("This Recurring Expense Event Creator has already been superseded, you may not supersede it again. To supersede this, find the most recent iteration in the chain and supersede it.")
+            } else {
+                throw RuntimeException("Unexpected error: ${e.message}", e)
+            }
+        }
+    }
+
+    /**
+     * Hide (aka Delete) a Recurring Expense Event Creator. This will take it out of the rotation of auto-posting,
+     * but will leave the record intact for references.
+     */
+    fun hideRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity) {
+        if (recurringExpenseEventCreator.hidden) {
+            throw BadRequestException("This Recurring Expense Event Creator has already been hidden.")
+        }
+        recurringExpenseEventCreator.hidden = true
+        recurringExpenseEventCreatorRepository.save(recurringExpenseEventCreator)
+    }
+
+    /**
      * Helper function to get all expense events.
      * @see ExpenseEventEntity
      */
@@ -66,7 +109,9 @@ class ExpenseService(
      * further filter by Recurring Expense Event Creator ID.
      * @see RecurringExpenseEventCreatorEntity
      */
-    fun getRecurringExpenseEventCreatorsByUser(user: UserEntity, ids: Optional<List<UUID>> = Optional.empty()): List<RecurringExpenseEventCreatorEntity> {
+    fun getRecurringExpenseEventCreatorsByUser(
+        user: UserEntity, ids: Optional<List<UUID>> = Optional.empty()
+    ): List<RecurringExpenseEventCreatorEntity> {
         return recurringExpenseEventCreatorRepository.findAllByUserAndOptionalIds(user, ids.getOrNull())
     }
 
@@ -94,6 +139,7 @@ class ExpenseService(
             description = entity.description,
             amount = entity.amount,
             recursEveryCalendarDay = entity.recursEveryCalendarDay,
+            predecessor = entity.predecessor?.id
         )
     }
 
@@ -109,12 +155,14 @@ class ExpenseService(
         for (creator in creators) {
             if (creator.recursEveryCalendarDay == now.dayOfMonth) {
                 logger.info("Posting Expense Event: ${creator.amount} - ${creator.description}");
-                expenseEventRepository.save(ExpenseEventEntity(
-                    amount = creator.amount,
-                    description = creator.description,
-                    recurringExpenseEventCreator = creator,
-                    date = now.atStartOfDay(zoneId).toInstant()
-                ))
+                expenseEventRepository.save(
+                    ExpenseEventEntity(
+                        amount = creator.amount,
+                        description = creator.description,
+                        recurringExpenseEventCreator = creator,
+                        date = now.atStartOfDay(zoneId).toInstant()
+                    )
+                )
             }
         }
     }

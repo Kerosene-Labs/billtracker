@@ -1,6 +1,7 @@
 package com.kerosenelabs.billtracker.controller
 
 import com.kerosenelabs.billtracker.entity.UserEntity
+import com.kerosenelabs.billtracker.exception.BadRequestException
 import com.kerosenelabs.billtracker.model.request.CreateOneOffExpenseRequest
 import com.kerosenelabs.billtracker.model.request.CreateRecurringExpenseCreatorRequest
 import com.kerosenelabs.billtracker.model.response.GetExpenseEventsResponse
@@ -10,12 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -42,6 +38,36 @@ class ExpensesController(private val expenseService: ExpenseService) {
             request.recursEveryCalendarDay,
             request.description
         )
+    }
+
+    @PutMapping("/expenses/recurringCreators/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun supersedeRecurringExpenseCreator(
+        @Parameter(hidden = true) user: UserEntity,
+        @PathVariable("id", required = true) id: String,
+        @RequestBody request: CreateRecurringExpenseCreatorRequest
+    ) {
+        val recurringExpenseEventCreator =
+            expenseService.getRecurringExpenseEventCreatorsByUser(user).find { it.id == UUID.fromString(id) }
+                ?: throw BadRequestException("Invalid ID")
+        expenseService.supersedeRecurringExpenseEventCreator(
+            predecessor = recurringExpenseEventCreator,
+            amount = request.amount,
+            description = request.description,
+            recursEveryCalendarDay = request.recursEveryCalendarDay,
+        )
+    }
+
+    @DeleteMapping("/expenses/recurringCreators/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteRecurringExpenseCreator(
+        @Parameter(hidden = true) user: UserEntity,
+        @PathVariable("id", required = true) id: String,
+    ) {
+        val recurringExpenseEventCreator =
+            expenseService.getRecurringExpenseEventCreatorsByUser(user).find { it.id == UUID.fromString(id) }
+                ?: throw BadRequestException("Invalid ID")
+        expenseService.hideRecurringExpenseEventCreator(recurringExpenseEventCreator)
     }
 
     @GetMapping("/expenses")

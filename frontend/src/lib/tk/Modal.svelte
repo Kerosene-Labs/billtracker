@@ -19,7 +19,7 @@
        transition:fade={{duration: 75}}>
     <div class="flex w-full h-full items-center justify-center">
       <div
-        class="bg-zinc-100 dark:bg-neutral-800 border border-zinc-200/50 dark:border-zinc-700/50 p-8 rounded-xl shadow-lg w-[40rem] m-2"
+        class="bg-zinc-100 dark:bg-neutral-800 border border-zinc-200/50 dark:border-zinc-700/50 p-8 rounded-xl shadow-lg w-[40rem] m-6"
         transition:fly={{ y: 20, duration: 150, delay: 25, easing: cubicOut, opacity: 50}}
       >
         <div class="flex flex-col">
