@@ -1,12 +1,27 @@
 <script lang="ts">
-  export let spinning: boolean = false;
-  export let disabled: boolean = false;
-  export let title: string | undefined = undefined;
+  type EurekaButtonType =
+    | "primary"
+    | "secondary"
+    | "danger"
+
+  interface Props {
+    spinning?: boolean;
+    disabled?: boolean;
+    title?: string;
+    type?: EurekaButtonType;
+    children?: any;
+    onclick?: any;
+  }
+
+  let { spinning, disabled, title, type = "primary", children, onclick }: Props = $props();
 </script>
 
-<button aria-label="Button" {disabled} on:click {title}>
+<button aria-label="Button" {disabled} onclick={onclick} {title}
+        class:primary={type === "primary"}
+        class:secondary={type === "secondary"}
+        class:danger={type === "danger"}>
   <span class="flex flex-row items-center justify-center gap-4">
-    <slot></slot>
+    {@render children()}
     {#if spinning}
       <span role="status">
         <svg
@@ -35,10 +50,25 @@
         @apply w-full;
         @apply font-semibold;
         @apply rounded-lg px-5 py-2 border;
+        @apply transition-all;
+    }
+
+    button.primary {
         @apply text-neutral-800 dark:text-neutral-300;
         @apply bg-neutral-200 hover:bg-neutral-300 active:bg-zinc-400 border-stone-300/50;
         @apply dark:bg-neutral-700 hover:dark:bg-neutral-600 active:dark:bg-zinc-700 dark:border-stone-600/50;
-        @apply transition-all;
+    }
+
+    button.secondary {
+        @apply text-neutral-800 dark:text-neutral-300;
+        @apply hover:bg-neutral-300 active:bg-zinc-400 border-stone-300/50;
+        @apply hover:dark:bg-neutral-600 active:dark:bg-zinc-700 dark:border-stone-600/50;
+    }
+
+    button.danger {
+        @apply text-neutral-800 dark:text-neutral-300;
+        @apply bg-red-300 hover:bg-red-400 active:bg-pink-400 border-rose-300/50;
+        @apply dark:bg-red-800 hover:dark:bg-red-700 active:dark:bg-pink-700 dark:border-rose-600/50;
     }
 
     button[disabled] {

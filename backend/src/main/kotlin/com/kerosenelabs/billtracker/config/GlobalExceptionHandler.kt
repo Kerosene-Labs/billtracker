@@ -1,6 +1,7 @@
 package com.kerosenelabs.billtracker.config
 
 import com.kerosenelabs.billtracker.exception.AuthException
+import com.kerosenelabs.billtracker.exception.BadRequestException
 import com.kerosenelabs.billtracker.exception.UnconfirmedUserException
 import com.kerosenelabs.billtracker.model.response.ErrorResponse
 import org.springframework.http.HttpStatus
@@ -18,5 +19,10 @@ class GlobalExceptionHandler {
     @ExceptionHandler(UnconfirmedUserException::class)
     fun handleUnconfirmedUserException(e: UnconfirmedUserException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ErrorResponse(e.message.toString()))
+    }
+
+    @ExceptionHandler(BadRequestException::class)
+    fun handleBadRequestException(e: BadRequestException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(e.message.toString()))
     }
 }

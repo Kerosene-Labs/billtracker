@@ -39,6 +39,8 @@
         <Spinner></Spinner>
       </div>
     {/if}
-    <Button on:click={doLogOut}>Log Out</Button>
+    <div class="pt-2">
+      <Button on:click={doLogOut}>Log Out</Button>
+    </div>
   </Card>
 </div>

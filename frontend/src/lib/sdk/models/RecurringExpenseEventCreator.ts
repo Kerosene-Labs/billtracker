@@ -43,6 +43,12 @@ export interface RecurringExpenseEventCreator {
      * @memberof RecurringExpenseEventCreator
      */
     description: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RecurringExpenseEventCreator
+     */
+    predecessor?: string;
 }
 
 /**
@@ -70,6 +76,7 @@ export function RecurringExpenseEventCreatorFromJSONTyped(json: any, ignoreDiscr
         'recursEveryCalendarDay': json['recursEveryCalendarDay'],
         'amount': json['amount'],
         'description': json['description'],
+        'predecessor': json['predecessor'] == null ? undefined : json['predecessor'],
     };
 }
 
@@ -88,6 +95,7 @@ export function RecurringExpenseEventCreatorToJSONTyped(value?: RecurringExpense
         'recursEveryCalendarDay': value['recursEveryCalendarDay'],
         'amount': value['amount'],
         'description': value['description'],
+        'predecessor': value['predecessor'],
     };
 }
 

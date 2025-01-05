@@ -7,10 +7,13 @@
   import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
   import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
+  import ETextInput from "$lib/eureka/input/ETextInput.svelte";
+  import EDateInput from "$lib/eureka/input/EDateInput.svelte";
+  import EButton from "$lib/eureka/button/EButton.svelte";
 
   let amount: number = 0.0;
   let description: string;
-  let date: string = "";
+  let date: Date = "";
 
   function createOneOff() {
     new ExpensesApi(getPrivateApiConfig())
@@ -18,19 +21,19 @@
         createOneOffExpenseRequest: {
           amount,
           date: new Date(date),
-          description: description,
-        },
+          description: description
+        }
       })
       .then((response) => {
         addToToastQueue({
           message: "Successfully created one-off expense.",
-          type: ToastType.SUCCESS,
+          type: ToastType.SUCCESS
         });
         goto("/app/expenses");
       })
       .catch(async (error: ResponseError) => {
         await getErrorMessageFromSdk(error).then((msg) =>
-          addToToastQueue({ message: msg, type: ToastType.ERROR }),
+          addToToastQueue({ message: msg, type: ToastType.ERROR })
         );
       });
   }
@@ -44,14 +47,13 @@
     <div class="flex h-fit w-full flex-col gap-4 xl:flex-row">
       <ENumberInput id="amount" label="Dollars" prefix="$" bind:value={amount}
       ></ENumberInput>
-      <LineEdit
+      <ETextInput
         id="description"
-        type="text"
         label="Description"
         bind:value={description}
-      ></LineEdit>
-      <LineEdit id="date" type="date" label="Date" bind:value={date}></LineEdit>
+      ></ETextInput>
+      <EDateInput id="date" label="Date" bind:value={date}></EDateInput>
     </div>
-    <Button on:click={createOneOff}>Create</Button>
+    <EButton onclick={createOneOff}>Create</EButton>
   </div>
 </Card>

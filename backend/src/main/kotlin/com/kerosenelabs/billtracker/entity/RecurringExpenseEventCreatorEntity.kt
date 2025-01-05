@@ -12,8 +12,9 @@ class RecurringExpenseEventCreatorEntity(
     @Column(nullable = false) var recursEveryCalendarDay: Int = 0,
     @Column(nullable = false) var amount: BigDecimal = BigDecimal.ZERO,
     @ManyToOne @JoinColumn(nullable = false) var user: UserEntity = UserEntity(),
-    @OneToOne var supersededBy: RecurringExpenseEventCreatorEntity? = null,
+    @OneToOne var predecessor: RecurringExpenseEventCreatorEntity? = null,
     @Column(nullable = false) var description: String = "",
+    @Column(nullable = false) var hidden: Boolean = false,
 ) {
     constructor(
         recursEveryCalendarDay: Int, amount: BigDecimal, user: UserEntity, description: String
@@ -22,7 +23,6 @@ class RecurringExpenseEventCreatorEntity(
         recursEveryCalendarDay = recursEveryCalendarDay,
         amount = amount,
         user = user,
-        supersededBy = null,
         description = description
     )
 }
