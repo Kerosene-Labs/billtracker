@@ -85,6 +85,18 @@ class ExpenseService(
     }
 
     /**
+     * Hide (aka Delete) a Recurring Expense Event Creator. This will take it out of the rotation of auto-posting,
+     * but will leave the record intact for references.
+     */
+    fun hideRecurringExpenseEventCreator(recurringExpenseEventCreator: RecurringExpenseEventCreatorEntity) {
+        if (recurringExpenseEventCreator.hidden) {
+            throw BadRequestException("This Recurring Expense Event Creator has already been hidden.")
+        }
+        recurringExpenseEventCreator.hidden = true
+        recurringExpenseEventCreatorRepository.save(recurringExpenseEventCreator)
+    }
+
+    /**
      * Helper function to get all expense events.
      * @see ExpenseEventEntity
      */
@@ -127,6 +139,7 @@ class ExpenseService(
             description = entity.description,
             amount = entity.amount,
             recursEveryCalendarDay = entity.recursEveryCalendarDay,
+            predecessor = entity.predecessor?.id
         )
     }
 

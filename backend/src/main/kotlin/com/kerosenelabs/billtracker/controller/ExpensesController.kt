@@ -63,8 +63,11 @@ class ExpensesController(private val expenseService: ExpenseService) {
     fun deleteRecurringExpenseCreator(
         @Parameter(hidden = true) user: UserEntity,
         @PathVariable("id", required = true) id: String,
-        @RequestBody request: CreateRecurringExpenseCreatorRequest
     ) {
+        val recurringExpenseEventCreator =
+            expenseService.getRecurringExpenseEventCreatorsByUser(user).find { it.id == UUID.fromString(id) }
+                ?: throw BadRequestException("Invalid ID")
+        expenseService.hideRecurringExpenseEventCreator(recurringExpenseEventCreator)
     }
 
     @GetMapping("/expenses")

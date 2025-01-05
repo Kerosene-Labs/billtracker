@@ -48,19 +48,16 @@
       ></ENumberInput>
       <ETextInput
         id="description"
-        type="text"
         label="Description"
         bind:value={description}
       ></ETextInput>
-      <EDateInput
+      <ENumberInput
         id="calendarDay"
         label="Calendar Day"
-        type="number"
         bind:value={calendarDay}
         min={1}
         max={28}
-        title="Must be between 1 and 28, reprenseting all days possible within the shortest month."
-      ></EDateInput>
+      ></ENumberInput>
     </div>
     <Button on:click={createRecurringExpenseCreator}>Create</Button>
   </div>
