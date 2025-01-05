@@ -39,8 +39,17 @@ export interface CreateRecurringExpenseCreatorOperationRequest {
     createRecurringExpenseCreatorRequest: CreateRecurringExpenseCreatorRequest;
 }
 
+export interface DeleteRecurringExpenseCreatorRequest {
+    id: string;
+}
+
 export interface GetRecurringExpenseCreatorsRequest {
     ids?: Array<string>;
+}
+
+export interface SupersedeRecurringExpenseCreatorRequest {
+    id: string;
+    createRecurringExpenseCreatorRequest: CreateRecurringExpenseCreatorRequest;
 }
 
 /**
@@ -132,6 +141,44 @@ export class ExpensesApi extends runtime.BaseAPI {
 
     /**
      */
+    async deleteRecurringExpenseCreatorRaw(requestParameters: DeleteRecurringExpenseCreatorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteRecurringExpenseCreator().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/expenses/recurringCreators/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async deleteRecurringExpenseCreator(requestParameters: DeleteRecurringExpenseCreatorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteRecurringExpenseCreatorRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     */
     async getExpensesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExpenseEventsResponse>> {
         const queryParameters: any = {};
 
@@ -196,6 +243,54 @@ export class ExpensesApi extends runtime.BaseAPI {
     async getRecurringExpenseCreators(requestParameters: GetRecurringExpenseCreatorsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRecurringExpenseEventCreatorsResponse> {
         const response = await this.getRecurringExpenseCreatorsRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     */
+    async supersedeRecurringExpenseCreatorRaw(requestParameters: SupersedeRecurringExpenseCreatorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling supersedeRecurringExpenseCreator().'
+            );
+        }
+
+        if (requestParameters['createRecurringExpenseCreatorRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createRecurringExpenseCreatorRequest',
+                'Required parameter "createRecurringExpenseCreatorRequest" was null or undefined when calling supersedeRecurringExpenseCreator().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/expenses/recurringCreators/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateRecurringExpenseCreatorRequestToJSON(requestParameters['createRecurringExpenseCreatorRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async supersedeRecurringExpenseCreator(requestParameters: SupersedeRecurringExpenseCreatorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.supersedeRecurringExpenseCreatorRaw(requestParameters, initOverrides);
     }
 
 }
