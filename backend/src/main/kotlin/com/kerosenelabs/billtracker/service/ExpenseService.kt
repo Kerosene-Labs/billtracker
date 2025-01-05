@@ -54,6 +54,26 @@ class ExpenseService(
     }
 
     /**
+     * Supersede a Recurring Expense Event Creator. T
+     */
+    fun supersedeRecurringExpenseEventCreator(
+        predecessor: RecurringExpenseEventCreatorEntity,
+        amount: BigDecimal,
+        recursEveryCalendarDay: Int,
+        description: String
+    ): RecurringExpenseEventCreatorEntity {
+        return recurringExpenseEventCreatorRepository.save(
+            RecurringExpenseEventCreatorEntity(
+                amount = amount,
+                user = predecessor.user,
+                recursEveryCalendarDay = recursEveryCalendarDay,
+                description = description,
+                predecessor = predecessor
+            )
+        )
+    }
+
+    /**
      * Helper function to get all expense events.
      * @see ExpenseEventEntity
      */
@@ -66,7 +86,9 @@ class ExpenseService(
      * further filter by Recurring Expense Event Creator ID.
      * @see RecurringExpenseEventCreatorEntity
      */
-    fun getRecurringExpenseEventCreatorsByUser(user: UserEntity, ids: Optional<List<UUID>> = Optional.empty()): List<RecurringExpenseEventCreatorEntity> {
+    fun getRecurringExpenseEventCreatorsByUser(
+        user: UserEntity, ids: Optional<List<UUID>> = Optional.empty()
+    ): List<RecurringExpenseEventCreatorEntity> {
         return recurringExpenseEventCreatorRepository.findAllByUserAndOptionalIds(user, ids.getOrNull())
     }
 
@@ -109,12 +131,14 @@ class ExpenseService(
         for (creator in creators) {
             if (creator.recursEveryCalendarDay == now.dayOfMonth) {
                 logger.info("Posting Expense Event: ${creator.amount} - ${creator.description}");
-                expenseEventRepository.save(ExpenseEventEntity(
-                    amount = creator.amount,
-                    description = creator.description,
-                    recurringExpenseEventCreator = creator,
-                    date = now.atStartOfDay(zoneId).toInstant()
-                ))
+                expenseEventRepository.save(
+                    ExpenseEventEntity(
+                        amount = creator.amount,
+                        description = creator.description,
+                        recurringExpenseEventCreator = creator,
+                        date = now.atStartOfDay(zoneId).toInstant()
+                    )
+                )
             }
         }
     }
