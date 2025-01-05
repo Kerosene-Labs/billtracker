@@ -1,14 +1,8 @@
 <script lang="ts">
-  import LineEdit from "$lib/tk/LineEdit.svelte";
-  import Button from "$lib/tk/Button.svelte";
   import { ResponseError, SettingsApi } from "$lib/sdk";
   import { getPrivateApiConfig, getErrorMessageFromSdk } from "$lib/sdkUtil";
-  import { addToToastQueue, ToastType } from "$lib/toast";
+  import { addToToastQueue, EButton, ECard, EDateInput, ETextInput, ToastType } from "@kerosenelabs/eureka";
   import { onMount } from "svelte";
-  import Card from "$lib/tk/Card.svelte";
-  import { goto } from "$app/navigation";
-  import ETextInput from "$lib/eureka/input/ETextInput.svelte";
-  import EDateInput from "$lib/eureka/input/EDateInput.svelte";
 
   let firstName: string;
   let lastName: string;
@@ -57,24 +51,19 @@
   }
 </script>
 
-<Card title="Introductions" subtitle="Tell us a bit about yourself.">
+<ECard title="Introductions" subtitle="Tell us a bit about yourself.">
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-4 xl:flex-row">
-      <ETextInput
-        bind:value={firstName}
-        id="firstName"
-        label="First Name"
+      <ETextInput bind:value={firstName} id="firstName" label="First Name"
       ></ETextInput>
-      <ETextInput
-        bind:value={lastName}
-        id="lastName"
-        label="Last Name"
+      <ETextInput bind:value={lastName} id="lastName" label="Last Name"
       ></ETextInput>
-      <EDateInput bind:value={birthday} id="birthday" label="Birthday"></EDateInput>
+      <EDateInput bind:value={birthday} id="birthday" label="Birthday"
+      ></EDateInput>
     </div>
-    <Button on:click={save}>Save</Button>
+    <EButton onclick={save}>Save</EButton>
   </div>
-</Card>
+</ECard>
 
 <style lang="postcss">
 </style>

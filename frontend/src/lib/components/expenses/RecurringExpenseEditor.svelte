@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { ExpensesApi, type RecurringExpenseEventCreator, ResponseError } from "$lib/sdk";
-  import { getErrorMessageFromSdk, getOrdinal, getPrivateApiConfig } from "$lib/sdkUtil";
-  import { addToToastQueue, ToastType } from "$lib/toast";
+  import {
+    ExpensesApi,
+    type RecurringExpenseEventCreator,
+    ResponseError,
+  } from "$lib/sdk";
   import { onMount } from "svelte";
-  import Card from "$lib/tk/Card.svelte";
-  import Table from "$lib/eureka/table/ETable.svelte";
-  import TableRow from "$lib/eureka/table/ETableRow.svelte";
-  import Spinner from "$lib/tk/Spinner.svelte";
-  import Modal from "$lib/tk/Modal.svelte";
-  import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
-  import EButton from "$lib/eureka/button/EButton.svelte";
-  import ETextInput from "$lib/eureka/input/ETextInput.svelte";
   import { goto } from "$app/navigation";
+    import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
+    import { addToToastQueue, EButton, ECard, EModal, ENumberInput, ESpinner, ETable, ETableRow, ETextInput, formatCurrency, getOrdinal, ToastType } from "@kerosenelabs/eureka";
 
   // props
   export let id: string;
@@ -39,7 +35,7 @@
       })
       .catch(async (error: ResponseError) => {
         await getErrorMessageFromSdk(error).then((msg) =>
-          addToToastQueue({ message: msg, type: ToastType.ERROR })
+          addToToastQueue({ message: msg, type: ToastType.ERROR }),
         );
       });
   });
@@ -55,18 +51,22 @@
     supersedeInFlight = true;
     new ExpensesApi(getPrivateApiConfig())
       .supersedeRecurringExpenseCreator({
-        id: data.id, createRecurringExpenseCreatorRequest: {
+        id: data.id,
+        createRecurringExpenseCreatorRequest: {
           amount: supersedeAmount,
           description: supersedeDescription,
-          recursEveryCalendarDay: supersedeRecursEveryCalendarDay
-        }
+          recursEveryCalendarDay: supersedeRecursEveryCalendarDay,
+        },
       })
       .then(() => {
-        addToToastQueue({ message: "Successfully superseded.", type: ToastType.SUCCESS });
+        addToToastQueue({
+          message: "Successfully superseded.",
+          type: ToastType.SUCCESS,
+        });
       })
       .catch(async (error: ResponseError) => {
         await getErrorMessageFromSdk(error).then((msg) =>
-          addToToastQueue({ message: msg, type: ToastType.ERROR })
+          addToToastQueue({ message: msg, type: ToastType.ERROR }),
         );
       });
     supersedeInFlight = false;
@@ -85,11 +85,14 @@
     new ExpensesApi(getPrivateApiConfig())
       .deleteRecurringExpenseCreator({ id: data.id })
       .then(() => {
-        addToToastQueue({ message: "Successfully deleted.", type: ToastType.SUCCESS });
+        addToToastQueue({
+          message: "Successfully deleted.",
+          type: ToastType.SUCCESS,
+        });
       })
       .catch(async (error: ResponseError) => {
         await getErrorMessageFromSdk(error).then((msg) =>
-          addToToastQueue({ message: msg, type: ToastType.ERROR })
+          addToToastQueue({ message: msg, type: ToastType.ERROR }),
         );
       });
     deleteInFlight = false;
@@ -98,56 +101,88 @@
   }
 </script>
 
-<Modal title="Supersede"
-       subtitle="This will create a new iteration of this Recurring Expense. Enter the new details, and we'll handle the transition."
-       closeButtonVisible={false}
-       bind:visible={supersedeModalVisible}>
+<EModal
+  title="Supersede"
+  subtitle="This will create a new iteration of this Recurring Expense. Enter the new details, and we'll handle the transition."
+  closeButtonVisible={false}
+  bind:visible={supersedeModalVisible}>
   <div class="flex flex-col gap-2">
-    <ENumberInput id="amount" label="Amount" prefix="$" bind:value={supersedeAmount}></ENumberInput>
-    <ETextInput id="description" label="Description" bind:value={supersedeDescription}></ETextInput>
-    <ENumberInput id="calendarDay" label="Recurs every (Calendar Day)"
-                  bind:value={supersedeRecursEveryCalendarDay}></ENumberInput>
-    <div class="flex flex-col desktop:flex-row gap-2">
-      <EButton type="secondary" onclick={() => {supersedeModalVisible = false}}>Cancel</EButton>
-      <EButton onclick={supersede} spinning={supersedeInFlight}>Continue</EButton>
+    <ENumberInput
+      id="amount"
+      label="Amount"
+      prefix="$"
+      bind:value={supersedeAmount}></ENumberInput>
+    <ETextInput
+      id="description"
+      label="Description"
+      bind:value={supersedeDescription}></ETextInput>
+    <ENumberInput
+      id="calendarDay"
+      label="Recurs every (Calendar Day)"
+      bind:value={supersedeRecursEveryCalendarDay}></ENumberInput>
+    <div class="flex flex-col gap-2 desktop:flex-row">
+      <EButton
+        type="secondary"
+        onclick={() => {
+          supersedeModalVisible = false;
+        }}>Cancel</EButton>
+      <EButton onclick={supersede} spinning={supersedeInFlight}
+        >Continue</EButton>
     </div>
   </div>
-</Modal>
+</EModal>
 
-<Modal title="Delete this?"
-       subtitle="Are you sure? You'll be permanently deleting this recurring expense. Any posted expenses will remain."
-       bind:visible={deleteModalVisible}
-       closeButtonVisible={false}
->
-  <div class="flex flex-col desktop:flex-row gap-2">
-    <EButton type="secondary" onclick={() => {deleteModalVisible = false}}>Cancel</EButton>
-    <EButton type="danger" onclick={_delete} spinning={deleteInFlight}>Yes, delete this</EButton>
+<EModal
+  title="Delete this?"
+  subtitle="Are you sure? You'll be permanently deleting this recurring expense. Any posted expenses will remain."
+  bind:visible={deleteModalVisible}
+  closeButtonVisible={false}>
+  <div class="flex flex-col gap-2 desktop:flex-row">
+    <EButton
+      type="secondary"
+      onclick={() => {
+        deleteModalVisible = false;
+      }}>Cancel</EButton>
+    <EButton type="danger" onclick={_delete} spinning={deleteInFlight}
+      >Yes, delete this</EButton>
   </div>
-</Modal>
+</EModal>
 
-<Card title="Details" subtitle="In-depth details of this Recurring Expense.">
+<ECard title="Details" subtitle="In-depth details of this Recurring Expense.">
   {#if data}
     <div class="flex flex-col gap-2">
-      <Table headers={["Key", "Value"]}>
-        <TableRow row={["Amount", "$" + data.amount]}></TableRow>
-        <TableRow row={["Description", data.description]}></TableRow>
-        <TableRow row={["Recurs every (Calendar Day)", getOrdinal(data.recursEveryCalendarDay)]}></TableRow>
-      </Table>
+      <ETable headers={["Key", "Value"]}>
+        <ETableRow row={["Amount", formatCurrency(data.amount)]}></ETableRow>
+        <ETableRow row={["Description", data.description]}></ETableRow>
+        <ETableRow
+          row={[
+            "Recurs every (Calendar Day)",
+            getOrdinal(data.recursEveryCalendarDay),
+          ]}></ETableRow>
+      </ETable>
     </div>
   {:else}
-    <Spinner></Spinner>
+    <ESpinner></ESpinner>
   {/if}
-</Card>
-<Card title="Actions" subtitle="Actions you can perform that change the state of this Recurring Expense.">
-  <div class="flex flex-col xl:flex-row gap-2">
-    <EButton onclick={() => {supersedeModalVisible = true}} title="Supersede this recurring expense">
+</ECard>
+<ECard
+  title="Actions"
+  subtitle="Actions you can perform that change the state of this Recurring Expense.">
+  <div class="flex flex-col gap-2 xl:flex-row">
+    <EButton
+      onclick={() => {
+        supersedeModalVisible = true;
+      }}
+      title="Supersede this recurring expense">
       Supersede
     </EButton>
     <EButton
-      onclick={() => {deleteModalVisible = true}}
+      onclick={() => {
+        deleteModalVisible = true;
+      }}
       type="danger"
       title="Delete this recurring expense. It will no longer post automatically, but existing posted expenses will remain.">
       Delete
     </EButton>
   </div>
-</Card>
+</ECard>

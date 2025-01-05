@@ -1,14 +1,9 @@
 <script lang="ts">
-  import Card from "$lib/tk/Card.svelte";
   import { onMount } from "svelte";
-  import Spinner from "$lib/tk/Spinner.svelte";
   import { OAuth2Api, ResponseError } from "$lib/sdk/index.js";
-  import {
-    getPrivateApiConfig,
-    getErrorMessageFromSdk,
-    getPublicApiConfig,
-  } from "$lib/sdkUtil";
+  import { getErrorMessageFromSdk, getPublicApiConfig } from "$lib/sdkUtil";
   import { goto } from "$app/navigation";
+  import { ECard, ESpinner } from "@kerosenelabs/eureka";
 
   let errorMessage: string | undefined = undefined;
 
@@ -30,7 +25,7 @@
 </script>
 
 {#if !errorMessage}
-  <Card>
+  <ECard>
     <div class="flex flex-col xl:flex-row">
       <div class="flex w-fit flex-col">
         <h1>Welcome</h1>
@@ -39,12 +34,12 @@
         </p>
       </div>
       <div class="flex w-full items-center justify-center">
-        <Spinner></Spinner>
+        <ESpinner></ESpinner>
       </div>
     </div>
-  </Card>
+  </ECard>
 {:else}
-  <Card title="Oops" subtitle="Something went wrong. Please report this.">
+  <ECard title="Oops" subtitle="Something went wrong. Please report this.">
     <p class="font-mono font-bold text-neutral-400">{errorMessage}</p>
-  </Card>
+  </ECard>
 {/if}

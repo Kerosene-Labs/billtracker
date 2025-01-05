@@ -12,7 +12,7 @@
     if (id == null) {
       addToToastQueue({
         message: "Unable to open the Recurring Expense editor. Unspecified ID.",
-        type: ToastType.ERROR
+        type: ToastType.ERROR,
       });
       goto("/app/expenses");
     }
@@ -23,7 +23,7 @@
 
 <!--this is kinda stinky, but oh well-->
 <BaseBackLayout title="Edit a Recurring Expense">
-{#if id}
-  <RecurringExpenseEditor {id}></RecurringExpenseEditor>
-{/if}
+  {#if id}
+    <RecurringExpenseEditor {id}></RecurringExpenseEditor>
+  {/if}
 </BaseBackLayout>

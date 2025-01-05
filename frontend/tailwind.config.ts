@@ -9,8 +9,7 @@ export default {
         desktop: "1280px",
       },
       colors: {
-        brand: {
-        }
+        brand: {},
       },
     },
   },

@@ -1,6 +1,6 @@
 import { Configuration, ResponseError } from "$lib/sdk";
 import { goto } from "$app/navigation";
-import { addToToastQueue, ToastType } from "$lib/toast";
+import { addToToastQueue, ToastType } from "@kerosenelabs/eureka";
 
 export function getPublicApiConfig(): Configuration {
   return new Configuration({
@@ -44,24 +44,4 @@ export function doLogOut() {
   addToToastQueue({ message: "You've been signed out.", type: ToastType.INFO });
   sessionStorage.removeItem("jwt");
   goto("/login");
-}
-
-export function isEmpty(value: any): boolean {
-  return (
-    value === null ||
-    value === undefined ||
-    value === "" ||
-    value === 0 ||
-    value === false ||
-    (Array.isArray(value) && value.length === 0) ||
-    (typeof value === "object" &&
-      value !== null &&
-      Object.keys(value).length === 0)
-  );
-}
-
-export function getOrdinal(num: number) {
-  const suffixes = ["th", "st", "nd", "rd"];
-  const value = num % 100;
-  return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
 }

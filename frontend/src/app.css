@@ -1,19 +1,4 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
-h1, h2, h3, h4, h5 {
-    @apply text-neutral-700 dark:text-white font-black text-xl;
-}
-
-h1 {
-    @apply text-2xl desktop:text-3xl;
-}
-
-p {
-    @apply text-neutral-900 dark:text-neutral-300 font-semibold;
-}
-
-.no-view-transition {
-    view-transition-name: header;
-}
+@import "@kerosenelabs/eureka/components.css";

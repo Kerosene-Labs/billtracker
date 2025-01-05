@@ -2,5 +2,6 @@
   "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
   "svelteSortOrder": "scripts-markup-options-styles",
   "svelteStrictMode": false,
-  "svelteBracketNewLine": false
+  "svelteBracketNewLine": false,
+  "bracketSameLine": true
 }

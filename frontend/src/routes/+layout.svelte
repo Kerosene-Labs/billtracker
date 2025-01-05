@@ -1,8 +1,7 @@
 <script lang="ts">
   import "../app.css";
-  import ToastQueue from "$lib/eureka/toast/EToastQueue.svelte";
   import { onNavigate } from "$app/navigation";
-  import { addToToastQueue, ToastType } from "$lib/toast";
+  import { EToastQueue } from "@kerosenelabs/eureka";
 
   let { children } = $props();
 
@@ -16,47 +15,45 @@
       });
     });
   });
-
 </script>
 
-<ToastQueue></ToastQueue>
+<EToastQueue></EToastQueue>
 {@render children()}
 
-
 <style lang="postcss">
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-        }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
     }
+  }
 
-    @keyframes fade-out {
-        to {
-            opacity: 0;
-        }
+  @keyframes fade-out {
+    to {
+      opacity: 0;
     }
+  }
 
-    @keyframes in {
-        from {
-            transform: translateY(30px);
-        }
+  @keyframes in {
+    from {
+      transform: translateY(30px);
     }
+  }
 
-    @keyframes out {
-        to {
-            transform: translateY(-30px);
-        }
+  @keyframes out {
+    to {
+      transform: translateY(-30px);
     }
+  }
 
-    :root::view-transition-old(root) {
-        animation:
-                90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-                300ms cubic-bezier(0.4, 0, 0.2, 1) both out;
-    }
+  :root::view-transition-old(root) {
+    animation:
+      90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both out;
+  }
 
-    :root::view-transition-new(root) {
-        animation:
-                210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-                300ms cubic-bezier(0.4, 0, 0.2, 1) both in;
-    }
+  :root::view-transition-new(root) {
+    animation:
+      210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both in;
+  }
 </style>

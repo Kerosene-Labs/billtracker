@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Button from "$lib/tk/Button.svelte";
-  import Card from "$lib/tk/Card.svelte";
+  import { EButton, ECard } from "@kerosenelabs/eureka";
 
   const googleOauthUri = import.meta.env.VITE_GOOGLE_OAUTH_URI;
 
@@ -12,16 +11,15 @@
 
 <div class="flex min-h-full flex-col items-center justify-center">
   <div class="flex max-w-96 flex-col">
-    <Card
+    <ECard
       title="Welcome"
-      subtitle="We're so excited to have you. Please log in with one of the following providers."
-    >
+      subtitle="We're so excited to have you. Please log in with one of the following providers.">
       <div class="flex flex-col gap-2">
-        <Button on:click={doSignInWithGoogle}>Sign in with Google</Button>
-        <Button disabled={true}>Sign in with Apple</Button>
-        <Button disabled={true}>Sign in with Microsoft</Button>
-        <Button disabled={true}>Sign in with E-Mail</Button>
+        <EButton onclick={doSignInWithGoogle}>Sign in with Google</EButton>
+        <EButton disabled={true}>Sign in with Apple</EButton>
+        <EButton disabled={true}>Sign in with Microsoft</EButton>
+        <EButton disabled={true}>Sign in with E-Mail</EButton>
       </div>
-    </Card>
+    </ECard>
   </div>
 </div>

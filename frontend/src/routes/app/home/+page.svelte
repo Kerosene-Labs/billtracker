@@ -1,13 +1,11 @@
 <script lang="ts">
-  import Card from "$lib/tk/Card.svelte";
+  import { ECard } from "@kerosenelabs/eureka";
   import { onMount } from "svelte";
-  import Spinner from "$lib/tk/Spinner.svelte";
-  import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
 
   onMount(() => {
     document.title = "Home | BillTracker";
   });
 </script>
 
-<Card title="Projections" subtitle="There's nothing here yet. Check back soon."
-></Card>
+<ECard title="Projections" subtitle="There's nothing here yet. Check back soon."
+></ECard>

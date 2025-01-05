@@ -1,15 +1,12 @@
 <script lang="ts">
-  import Button from "$lib/tk/Button.svelte";
   import {
     doLogOut,
     getErrorMessageFromSdk,
-    getPrivateApiConfig
+    getPrivateApiConfig,
   } from "$lib/sdkUtil";
   import { onMount } from "svelte";
   import { ResponseError, SettingsApi } from "$lib/sdk";
-  import { addToToastQueue, ToastType } from "$lib/toast";
-  import Spinner from "$lib/tk/Spinner.svelte";
-  import Card from "$lib/tk/Card.svelte";
+    import { addToToastQueue, EButton, ECard, ESpinner, ToastType } from "@kerosenelabs/eureka";
 
   let loading: boolean = true;
 
@@ -22,7 +19,7 @@
       })
       .catch(async (error: ResponseError) => {
         await getErrorMessageFromSdk(error).then((msg) =>
-          addToToastQueue({ message: msg, type: ToastType.ERROR })
+          addToToastQueue({ message: msg, type: ToastType.ERROR }),
         );
       });
   });
@@ -30,17 +27,17 @@
 </script>
 
 <div class="m-4">
-  <Card>
+  <ECard>
     {#if !loading}
       <h1>Hey, {firstName}!</h1>
       <p>Hope you're ready to save some money!</p>
     {:else}
       <div class="flex w-full justify-center">
-        <Spinner></Spinner>
+        <ESpinner></ESpinner>
       </div>
     {/if}
     <div class="pt-2">
-      <Button on:click={doLogOut}>Log Out</Button>
+      <EButton onclick={doLogOut}>Log Out</EButton>
     </div>
-  </Card>
+  </ECard>
 </div>
