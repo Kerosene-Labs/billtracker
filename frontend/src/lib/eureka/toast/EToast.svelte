@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { toastQueue, type ToastRequest, ToastType } from "$lib/toast";
-  import { cubicOut } from "svelte/easing";
+  import { cubicIn, cubicInOut, cubicOut } from "svelte/easing";
   import { fly } from "svelte/transition";
   export let request: ToastRequest;
   export let id: number;
@@ -18,9 +18,9 @@
 </script>
 
 <button
-  transition:fly={{ x: -100, duration: 150, delay: 25, easing: cubicOut }}
+  transition:fly={{ y: -100, duration: 150, delay: 25, easing: cubicIn }}
   title="Dismiss"
-  class="min-w-72 max-w-72 rounded-lg p-6 text-left font-mono text-sm font-bold drop-shadow-2xl transition-colors"
+  class="max-w-72 rounded-lg p-4 text-left font-mono text-sm font-bold drop-shadow-2xl transition-colors border backdrop-blur-lg z-20 pointer-events-auto"
   on:click={destroy}
   class:error={request.type === ToastType.ERROR}
   class:success={request.type === ToastType.SUCCESS}
@@ -31,14 +31,14 @@
 
 <style lang="postcss">
   .error {
-    @apply bg-red-900 text-red-300 hover:bg-red-800 hover:text-red-200;
+    @apply bg-red-900/90 text-red-300 hover:bg-red-800/90 border-red-600;
   }
 
   .success {
-    @apply bg-green-900 text-green-300 hover:bg-green-800 hover:text-green-200;
+    @apply bg-green-900/90 text-green-300 hover:bg-green-800/90 border-green-600;
   }
 
   .info {
-    @apply bg-neutral-950 text-neutral-300 hover:bg-neutral-900 hover:text-neutral-200;
+    @apply bg-neutral-900/90 text-neutral-300 hover:bg-neutral-800/90 border-neutral-800;
   }
 </style>

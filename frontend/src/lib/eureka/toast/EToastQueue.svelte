@@ -1,10 +1,10 @@
 <script lang="ts">
   import { toastQueue } from "$lib/toast";
-  import Toast from "$lib/tk/Toast.svelte";
+  import Toast from "$lib/eureka/toast/EToast.svelte";
 </script>
 
 <div
-  class="fixed left-0 top-0 z-10 flex flex-col gap-2 p-2 pt-16 drop-shadow-2xl"
+  class="absolute z-10 flex flex-col gap-2 p-2 drop-shadow-2xl w-screen h-screen items-center justify-end pointer-events-none"
 >
   {#each $toastQueue as toastRequest, index}
     <Toast request={toastRequest} id={index}></Toast>
