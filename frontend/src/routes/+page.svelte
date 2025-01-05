@@ -10,8 +10,8 @@
     class="flex h-fit max-w-[50rem] flex-col items-center justify-center rounded-3xl bg-neutral-900/80 border border-neutral-800 backdrop-blur-2xl p-12 text-center"
   >
     <div class="flex flex-col pb-8">
-      <h2 class="text-2xl desktop:text-3xl text-white font-semibold">Say Hello to...</h2>
-      <h1 class="text-3xl desktop:text-6xl text-white">BillTracker</h1>
+      <h2 class="text-2xl desktop:text-3xl text-white font-semibold">Say Hello to</h2>
+      <h1 class="text-4xl desktop:text-6xl text-white">BillTracker</h1>
     </div>
     <EHorizontalSeparator></EHorizontalSeparator>
     <div class="flex flex-col gap-4 pt-8">

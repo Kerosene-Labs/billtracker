@@ -8,5 +8,5 @@ data class RecurringExpenseEventCreator(
     var recursEveryCalendarDay: Int,
     var amount: BigDecimal,
     var description: String,
-    var predecessor: UUID?,
+    var successor: UUID?,
 )

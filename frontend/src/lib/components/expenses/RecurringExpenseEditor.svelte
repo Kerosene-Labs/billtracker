@@ -11,6 +11,7 @@
   import ENumberInput from "$lib/eureka/input/ENumberInput.svelte";
   import EButton from "$lib/eureka/button/EButton.svelte";
   import ETextInput from "$lib/eureka/input/ETextInput.svelte";
+  import { goto } from "$app/navigation";
 
   // props
   export let id: string;
@@ -70,6 +71,7 @@
       });
     supersedeInFlight = false;
     supersedeModalVisible = false;
+    goto("/app/expenses");
   }
 
   /**
@@ -92,6 +94,7 @@
       });
     deleteInFlight = false;
     deleteModalVisible = false;
+    goto("/app/expenses");
   }
 </script>
 

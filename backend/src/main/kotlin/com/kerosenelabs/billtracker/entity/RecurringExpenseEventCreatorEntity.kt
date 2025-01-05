@@ -12,7 +12,7 @@ class RecurringExpenseEventCreatorEntity(
     @Column(nullable = false) var recursEveryCalendarDay: Int = 0,
     @Column(nullable = false) var amount: BigDecimal = BigDecimal.ZERO,
     @ManyToOne @JoinColumn(nullable = false) var user: UserEntity = UserEntity(),
-    @OneToOne var predecessor: RecurringExpenseEventCreatorEntity? = null,
+    @OneToOne var successor: RecurringExpenseEventCreatorEntity? = null,
     @Column(nullable = false) var description: String = "",
     @Column(nullable = false) var hidden: Boolean = false,
 ) {

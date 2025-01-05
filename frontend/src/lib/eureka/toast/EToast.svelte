@@ -18,7 +18,8 @@
 </script>
 
 <button
-  transition:fly={{ y: -100, duration: 150, delay: 25, easing: cubicIn }}
+  in:fly={{ y: 100, duration: 150, delay: 25, easing: cubicIn }}
+  out:fly={{ y: 100, duration: 150, delay: 25, easing: cubicIn }}
   title="Dismiss"
   class="max-w-72 rounded-lg p-4 text-left font-mono text-sm font-bold drop-shadow-2xl transition-colors border backdrop-blur-lg z-20 pointer-events-auto"
   on:click={destroy}

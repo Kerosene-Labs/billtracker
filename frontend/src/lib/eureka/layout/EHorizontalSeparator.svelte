@@ -1,1 +1,1 @@
-<div class="h-[0.05rem] bg-zinc-200 dark:bg-zinc-900 rounded-3xl w-full flex"></div>
+<div class="h-[0.05rem] bg-zinc-200/50 dark:bg-zinc-800/50 rounded-3xl w-full flex"></div>

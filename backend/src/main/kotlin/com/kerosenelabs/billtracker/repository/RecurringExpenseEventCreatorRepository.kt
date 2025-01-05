@@ -12,7 +12,7 @@ interface RecurringExpenseEventCreatorRepository : JpaRepository<RecurringExpens
      * Queries for Recurring Expense Event Creators that are for the given user, and optionally, find by IDs.
      * This method also filters out hidden superseded records.
      */
-    @Query("SELECT e FROM RecurringExpenseEventCreatorEntity e WHERE e.user = :user AND (:ids IS NULL OR e.id IN :ids) AND e.hidden = false AND e.predecessor IS NOT NULL")
+    @Query("SELECT e FROM RecurringExpenseEventCreatorEntity e WHERE e.user = :user AND (:ids IS NULL OR e.id IN :ids) AND e.hidden = false AND e.successor IS NULL")
     fun findAllByUserAndOptionalIds(
         @Param("user") user: UserEntity, @Param("ids") ids: List<UUID>?
     ): List<RecurringExpenseEventCreatorEntity>

@@ -9,7 +9,6 @@ import com.kerosenelabs.billtracker.model.expense.ExpenseEventType
 import com.kerosenelabs.billtracker.model.expense.RecurringExpenseEventCreator
 import com.kerosenelabs.billtracker.repository.ExpenseEventRepository
 import com.kerosenelabs.billtracker.repository.RecurringExpenseEventCreatorRepository
-import org.postgresql.util.PSQLException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
@@ -66,15 +65,19 @@ class ExpenseService(
         description: String
     ): RecurringExpenseEventCreatorEntity {
         try {
-            return recurringExpenseEventCreatorRepository.save(
-                RecurringExpenseEventCreatorEntity(
-                    amount = amount,
-                    user = predecessor.user,
-                    recursEveryCalendarDay = recursEveryCalendarDay,
-                    description = description,
-                    predecessor = predecessor
-                )
+            // create our new recurring expense event creator, persist it
+            val successor = RecurringExpenseEventCreatorEntity(
+                amount = amount,
+                user = predecessor.user,
+                recursEveryCalendarDay = recursEveryCalendarDay,
+                description = description,
             )
+            recurringExpenseEventCreatorRepository.save(successor)
+
+            // update the predecessor
+            predecessor.successor = successor
+            recurringExpenseEventCreatorRepository.save(predecessor)
+            return successor;
         } catch (e: DataIntegrityViolationException) {
             if (e.message.toString().contains("violates unique constraint")) {
                 throw BadRequestException("This Recurring Expense Event Creator has already been superseded, you may not supersede it again. To supersede this, find the most recent iteration in the chain and supersede it.")
@@ -130,7 +133,7 @@ class ExpenseService(
     }
 
     /**
-     * Map a RecurringExpenseEventCreatorEntity (aka an recurring expense event from the database) to a model
+     * Map a RecurringExpenseEventCreatorEntity (aka a recurring expense event from the database) to a model
      * suitable for consumption by the user.
      */
     fun mapRecurringExpenseEventCreatorEntityToRecurringExpenseEventCreator(entity: RecurringExpenseEventCreatorEntity): RecurringExpenseEventCreator {
@@ -139,7 +142,7 @@ class ExpenseService(
             description = entity.description,
             amount = entity.amount,
             recursEveryCalendarDay = entity.recursEveryCalendarDay,
-            predecessor = entity.predecessor?.id
+            successor = entity.successor?.id
         )
     }
 
