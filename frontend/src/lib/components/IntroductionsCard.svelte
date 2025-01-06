@@ -1,7 +1,14 @@
 <script lang="ts">
   import { ResponseError, SettingsApi } from "$lib/sdk";
   import { getPrivateApiConfig, getErrorMessageFromSdk } from "$lib/sdkUtil";
-  import { addToToastQueue, EButton, ECard, EDateInput, ETextInput, ToastType } from "@kerosenelabs/eureka";
+  import {
+    addToToastQueue,
+    EButton,
+    ECard,
+    EDateInput,
+    ETextInput,
+    ToastType,
+  } from "@kerosenelabs/eureka";
   import { onMount } from "svelte";
 
   let firstName: string;

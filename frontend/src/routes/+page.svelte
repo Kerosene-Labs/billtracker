@@ -11,7 +11,9 @@
       <h2 class="text-2xl font-semibold text-white desktop:text-3xl">
         Say Hello to
       </h2>
-      <h1 class="text-4xl text-white desktop:text-6xl">BillTracker</h1>
+      <h1 class="text-4xl font-bold text-white desktop:text-6xl">
+        BillTracker
+      </h1>
     </div>
     <EHorizontalSeparator></EHorizontalSeparator>
     <div class="flex flex-col gap-4 pt-8">

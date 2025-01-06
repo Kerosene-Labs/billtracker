@@ -3,7 +3,15 @@
   import { getPrivateApiConfig } from "$lib/sdkUtil";
   import { type ExpenseEvent, ExpensesApi, ResponseError } from "$lib/sdk";
   import { goto } from "$app/navigation";
-    import { addToToastQueue, EButton, ESpinner, ETable, ETableRow, ToastType } from "@kerosenelabs/eureka";
+  import {
+    addToToastQueue,
+    EButton,
+    EP,
+    ESpinner,
+    ETable,
+    ETableRow,
+    ToastType,
+  } from "@kerosenelabs/eureka";
 
   let expenses: ExpenseEvent[] | undefined = undefined;
   let expenseRows: string[][] = [];
@@ -34,7 +42,7 @@
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-2 text-nowrap xl:ml-auto xl:flex-row">
     <EButton
-      on:click={() => {
+      onclick={() => {
         goto("/app/expenses/createOneOff");
       }}
       >Create One-off
@@ -49,8 +57,8 @@
     </div>
   {:else if expenses !== undefined && expenses.length === 0}
     <div class="flex flex-col items-center justify-center gap-2 p-8">
-      <p class="font-mono text-2xl font-black">🦗...Just crickets</p>
-      <p class="font-semibold">There's nothing here.</p>
+      <EP>🦗...Just crickets</EP>
+      <EP>There's nothing here.</EP>
     </div>
   {:else}
     <ETable headers={["Amount", "Occurred On", "Description", "Type"]}>

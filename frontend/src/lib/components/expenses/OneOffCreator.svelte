@@ -2,7 +2,15 @@
   import { ExpensesApi, ResponseError } from "$lib/sdk";
   import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
   import { goto } from "$app/navigation";
-    import { addToToastQueue, EButton, ECard, EDateInput, ENumberInput, ETextInput, ToastType } from "@kerosenelabs/eureka";
+  import {
+    addToToastQueue,
+    EButton,
+    ECard,
+    EDateInput,
+    ENumberInput,
+    ETextInput,
+    ToastType,
+  } from "@kerosenelabs/eureka";
 
   let amount: number = 0.0;
   let description: string;

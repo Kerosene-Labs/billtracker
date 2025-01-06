@@ -6,7 +6,15 @@
   } from "$lib/sdkUtil";
   import { onMount } from "svelte";
   import { ResponseError, SettingsApi } from "$lib/sdk";
-    import { addToToastQueue, EButton, ECard, ESpinner, ToastType } from "@kerosenelabs/eureka";
+  import {
+    addToToastQueue,
+    EButton,
+    ECard,
+    EH1,
+    EP,
+    ESpinner,
+    ToastType,
+  } from "@kerosenelabs/eureka";
 
   let loading: boolean = true;
 
@@ -29,8 +37,8 @@
 <div class="m-4">
   <ECard>
     {#if !loading}
-      <h1>Hey, {firstName}!</h1>
-      <p>Hope you're ready to save some money!</p>
+      <EH1>Hey, {firstName}!</EH1>
+      <EP>Hope you're ready to save some money!</EP>
     {:else}
       <div class="flex w-full justify-center">
         <ESpinner></ESpinner>

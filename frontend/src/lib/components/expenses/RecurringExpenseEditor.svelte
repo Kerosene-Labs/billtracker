@@ -6,8 +6,21 @@
   } from "$lib/sdk";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-    import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
-    import { addToToastQueue, EButton, ECard, EModal, ENumberInput, ESpinner, ETable, ETableRow, ETextInput, formatCurrency, getOrdinal, ToastType } from "@kerosenelabs/eureka";
+  import { getErrorMessageFromSdk, getPrivateApiConfig } from "$lib/sdkUtil";
+  import {
+    addToToastQueue,
+    EButton,
+    ECard,
+    EModal,
+    ENumberInput,
+    ESpinner,
+    ETable,
+    ETableRow,
+    ETextInput,
+    formatCurrency,
+    getOrdinal,
+    ToastType,
+  } from "@kerosenelabs/eureka";
 
   // props
   export let id: string;

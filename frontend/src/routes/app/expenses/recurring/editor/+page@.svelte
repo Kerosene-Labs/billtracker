@@ -1,9 +1,9 @@
 <script lang="ts">
   import RecurringExpenseEditor from "$lib/components/expenses/RecurringExpenseEditor.svelte";
   import { onMount } from "svelte";
-  import { addToToastQueue, ToastType } from "$lib/toast";
   import { goto } from "$app/navigation";
   import BaseBackLayout from "$lib/components/BaseBackLayout.svelte";
+  import { addToToastQueue, ToastType } from "@kerosenelabs/eureka";
 
   export let data;
   const id = data.id;

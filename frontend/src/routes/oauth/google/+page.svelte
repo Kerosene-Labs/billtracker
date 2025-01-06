@@ -3,7 +3,7 @@
   import { OAuth2Api, ResponseError } from "$lib/sdk/index.js";
   import { getErrorMessageFromSdk, getPublicApiConfig } from "$lib/sdkUtil";
   import { goto } from "$app/navigation";
-  import { ECard, ESpinner } from "@kerosenelabs/eureka";
+  import { ECard, EH1, EP, ESpinner } from "@kerosenelabs/eureka";
 
   let errorMessage: string | undefined = undefined;
 
@@ -28,10 +28,10 @@
   <ECard>
     <div class="flex flex-col xl:flex-row">
       <div class="flex w-fit flex-col">
-        <h1>Welcome</h1>
-        <p class="subtitle desktop:text-nowrap">
-          Hang tight while we put the finishing touches on your account.
-        </p>
+        <EH1>Welcome</EH1>
+        <div class="desktop:text-nowrap">
+        <EP>Hang tight while we put the finishing touches on your account.</EP>
+      </div>
       </div>
       <div class="flex w-full items-center justify-center">
         <ESpinner></ESpinner>

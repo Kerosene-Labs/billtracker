@@ -7,7 +7,15 @@
     ResponseError,
   } from "$lib/sdk";
   import { goto } from "$app/navigation";
-    import { addToToastQueue, EButton, ESpinner, ETable, ETableRow, ToastType } from "@kerosenelabs/eureka";
+  import {
+    addToToastQueue,
+    EButton,
+    EP,
+    ESpinner,
+    ETable,
+    ETableRow,
+    ToastType,
+  } from "@kerosenelabs/eureka";
 
   let recurringExpenseEventCreators:
     | RecurringExpenseEventCreator[]
@@ -44,14 +52,14 @@
     </div>
   {:else if recurringExpenseEventCreators !== undefined && recurringExpenseEventCreators.length === 0}
     <div class="flex flex-col items-center justify-center gap-2 p-8">
-      <p class="font-mono text-2xl font-black">🦗...Just crickets</p>
-      <p class="font-semibold">There's nothing here.</p>
+      <EP>🦗...Just crickets</EP>
+      <EP>There's nothing here.</EP>
     </div>
   {:else}
     <ETable headers={["Amount", "Interval (every month)", "Description"]}>
       {#each recurringExpenseEventCreators as row}
         <ETableRow
-          on:click={() => {
+          onclick={() => {
             goto("/app/expenses/recurring/editor?id=" + row.id);
           }}
           row={[
