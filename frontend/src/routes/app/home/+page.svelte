@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { ECard } from "@kerosenelabs/eureka";
+  import NavItems from "$lib/components/NavItems.svelte";
+  import { ECard, ERootPage } from "@kerosenelabs/eureka";
   import { onMount } from "svelte";
 
   onMount(() => {

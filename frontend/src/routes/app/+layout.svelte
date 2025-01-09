@@ -1,9 +1,12 @@
 <script lang="ts">
-  import BaseNavLayout from "$lib/components/BaseNavLayout.svelte";
-
+  import { ERootPage } from "@kerosenelabs/eureka";
+  import NavItems from "$lib/components/NavItems.svelte";
   let { children } = $props();
 </script>
 
-<BaseNavLayout>
+<ERootPage>
+  {#snippet navItems()}
+    <NavItems></NavItems>
+  {/snippet}
   {@render children()}
-</BaseNavLayout>
+</ERootPage>

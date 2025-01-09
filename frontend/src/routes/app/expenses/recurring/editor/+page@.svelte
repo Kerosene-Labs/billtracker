@@ -2,7 +2,6 @@
   import RecurringExpenseEditor from "$lib/components/expenses/RecurringExpenseEditor.svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import BaseBackLayout from "$lib/components/BaseBackLayout.svelte";
   import { addToToastQueue, ToastType } from "@kerosenelabs/eureka";
 
   export let data;
